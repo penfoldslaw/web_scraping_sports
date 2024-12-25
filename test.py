@@ -43,22 +43,36 @@ time.sleep(5)  # Replace with WebDriverWait for robustness
 stats_link = driver.find_element(By.XPATH, "//ul[@class='InnerNavTabs_list__tIFRN']/li[2]")
 stats_link.click()
 
+time.sleep(5)
+
 
 # Locate and click the dropdown button
 dropdown_button = driver.find_element(By.CLASS_NAME, "ArrowToggleButton_arrowText__ep3Dn")
 dropdown_button.click()
 
 # Add another brief delay to allow the dropdown to expand
-time.sleep(3)
+time.sleep(5)
+
 
 # Locate and click the "Career" option
 career_option = driver.find_element(By.LINK_TEXT, 'Advanced Box Scores')
 career_option.click()
 
-time.sleep(60)
 
-# Extract the HTML of the dropdown or a specific element
-# html_content = career_option.get_attribute("outerHTML")
+# this clicks on the dropdown for the season
+dropdown_season = driver.find_element(By.XPATH, "//div[@class='DropDown_dropdown__TMlAR']")
+dropdown_season.click()
+time.sleep(5)
+
+#this click on the season that you want
+season = driver.find_element(By.XPATH,  "//option[@value='2019-20']")
+season.click()
+
+time.sleep(5)
+
+time.sleep(10)
+
+# Extract the entire HTML page
 page_html = driver.page_source
 
 

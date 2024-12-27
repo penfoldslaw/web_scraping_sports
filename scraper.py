@@ -26,8 +26,8 @@ from webdriver_manager.firefox import GeckoDriverManager
 
 #  Firefox options
 firefox_options = Options()
-# firefox_options.add_argument("--headless")  # Run in headless mode if needed
-firefox_options.add_argument("--start-maximized")  # Run in headless mode if needed
+firefox_options.add_argument("--headless")  # Run in headless mode if needed
+#firefox_options.add_argument("--start-maximized")  # Run in headless mode if needed
 
 # Initialize the Firefox WebDriver
 driver = webdriver.Firefox(
@@ -82,7 +82,7 @@ def scrape_data(player,season,folder_year):
     advance_option = driver.find_element(By.LINK_TEXT, 'Advanced Box Scores')
     advance_option.click()
 
-    # Add another brief delay to allow the dropdown to expand
+    # delay to allow the dropdown to expand
     time.sleep(2)
 
     # this clicks on the dropdown for the season
@@ -93,8 +93,8 @@ def scrape_data(player,season,folder_year):
     time.sleep(2)
 
     #this click on the season that you want
-    season_year = season
-    season_select = driver.find_element(By.XPATH,  f"//option[@value={season_year}]")
+    
+    season_select = driver.find_element(By.XPATH,  f"//option[@value={season}]")
     season_select.click()
     #driver.execute_script("window.scrollBy(0, 300);") 
 
@@ -137,8 +137,8 @@ def scrape_data(player,season,folder_year):
     for nba_quarter, folder_name in zip(xpath_quarters, folder_quarter_data):
         print(f"Processing: {nba_quarter}, {folder_name}")
 
-        select_q1 = driver.find_element(By.XPATH, nba_quarter)
-        select_q1.click()
+        select_q = driver.find_element(By.XPATH, nba_quarter)
+        select_q.click()
 
         get_results = driver.find_element(By.XPATH, "//*[@id='__next']/div[2]/div[2]/section/div[4]/section[2]/div/div/div[4]/div[2]/div/button[2]")
         get_results.click()
@@ -165,7 +165,29 @@ def scrape_data(player,season,folder_year):
     driver.quit()
 
 if __name__ == "__main__":
-    scrape_data("Paul George",'"2019-20"', "2019")
+    import configparser
+    import sys
+
+    # Load the configuration
+    config = configparser.ConfigParser()
+    config.read('scraper_config.cfg')
+
+    # Access values
+    player = config['scraper']['players'].split(',')
+    season = config['scraper']['season']
+    folder_year = config['scraper']['folder_year']
+    print(f"scraper data: {player},{season}, {folder_year}")
+
+    if len(sys.argv) != 4:
+        print("Usage: python scraper.py <player> <season> <year>")
+        sys.exit(1)
+
+    # Get arguments from the command line
+    player = sys.argv[1]
+    season = sys.argv[2]
+    year = sys.argv[3]
+
+    scrape_data(player,season,folder_year)
 
 
 

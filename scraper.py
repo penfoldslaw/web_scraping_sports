@@ -165,18 +165,7 @@ def scrape_data(player,season,folder_year):
     driver.quit()
 
 if __name__ == "__main__":
-    import configparser
     import sys
-
-    # Load the configuration
-    config = configparser.ConfigParser()
-    config.read('scraper_config.cfg')
-
-    # Access values
-    player = config['scraper']['players'].split(',')
-    season = config['scraper']['season']
-    folder_year = config['scraper']['folder_year']
-    print(f"scraper data: {player},{season}, {folder_year}")
 
     if len(sys.argv) != 4:
         print("Usage: python scraper.py <player> <season> <year>")
@@ -185,7 +174,7 @@ if __name__ == "__main__":
     # Get arguments from the command line
     player = sys.argv[1]
     season = sys.argv[2]
-    year = sys.argv[3]
+    folder_year = sys.argv[3]
 
     scrape_data(player,season,folder_year)
 

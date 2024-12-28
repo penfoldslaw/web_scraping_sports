@@ -12,6 +12,9 @@ from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
 
+service = Service(executable_path="firefox_drive\geckodriver.exe", log_path="geckodriver.log")
+#driver = webdriver.Firefox(service=service)
+
 # Chrome options
 # chrome_options = Options()
 # chrome_options.add_argument("--start-maximized")  # Example option: Start maximized
@@ -26,14 +29,17 @@ from webdriver_manager.firefox import GeckoDriverManager
 
 #  Firefox options
 firefox_options = Options()
-firefox_options.add_argument("--headless")  # Run in headless mode if needed
-#firefox_options.add_argument("--start-maximized")  # Run in headless mode if needed
+#firefox_options.add_argument("--headless")  # Run in headless mode if needed
+firefox_options.add_argument("--start-maximized")  # Run in headless mode if needed
 
 # Initialize the Firefox WebDriver
-driver = webdriver.Firefox(
-    service=Service(GeckoDriverManager().install()),
-    options=firefox_options
-)
+driver = webdriver.Firefox(service=service,options=firefox_options)
+
+# Initialize the Firefox WebDriver when webdrive not installed manaully
+# driver = webdriver.Firefox(
+#     service=Service(GeckoDriverManager().install()),
+#     options=firefox_options
+# )
 
 
 
@@ -62,44 +68,45 @@ def scrape_data(player,season,folder_year):
     player_link = driver.find_element(By.XPATH, "//div[@class='RosterRow_playerName__G28lg']")
     player_link.click()  # This simulates a click
 
-    #time.sleep(2)
+    time.sleep(2)
 
 
     #this click the stats page 
     stats_link = driver.find_element(By.XPATH, "//ul[@class='InnerNavTabs_list__tIFRN']/li[2]")
     stats_link.click()
 
-    #time.sleep(2)
+    time.sleep(3)
 
     # Locate and click the dropdown button for the advance stats page
     dropdown_button = driver.find_element(By.XPATH, "//*[@id='__next']/div[2]/div[2]/section/div[4]/section[1]/div/nav/div[1]/button/span")
     driver.execute_script("window.scrollBy(0, 200);")  # Scroll down by 500 pixels
 
     dropdown_button.click()
-    #time.sleep(2)
+    time.sleep(3)
 
     # Locate and click the "Career" option
     advance_option = driver.find_element(By.LINK_TEXT, 'Advanced Box Scores')
     advance_option.click()
 
     # delay to allow the dropdown to expand
-    time.sleep(2)
+    time.sleep(3)
 
     # this clicks on the dropdown for the season
     dropdown_season = driver.find_element(By.XPATH, "//*[@id='__next']/div[2]/div[2]/section/div[4]/section[2]/div/div/div[1]/label/div")
     driver.execute_script("window.scrollBy(0, 200);")  #this is to scroll down
 
     dropdown_season.click()
-    time.sleep(2)
+    time.sleep(3)
 
     #this click on the season that you want
     
     season_select = driver.find_element(By.XPATH,  f"//option[@value={season}]")
     season_select.click()
+    time.sleep(3)
     #driver.execute_script("window.scrollBy(0, 300);") 
 
 
-    time.sleep(2)
+    # time.sleep(2)
 
     # Extract the entire HTML page
     page_html = driver.page_source
@@ -115,10 +122,11 @@ def scrape_data(player,season,folder_year):
     #time.sleep(30)
     print("All quarters printed")
     # advance stats  
+    driver.execute_script("window.scrollBy(0, 100);") 
     advance_filter = driver.find_element(By.XPATH, "//*[@id='__next']/div[2]/div[2]/section/div[4]/section[2]/div/div/div[4]/div[2]/button/span")
     advance_filter.click()
 
-    time.sleep(2)
+    time.sleep(3)
 
     #this select the quarters button
     select_quaters = driver.find_element(By.XPATH,"//*[@id='__next']/div[2]/div[2]/section/div[4]/section[2]/div/div/div[4]/div[1]/section[2]/div/div[3]/label/div")

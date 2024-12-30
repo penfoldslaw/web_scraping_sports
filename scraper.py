@@ -45,7 +45,7 @@ driver = webdriver.Firefox(service=service,options=firefox_options)
 
 
 
-def scrape_data(player,season,folder_year):
+def scrape_data(player,season,main_folder,folder_year):
     driver.get("https://www.nba.com/players")
     time.sleep(2)
 
@@ -113,9 +113,10 @@ def scrape_data(player,season,folder_year):
 
 
     # Save the HTML to a file
- 
-    folder = os.path.join("nba_historic", f"nba_html_{folder_year}")
+    main_folder = main_folder
+    folder = os.path.join(main_folder, f"nba_html_{folder_year}")
     file_path = os.path.join(folder, f"{player}_content.html")
+    os.makedirs(folder, exist_ok=True)
     with open(file_path, "w", encoding="utf-8") as file:
         file.write(page_html)
 
@@ -159,7 +160,8 @@ def scrape_data(player,season,folder_year):
 
         # Save the HTML to a file
         which_q_folder = folder_name
-        folder = os.path.join("nba_historic", f"nba_html_{folder_year}", "quarter_data", which_q_folder)
+        folder = os.path.join(main_folder, f"nba_html_{folder_year}", "quarter_data", which_q_folder)
+        os.makedirs(folder, exist_ok=True)
         file_path = os.path.join(folder, f"{player}_content_{which_q_folder}.html")
         with open(file_path, "w", encoding="utf-8") as file:
             file.write(page_html)
@@ -175,16 +177,17 @@ def scrape_data(player,season,folder_year):
 if __name__ == "__main__":
     import sys
 
-    if len(sys.argv) != 4:
+    if len(sys.argv) != 5:
         print("Usage: python scraper.py <player> <season> <year>")
         sys.exit(1)
 
     # Get arguments from the command line
     player = sys.argv[1]
     season = sys.argv[2]
-    folder_year = sys.argv[3]
+    main_folder = sys.argv[3]
+    folder_year = sys.argv[4]
 
-    scrape_data(player,season,folder_year)
+    scrape_data(player,season,main_folder,folder_year)
 
 
 

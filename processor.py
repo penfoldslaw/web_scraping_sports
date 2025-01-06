@@ -159,7 +159,7 @@ import subprocess
 import sys
 
 def run_script(player, season, main_folder, year):
-    subprocess.run([sys.executable, "scraper.py", player, season, main_folder, year])
+    subprocess.run([sys.executable, "player_scraper.py", player, season, main_folder, year])
 
 if __name__ == "__main__":
     players =[
@@ -213,9 +213,9 @@ if __name__ == "__main__":
         'Kevin Love',
         'Spencer Dinwiddie'
 ]
-    season = "'2024-25'"
+    season = "'2019-20'"
     main_folder = "nba_historic"
-    year = "2024"
+    year = "2019-20"
     
     for player in players:
         run_script(player, season, main_folder, year)

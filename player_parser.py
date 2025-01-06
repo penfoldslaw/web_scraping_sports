@@ -117,8 +117,17 @@ def create_dataframe(relative_path, csv_path):
             df.to_csv(f'{csv_path}\{modified_filename}.csv', index=False)
 
 if __name__ == "__main__":
-    create_dataframe(r'nba_historic\nba_html_2019', r'nba_historic_csv\all_quarters')
-    create_dataframe(r'nba_historic\nba_html_2019\quarter_data\q1', r'nba_historic_csv\quarter_data\q1' )
-    create_dataframe(r'nba_historic\nba_html_2019\quarter_data\q2', r'nba_historic_csv\quarter_data\q2')
-    create_dataframe(r'nba_historic\nba_html_2019\quarter_data\q3', r'nba_historic_csv\quarter_data\q3')
-    create_dataframe(r'nba_historic\nba_html_2019\quarter_data\q4', r'nba_historic_csv\quarter_data\q4')
+    # create_dataframe(r'nba_historic\nba_html_2019', r'nba_historic_csv\all_quarters')
+    # create_dataframe(r'nba_historic\nba_html_2019\quarter_data\q1', r'nba_historic_csv\quarter_data\q1' )
+    # create_dataframe(r'nba_historic\nba_html_2019\quarter_data\q2', r'nba_historic_csv\quarter_data\q2')
+    # create_dataframe(r'nba_historic\nba_html_2019\quarter_data\q3', r'nba_historic_csv\quarter_data\q3')
+    # create_dataframe(r'nba_historic\nba_html_2019\quarter_data\q4', r'nba_historic_csv\quarter_data\q4')
+    import sys
+    if len(sys.argv) != 3:
+        print("Usage: python defense_parser.py <relative_path> <csv_path>")
+        sys.exit(1)
+
+    relative_path = sys.argv[1]
+    csv_path = sys.argv[2]
+    
+    create_dataframe(relative_path, csv_path)

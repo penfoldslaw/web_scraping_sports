@@ -53,14 +53,22 @@ def defense_scraper(main_folder,folder_season,data_season):
         with open(file_path, "w", encoding="utf-8") as file:
             file.write(page_html)
 
-        print(f"{file_names} has been completed!!!")
+        print(f"{file_names} {data_season} has been completed!!!")
 
     driver.quit()
 
 
 if __name__ == "__main__":
-    defense_scraper(r"nba_defense_historic", "2020-21", "2020-21")
+    import sys
+    if len(sys.argv) != 5:
+        print("Usage: python defense_scraper.py <main_folder> <folder_season> <data_season>")
+        sys.exit(1)
 
+    main_folder = sys.argv[1]
+    folder_season = sys.argv[2]
+    data_season = sys.argv[3]
+    # defense_scraper(r"nba_defense_historic", "2020-21", "2020-21")
+    defense_scraper(main_folder,folder_season,data_season)
 
 
 

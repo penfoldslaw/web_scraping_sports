@@ -159,12 +159,12 @@ import subprocess
 import sys
 
 def run_script(player, season, main_folder, year):
-    subprocess.run([sys.executable, "player_scraper.py", player, season, main_folder, year])
+    subprocess.run([sys.executable, "nba_player_scraper.py", player, season, main_folder, year])
 
 if __name__ == "__main__":
     players =[
-        'James Harden','Giannis Antetokounmpo','Luka Doncic','LeBron James','Damian Lillard',
-        'Karl-Anthony Towns','Trae Young','Anthony Davis','Russell Westbrook','Bradley Beal','Kyrie Irving','Kawhi Leonard','Nikola Jokic',
+        'James Harden','Giannis Antetokounmpo','Kawhi Leonard','Luka Doncic','LeBron James','Damian Lillard',
+        'Karl-Anthony Towns','Trae Young','Anthony Davis','Russell Westbrook','Bradley Beal','Kyrie Irving','Nikola Jokic',
         'Devin Booker','Joel Embiid','John Collins','Domantas Sabonis','Andre Drummond','Nikola Vucevic','DeMar DeRozan',
         'Jusuf Nurkic','Zach LaVine','Ben Simmons','Brandon Ingram','Jayson Tatum','Jimmy Butler','Pascal Siakam','DAngelo Russell',
         'Deandre Ayton','Kyle Lowry','Bam Adebayo','Stephen Curry','Khris Middleton','Kristaps Porzingis','Donovan Mitchell',
@@ -172,9 +172,9 @@ if __name__ == "__main__":
         'Julius Randle','Andrew Wiggins','Tobias Harris','Kevin Love','Spencer Dinwiddie' ]
     
 
-    seasons = ["'2019-20'", "'2020-21'", "'2021-22'", "'2022-23'", "'2023-24'"]
+    seasons = ["2019-20", "2020-21", "2021-22", "2022-23", "2023-24"]
     main_folder = "nba_player_historic"
-    years = ["2019-20", "2020-21", "2021-22", "2022-23", "2023-24"]
+    years = ["2019-20", "2020-21", "2021-22", "2022-23", "2023-24"] #old logic was to use the same year for all seasons keeping it because it is not clear if the year is used for anything else
     
     for player in players:
         for season, year in zip(seasons, years):

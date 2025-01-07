@@ -32,16 +32,23 @@ def create_dataframe(relative_path, csv_path):
                 headers = [th.text.strip() for th in header_row.find_all('th')]
                 #print(headers)
             else:
-                print("Header row not found.")
+                print(f"Header {modified_filename} {relative_path} row not found.")
 
             rows = soup.find_all('tr')
 
             # Loop through rows and extract data
             list = []
+            
+            #check to see if the html holds any data if not it is skipped
+            if soup.find('tbody', class_='Crom_body__UYOcU') is None:
+                print(f"Contents of {modified_filename} {relative_path} is empty, skipping this file.")
+                continue
+
             tbody = soup.find('tbody', class_='Crom_body__UYOcU')
 
             # Extract the rows and their data
             rows = tbody.find_all('tr')
+            
             for row in rows:
                 cells = row.find_all('td')
                 row_data = [cell.get_text(strip=True) for cell in cells]
@@ -65,7 +72,7 @@ def create_dataframe(relative_path, csv_path):
             # Turns every n/a value in this column into Home
             df[['Home/Away_game']] = df[['Home/Away_game']].fillna('Home')
 
-            df['Date'] = pd.to_datetime(df['Date'])
+            df['Date'] = pd.to_datetime(df['Date'], format='%b %d, %Y')
             df['Matchup'] = df['Matchup'].astype('string')
             df['Team'] = df['Team'].astype('string')
             df['Away'] = df['Away'].astype('string')
@@ -117,12 +124,17 @@ def create_dataframe(relative_path, csv_path):
             df.to_csv(f'{csv_path}\{modified_filename}.csv', index=False)
 
 if __name__ == "__main__":
+    import sys
+    log_file_path = "player_parser.log"
+    sys.stdout = open(log_file_path, "a")
+    sys.stderr = open(log_file_path, "a")
+
     # create_dataframe(r'nba_historic\nba_html_2019', r'nba_historic_csv\all_quarters')
     # create_dataframe(r'nba_historic\nba_html_2019\quarter_data\q1', r'nba_historic_csv\quarter_data\q1' )
     # create_dataframe(r'nba_historic\nba_html_2019\quarter_data\q2', r'nba_historic_csv\quarter_data\q2')
     # create_dataframe(r'nba_historic\nba_html_2019\quarter_data\q3', r'nba_historic_csv\quarter_data\q3')
     # create_dataframe(r'nba_historic\nba_html_2019\quarter_data\q4', r'nba_historic_csv\quarter_data\q4')
-    import sys
+
     if len(sys.argv) != 3:
         print("Usage: python defense_parser.py <relative_path> <csv_path>")
         sys.exit(1)
@@ -131,3 +143,5 @@ if __name__ == "__main__":
     csv_path = sys.argv[2]
     
     create_dataframe(relative_path, csv_path)
+    sys.stdout.close()
+    sys.stderr.close()

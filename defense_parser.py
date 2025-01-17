@@ -53,7 +53,7 @@ def defense_parser(sub_folder, csv_sub_folder):
 
             df.rename(columns={df.columns[0]: "RANK"}, inplace=True)
 
-            rename_map = {
+            rename_header = {
                 'DEF\xa0RTG': 'DEF RTG',
                 'OPP\xa0PTSOFF\xa0TOV': 'OPP PTSOFF TOV',
                 'OPP\xa0PTS2ND\xa0CHANCE': 'OPP PTS2ND CHANCE',
@@ -61,9 +61,44 @@ def defense_parser(sub_folder, csv_sub_folder):
                 'OPP\xa0PTSPAINT': 'OPP PTSPAINT'
             }
 
-            df.rename(columns=rename_map, inplace=True)
+            df.rename(columns=rename_header, inplace=True)
 
             df['TEAM'] = df['TEAM'].astype('string')
+
+            rename_team = {
+                'Atlanta Hawks': 'ATL',
+                'Boston Celtics': 'BOS',
+                'Brooklyn Nets': 'BKN',
+                'Charlotte Hornets': 'CHA',
+                'Chicago Bulls': 'CHI',
+                'Cleveland Cavaliers': 'CLE',
+                'Dallas Mavericks': 'DAL',
+                'Denver Nuggets': 'DEN',
+                'Detroit Pistons': 'DET',
+                'Golden State Warriors': 'GSW',
+                'Houston Rockets': 'HOU',
+                'Indiana Pacers': 'IND',
+                'LA Clippers': 'LAC',
+                'Los Angeles Lakers': 'LAL',
+                'Memphis Grizzlies': 'MEM',
+                'Miami Heat': 'MIA',
+                'Milwaukee Bucks': 'MIL',
+                'Minnesota Timberwolves': 'MIN',
+                'New Orleans Pelicans': 'NOP',
+                'New York Knicks': 'NYK',
+                'Oklahoma City Thunder': 'OKC',
+                'Orlando Magic': 'ORL',
+                'Philadelphia 76ers': 'PHI',
+                'Phoenix Suns': 'PHX',
+                'Portland Trail Blazers': 'POR',
+                'Sacramento Kings': 'SAC',
+                'San Antonio Spurs': 'SAS',
+                'Toronto Raptors': 'TOR',
+                'Utah Jazz': 'UTA',
+                'Washington Wizards': 'WAS'
+                }
+            
+            df['TEAM'] = df['TEAM'].map(rename_team)
 
             columns_to_convert = [
                 'RANK', 'GP', 'W', 'L', 'MIN','DEF RTG', 'DREB',
@@ -85,6 +120,9 @@ def defense_parser(sub_folder, csv_sub_folder):
 
 if __name__ == "__main__":
     import sys
+    log_file_path = "defense_parser.log"
+    sys.stdout = open(log_file_path, "w")
+    sys.stderr = open(log_file_path, "w")
 
     if len(sys.argv) != 3:
         print("Usage: python defense_parser.py <sub_folder> <csv_sub_folder>")

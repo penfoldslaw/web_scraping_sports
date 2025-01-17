@@ -78,8 +78,9 @@ def create_dataframe(relative_path, csv_path):
             df['Away'] = df['Away'].astype('string')
             df['Home/Away_game'] = df['Home/Away_game'].astype('string')
             df['W/L'] = df['W/L'].astype('string')
-            df['MIN'] = '00:' + df['MIN']
-            df['MIN'] = pd.to_datetime(df['MIN'],format= '%H:%M:%S' ).dt.time
+            #convert mins to float
+            df['MIN'] = df['MIN'].str.replace(':', '.').astype(float)
+            
 
             columns_to_convert = [
                 'PTS', 'FGM', 'FGA', 'FG%', '3PM', '3PA', '3P%', 'FTM', 'FTA', 'FT%', 

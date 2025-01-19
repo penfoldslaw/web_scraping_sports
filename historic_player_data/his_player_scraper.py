@@ -149,7 +149,7 @@ def scrape_data(player,season,main_folder,folder_year):
     # time.sleep(10)
 
     print(driver.title.encode('ascii', 'replace').decode())
-    driver.quit()
+driver.quit()
 
 if __name__ == "__main__":
     import sys

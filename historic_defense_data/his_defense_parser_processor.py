@@ -1,7 +1,7 @@
 import sys
 import subprocess
 def run_script(sub_folder, csv_sub_folder):
-    subprocess.run([sys.executable, "defense_parser.py", sub_folder, csv_sub_folder])
+    subprocess.run([sys.executable, "his_defense_parser.py", sub_folder, csv_sub_folder])
 
 if __name__ == "__main__":
     

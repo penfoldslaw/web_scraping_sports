@@ -8,6 +8,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import os
+import sys
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
@@ -26,11 +27,11 @@ driver = webdriver.Firefox(service=service,options=firefox_options)
 def defense_scraper(main_folder,folder_season,data_season):
     
     web_site_list = [
-    f"https://www.nba.com/stats/teams/defense?Season={data_season}&PerMode=PerGame",
-    f"https://www.nba.com/stats/teams/defense?Season={data_season}&Period=1",
-    f"https://www.nba.com/stats/teams/defense?Season={data_season}&Period=2",
-    f"https://www.nba.com/stats/teams/defense?Season={data_season}&Period=3",
-    f"https://www.nba.com/stats/teams/defense?Season={data_season}&Period=4"       
+    f"https://www.nba.com/stats/teams/advanced?Season={data_season}",
+    f"https://www.nba.com/stats/teams/advanced?Season={data_season}&Period=1",
+    f"https://www.nba.com/stats/teams/advanced?Season={data_season}&Period=2",
+    f"https://www.nba.com/stats/teams/advanced?Season={data_season}&Period=3",
+    f"https://www.nba.com/stats/teams/advanced?Season={data_season}&Period=4"       
     ]
 
     file_names = ["all_quarter",
@@ -59,8 +60,8 @@ def defense_scraper(main_folder,folder_season,data_season):
 
 
 if __name__ == "__main__":
-    import sys
-    if len(sys.argv) != 5:
+
+    if len(sys.argv) != 4:
         print("Usage: python defense_scraper.py <main_folder> <folder_season> <data_season>")
         sys.exit(1)
 
@@ -68,7 +69,9 @@ if __name__ == "__main__":
     folder_season = sys.argv[2]
     data_season = sys.argv[3]
     # defense_scraper(r"nba_defense_historic", "2020-21", "2020-21")
+    print(f"Main folder: {main_folder}, Folder season: {folder_season}, Data season: {data_season}")
     defense_scraper(main_folder,folder_season,data_season)
+
 
 
 

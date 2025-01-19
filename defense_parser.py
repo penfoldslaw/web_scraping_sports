@@ -28,8 +28,8 @@ def defense_parser(sub_folder, csv_sub_folder):
             # Extract the text from each <th> element
             if header_row:
                 headers = [th.text.strip() for th in header_row.find_all('th')]
-                del headers[15:]
-                # print(headers)
+                del headers[21:]
+                #print(headers)
             else:
                 print("Header row not found.")
 
@@ -43,14 +43,14 @@ def defense_parser(sub_folder, csv_sub_folder):
             for row in rows:
                 cells = row.find_all('td')
                 row_data = [cell.get_text(strip=True) for cell in cells]
-                del row_data[15:]
-                # print(row_data)
+                del row_data[21:]
+                #print(row_data)
                 list.append(row_data)
-            # print(list)
+            #print(list)
 
             import pandas as pd
             df = pd.DataFrame(list, columns=headers)
-
+            #print(df.columns)
             df.rename(columns={df.columns[0]: "RANK"}, inplace=True)
 
             rename_header = {
@@ -101,8 +101,7 @@ def defense_parser(sub_folder, csv_sub_folder):
             df['TEAM'] = df['TEAM'].map(rename_team)
 
             columns_to_convert = [
-                'RANK', 'GP', 'W', 'L', 'MIN','DEF RTG', 'DREB',
-                'DREB%', 'STL', 'BLK', 'OPP PTSOFF TOV', 'OPP PTS2ND CHANCE', 'OPP PTSFB', 'OPP PTSPAINT']
+               'OffRtg', 'DefRtg', 'NetRtg', 'AST%', 'AST/TO', 'ASTRatio', 'OREB%', 'DREB%', 'REB%', 'TOV%', 'eFG%', 'TS%', 'PACE', 'PIE', 'POSS']
             
              # Converting selected columns to float
             df[columns_to_convert] = df[columns_to_convert].apply(pd.to_numeric, errors='coerce')

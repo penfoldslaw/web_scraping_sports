@@ -13,7 +13,7 @@ from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
 
-service = Service(executable_path="firefox_drive\geckodriver.exe", log_path="geckodriver.log")
+service = Service(executable_path="../firefox_drive/geckodriver.exe", log_path="geckodriver.log")
 
 
 #  Firefox options
@@ -56,11 +56,9 @@ def defense_scraper(main_folder,folder_season,data_season):
 
         print(f"{file_names} {data_season} has been completed!!!")
 
-    driver.quit()
-
 
 if __name__ == "__main__":
-    log_file_path = "defense_current.log"
+    log_file_path = "defense_scraper.log"
     sys.stdout = open(log_file_path, "w")
     sys.stderr = open(log_file_path, "w")
 
@@ -74,6 +72,7 @@ if __name__ == "__main__":
     # defense_scraper(r"nba_defense_historic", "2020-21", "2020-21")
     print(f"Main folder: {main_folder}, Folder season: {folder_season}, Data season: {data_season}")
     defense_scraper(main_folder,folder_season,data_season)
+    driver.quit()
 
 
 

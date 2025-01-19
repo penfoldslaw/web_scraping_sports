@@ -119,7 +119,7 @@ def defense_parser(sub_folder, csv_sub_folder):
 
 if __name__ == "__main__":
     import sys
-    log_file_path = "defense_parser.log"
+    log_file_path = "his_defense_parser.log"
     sys.stdout = open(log_file_path, "w")
     sys.stderr = open(log_file_path, "w")
 

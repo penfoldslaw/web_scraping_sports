@@ -13,7 +13,7 @@ from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
 
-service = Service(executable_path="firefox_drive\geckodriver.exe", log_path="geckodriver.log")
+service = Service(executable_path="../firefox_drive/geckodriver.exe", log_path="geckodriver.log")
 
 
 #  Firefox options
@@ -60,6 +60,9 @@ def defense_scraper(main_folder,folder_season,data_season):
 
 
 if __name__ == "__main__":
+    log_file_path = "his_defense_scraper.log"
+    sys.stdout = open(log_file_path, "w")
+    sys.stderr = open(log_file_path, "w")
 
     if len(sys.argv) != 4:
         print("Usage: python defense_scraper.py <main_folder> <folder_season> <data_season>")

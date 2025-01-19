@@ -159,7 +159,7 @@ import subprocess
 import sys
 
 def run_script(player, season, main_folder, year):
-    subprocess.run([sys.executable, "his_player_scraper.py", player, season, main_folder, year])
+    subprocess.run([sys.executable, "current_player_scraper.py", player, season, main_folder, year])
 
 if __name__ == "__main__":
     players =[

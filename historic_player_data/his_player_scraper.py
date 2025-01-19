@@ -153,6 +153,9 @@ driver.quit()
 
 if __name__ == "__main__":
     import sys
+    log_file_path = "his_player_scraper.log"
+    sys.stdout = open(log_file_path, "w")
+    sys.stderr = open(log_file_path, "w")
 
     if len(sys.argv) != 5:
         print("Usage: python scraper.py <player> <season> <main_folder> <year>")

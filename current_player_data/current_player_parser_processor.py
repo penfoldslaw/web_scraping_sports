@@ -3,7 +3,7 @@ import subprocess
 import sys
 
 def run_script(relative_path, csv_path):
-    subprocess.run([sys.executable, "his_player_parser.py", relative_path, csv_path])
+    subprocess.run([sys.executable, "current_player_parser.py", relative_path, csv_path])
 
 if __name__ == "__main__":
 

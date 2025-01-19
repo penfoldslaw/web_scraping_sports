@@ -13,7 +13,7 @@ from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
 from tenacity import retry, stop_after_attempt, wait_fixed
 
-service = Service(executable_path="firefox_drive\geckodriver.exe", log_path="geckodriver.log")
+service = Service(executable_path="../firefox_drive/geckodriver.exe", log_path="geckodriver.log")
 #driver = webdriver.Firefox(service=service)
 
 # Chrome options
@@ -30,8 +30,8 @@ service = Service(executable_path="firefox_drive\geckodriver.exe", log_path="gec
 
 #  Firefox options
 firefox_options = Options()
-#firefox_options.add_argument("--headless")  # Run in headless mode if needed
-firefox_options.add_argument("--start-maximized")  # Run in headless mode if needed
+firefox_options.add_argument("--headless")  # Run in headless mode if needed
+#firefox_options.add_argument("--start-maximized")  # Run in headless mode if needed
 
 # Initialize the Firefox WebDriver
 driver = webdriver.Firefox(service=service,options=firefox_options)
@@ -149,13 +149,23 @@ def scrape_data(player,season,main_folder,folder_year):
     # time.sleep(10)
 
     print(driver.title.encode('ascii', 'replace').decode())
-driver.quit()
 
 if __name__ == "__main__":
     import sys
+    import datetime
+
     log_file_path = "current_scraper.log"
-    sys.stdout = open(log_file_path, "w")
-    sys.stderr = open(log_file_path, "w")
+
+    # Open the log file in append mode ("a")
+    sys.stdout = open(log_file_path, "a")
+    sys.stderr = open(log_file_path, "a")
+
+    def log_with_timestamp(message):
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"{timestamp} - {message}")
+        print(f"{timestamp} - {message}", file=sys.stderr)
+
+    log_with_timestamp("Scraping data...") 
 
     if len(sys.argv) != 5:
         print("Usage: python scraper.py <player> <season> <main_folder> <year>")
@@ -169,6 +179,7 @@ if __name__ == "__main__":
 
     try:
         scrape_data(player,season,main_folder,folder_year)
+        driver.quit()
 
     except Exception as e:
         print(f"Function failed after retries: {e}")

@@ -1,0 +1,21 @@
+home_team,schedule_team,schedule_matchup,DATE,TIME,location
+MIN,MEM,@ Memphis,2025-01-20,2:30 PM,away
+MIN,DEN,vs Denver,2025-01-25,3:00 PM,home
+MIN,PHX,@ Phoenix,2025-01-29,9:00 PM,away
+MIN,WAS,vs Washington,2025-02-01,8:00 PM,home
+MIN,CHI,vs Chicago,2025-02-05,8:00 PM,home
+MIN,POR,vs Portland,2025-02-08,8:00 PM,home
+MIN,MIL,vs Milwaukee,2025-02-12,8:00 PM,home
+MIN,HOU,@ Houston,2025-02-21,8:00 PM,away
+MIN,OKC,@ Oklahoma City,2025-02-24,8:00 PM,away
+MIN,UTA,@ Utah,2025-02-28,9:30 PM,away
+MIN,PHI,vs Philadelphia,2025-03-04,8:00 PM,home
+MIN,MIA,@ Miami,2025-03-07,8:00 PM,away
+MIN,DEN,@ Denver,2025-03-12,10:00 PM,away
+MIN,UTA,vs Utah,2025-03-16,7:00 PM,home
+MIN,NOP,vs New Orleans,2025-03-19,7:30 PM,home
+MIN,IND,@ Indiana,2025-03-24,7:00 PM,away
+MIN,DET,vs Detroit,2025-03-30,7:00 PM,home
+MIN,BKN,@ Brooklyn,2025-04-03,7:30 PM,away
+MIN,MIL,@ Milwaukee,2025-04-08,8:00 PM,away
+MIN,BKN,vs Brooklyn,2025-04-11,9:00 PM,home

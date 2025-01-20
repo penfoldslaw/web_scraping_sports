@@ -1,0 +1,21 @@
+home_team,schedule_team,schedule_matchup,DATE,TIME,location
+LAC,CHI,vs Chicago,2025-01-20,10:30 PM,home
+LAC,WAS,vs Washington,2025-01-23,10:30 PM,home
+LAC,PHX,@ Phoenix,2025-01-27,9:30 PM,away
+LAC,CHA,@ Charlotte,2025-01-31,7:00 PM,away
+LAC,LAL,vs Los Angeles,2025-02-04,10:00 PM,home
+LAC,UTA,vs Utah,2025-02-08,10:30 PM,home
+LAC,UTA,@ Utah,2025-02-13,9:00 PM,away
+LAC,IND,@ Indiana,2025-02-23,5:00 PM,away
+LAC,CHI,@ Chicago,2025-02-26,8:00 PM,away
+LAC,LAL,@ Los Angeles,2025-03-02,9:30 PM,away
+LAC,DET,vs Detroit,2025-03-05,10:30 PM,home
+LAC,SAC,vs Sacramento,2025-03-09,9:30 PM,home
+LAC,MIA,@ Miami,2025-03-12,8:00 PM,away
+LAC,CHA,vs Charlotte,2025-03-16,7:00 PM,home
+LAC,MEM,vs Memphis,2025-03-21,10:30 PM,home
+LAC,NYK,@ New York,2025-03-26,7:30 PM,away
+LAC,CLE,@ Cleveland,2025-03-30,3:30 PM,away
+LAC,NOP,vs New Orleans,2025-04-02,10:00 PM,home
+LAC,DAL,vs Dallas,2025-04-05,10:30 PM,home
+LAC,HOU,vs Houston,2025-04-09,10:30 PM,home

@@ -1,0 +1,21 @@
+home_team,schedule_team,schedule_matchup,DATE,TIME,location
+PHX,CLE,@ Cleveland,2025-01-20,3:30 PM,away
+PHX,WAS,vs Washington,2025-01-25,9:00 PM,home
+PHX,MIN,vs Minnesota,2025-01-29,9:00 PM,home
+PHX,POR,@ Portland,2025-02-01,10:00 PM,away
+PHX,OKC,@ Oklahoma City,2025-02-05,8:00 PM,away
+PHX,DEN,vs Denver,2025-02-08,9:00 PM,home
+PHX,HOU,@ Houston,2025-02-12,8:30 PM,away
+PHX,CHI,@ Chicago,2025-02-22,5:00 PM,away
+PHX,MEM,@ Memphis,2025-02-25,8:00 PM,away
+PHX,NOP,vs New Orleans,2025-02-28,9:00 PM,home
+PHX,LAC,vs LA,2025-03-04,10:00 PM,home
+PHX,DAL,@ Dallas,2025-03-09,3:30 PM,away
+PHX,HOU,@ Houston,2025-03-12,8:00 PM,away
+PHX,LAL,@ Los Angeles,2025-03-16,3:30 PM,away
+PHX,CHI,vs Chicago,2025-03-19,10:00 PM,home
+PHX,MIL,vs Milwaukee,2025-03-24,10:00 PM,home
+PHX,MIN,@ Minnesota,2025-03-28,8:00 PM,away
+PHX,MIL,@ Milwaukee,2025-04-01,8:00 PM,away
+PHX,NYK,@ New York,2025-04-06,7:00 PM,away
+PHX,OKC,vs Oklahoma City,2025-04-09,10:00 PM,home

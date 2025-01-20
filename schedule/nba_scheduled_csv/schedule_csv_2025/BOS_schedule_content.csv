@@ -1,0 +1,21 @@
+home_team,schedule_team,schedule_matchup,DATE,TIME,location
+BOS,GSW,@ Golden State,2025-01-20,5:00 PM,away
+BOS,LAL,@ Los Angeles,2025-01-23,10:00 PM,away
+BOS,HOU,vs Houston,2025-01-27,7:30 PM,home
+BOS,NOP,@ New Orleans,2025-01-31,8:00 PM,away
+BOS,CLE,@ Cleveland,2025-02-04,7:30 PM,away
+BOS,NYK,@ New York,2025-02-08,8:30 PM,away
+BOS,SAS,vs San Antonio,2025-02-12,7:00 PM,home
+BOS,NYK,vs New York,2025-02-23,1:00 PM,home
+BOS,DET,@ Detroit,2025-02-26,7:00 PM,away
+BOS,DEN,vs Denver,2025-03-02,1:00 PM,home
+BOS,PHI,vs Philadelphia,2025-03-06,7:30 PM,home
+BOS,UTA,vs Utah,2025-03-10,7:30 PM,home
+BOS,MIA,@ Miami,2025-03-14,7:00 PM,away
+BOS,BKN,vs Brooklyn,2025-03-18,7:30 PM,home
+BOS,POR,@ Portland,2025-03-23,6:00 PM,away
+BOS,PHX,@ Phoenix,2025-03-26,10:00 PM,away
+BOS,MEM,@ Memphis,2025-03-31,8:00 PM,away
+BOS,PHX,vs Phoenix,2025-04-04,7:30 PM,home
+BOS,NYK,@ New York,2025-04-08,7:30 PM,away
+BOS,CHA,vs Charlotte,2025-04-11,7:30 PM,home

@@ -163,7 +163,7 @@ def run_script(player, season, main_folder, year):
 
 if __name__ == "__main__":
     players =[
-        'James Harden','Giannis Antetokounmpo','Kawhi Leonard','Luka Doncic','LeBron James','Damian Lillard',
+        'Nikola Vučević','Norman Powell','James Harden','Giannis Antetokounmpo','Kawhi Leonard','Luka Doncic','LeBron James','Damian Lillard',
         'Karl-Anthony Towns','Trae Young','Anthony Davis','Russell Westbrook','Bradley Beal','Kyrie Irving','Nikola Jokic',
         'Devin Booker','Joel Embiid','John Collins','Domantas Sabonis','Andre Drummond','Nikola Vucevic','DeMar DeRozan',
         'Jusuf Nurkic','Zach LaVine','Ben Simmons','Brandon Ingram','Jayson Tatum','Jimmy Butler','Pascal Siakam','DAngelo Russell',

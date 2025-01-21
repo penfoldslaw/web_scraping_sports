@@ -1,0 +1,104 @@
+Traceback (most recent call last):
+  File "C:\Users\mandy\Documents\Github\web_scraping_sports\historic_player_data\his_player_scraper.py", line 165, in <module>
+    log_with_timestamp("Scraping data...") 
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mandy\Documents\Github\web_scraping_sports\historic_player_data\his_player_scraper.py", line 161, in log_with_timestamp
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                ^^^^^^^^^^^^^^^^^
+AttributeError: type object 'datetime.datetime' has no attribute 'datetime'
+2025-01-20 21:26:11 - Scraping data...
+2025-01-20 21:26:11 - Scraping data...
+Function failed after retries: RetryError[<Future at 0x29e80c46d10 state=finished raised UnicodeEncodeError>]
+2025-01-20 21:27:31 - Scraping data...
+2025-01-20 21:27:31 - Scraping data...
+Function failed after retries: RetryError[<Future at 0x1a8f35a7390 state=finished raised UnicodeEncodeError>]
+2025-01-20 21:28:49 - Scraping data...
+2025-01-20 21:28:49 - Scraping data...
+Function failed after retries: RetryError[<Future at 0x1dc14b46d10 state=finished raised UnicodeEncodeError>]
+2025-01-20 21:30:10 - Scraping data...
+2025-01-20 21:30:10 - Scraping data...
+Function failed after retries: RetryError[<Future at 0x27325ad7d50 state=finished raised UnicodeEncodeError>]
+2025-01-20 21:31:30 - Scraping data...
+2025-01-20 21:31:30 - Scraping data...
+Function failed after retries: RetryError[<Future at 0x25c1f5e7910 state=finished raised UnicodeEncodeError>]
+2025-01-20 21:32:56 - Scraping data...
+2025-01-20 21:32:56 - Scraping data...
+Function failed after retries: RetryError[<Future at 0x1f0eaac7b90 state=finished raised InvalidSessionIdException>]
+2025-01-20 21:33:28 - Scraping data...
+2025-01-20 21:33:28 - Scraping data...
+Traceback (most recent call last):
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\http\client.py", line 1374, in getresponse
+    response.begin()
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\http\client.py", line 318, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\http\client.py", line 279, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\mandy\Documents\Github\web_scraping_sports\historic_player_data\his_player_scraper.py", line 178, in <module>
+    scrape_data(player,season,main_folder,folder_year)
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\site-packages\tenacity\__init__.py", line 336, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\site-packages\tenacity\__init__.py", line 475, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\site-packages\tenacity\__init__.py", line 376, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\site-packages\tenacity\__init__.py", line 398, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\site-packages\tenacity\__init__.py", line 478, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mandy\Documents\Github\web_scraping_sports\historic_player_data\his_player_scraper.py", line 50, in scrape_data
+    driver.get("https://www.nba.com/players")
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 393, in get
+    self.execute(Command.GET, {"url": url})
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 382, in execute
+    response = self.command_executor.execute(driver_command, params)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 404, in execute
+    return self._request(command_info[0], url, body=data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 428, in _request
+    response = self._conn.request(method, url, body=body, headers=headers, timeout=self._client_config.timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\_request_methods.py", line 143, in request
+    return self.request_encode_body(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\_request_methods.py", line 278, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\poolmanager.py", line 443, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\http\client.py", line 1376, in getresponse
+    self.close()
+  File "C:\Users\mandy\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connection.py", line 316, in close
+    def close(self) -> None:
+
+KeyboardInterrupt

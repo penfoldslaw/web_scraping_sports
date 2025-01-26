@@ -1,21 +1,20 @@
 home_team,schedule_team,schedule_matchup,DATE,TIME,location
-DEN,PHI,vs Philadelphia,2025-01-21,10:00 PM,home
-DEN,MIN,@ Minnesota,2025-01-25,3:00 PM,away
-DEN,NYK,@ New York,2025-01-29,7:30 PM,away
-DEN,CHA,@ Charlotte,2025-02-01,7:00 PM,away
-DEN,NOP,vs New Orleans,2025-02-05,10:00 PM,home
-DEN,PHX,@ Phoenix,2025-02-08,9:00 PM,away
-DEN,POR,vs Portland,2025-02-12,9:00 PM,home
-DEN,LAL,vs Los Angeles,2025-02-22,8:30 PM,home
-DEN,MIL,@ Milwaukee,2025-02-27,7:30 PM,away
-DEN,BOS,@ Boston,2025-03-02,1:00 PM,away
-DEN,PHX,vs Phoenix,2025-03-07,10:00 PM,home
-DEN,OKC,@ Oklahoma City,2025-03-10,8:00 PM,away
-DEN,LAL,vs Los Angeles,2025-03-14,9:30 PM,home
-DEN,GSW,@ Golden State,2025-03-17,10:00 PM,away
-DEN,POR,@ Portland,2025-03-21,10:00 PM,away
-DEN,CHI,vs Chicago,2025-03-24,9:00 PM,home
-DEN,UTA,vs Utah,2025-03-28,9:00 PM,home
-DEN,SAS,vs San Antonio,2025-04-02,9:00 PM,home
-DEN,IND,vs Indiana,2025-04-06,8:00 PM,home
-DEN,MEM,vs Memphis,2025-04-11,9:00 PM,home
+DEN,SAC,vs Sacramento,2025-01-23,9:00 PM,home
+DEN,CHI,@ Chicago,2025-01-27,8:00 PM,away
+DEN,PHI,@ Philadelphia,2025-01-31,7:30 PM,away
+DEN,NOP,vs New Orleans,2025-02-03,9:00 PM,home
+DEN,ORL,vs Orlando,2025-02-06,9:00 PM,home
+DEN,POR,vs Portland,2025-02-10,9:00 PM,home
+DEN,CHA,vs Charlotte,2025-02-20,9:00 PM,home
+DEN,IND,@ Indiana,2025-02-24,7:00 PM,away
+DEN,DET,@ Detroit,2025-02-28,7:00 PM,away
+DEN,SAC,vs Sacramento,2025-03-05,9:00 PM,home
+DEN,OKC,@ Oklahoma City,2025-03-09,1:00 PM,away
+DEN,MIN,vs Minnesota,2025-03-12,10:00 PM,home
+DEN,WAS,vs Washington,2025-03-15,9:00 PM,home
+DEN,LAL,@ Los Angeles,2025-03-19,10:00 PM,away
+DEN,HOU,@ Houston,2025-03-23,7:00 PM,away
+DEN,MIL,vs Milwaukee,2025-03-26,9:00 PM,home
+DEN,MIN,vs Minnesota,2025-04-01,10:00 PM,home
+DEN,GSW,@ Golden State,2025-04-04,10:00 PM,away
+DEN,SAC,@ Sacramento,2025-04-09,10:00 PM,away

@@ -1,23 +1,22 @@
 home_team,schedule_team,schedule_matchup,DATE,TIME,location
-CHA,DAL,vs Dallas,2025-01-20,LIVE,home
-CHA,POR,vs Portland,2025-01-24,7:00 PM,home
-CHA,LAL,vs Los Angeles,2025-01-27,7:00 PM,home
-CHA,LAC,vs LA,2025-01-31,7:00 PM,home
-CHA,WAS,vs Washington,2025-02-03,7:00 PM,home
-CHA,SAS,vs San Antonio,2025-02-07,7:00 PM,home
-CHA,BKN,@ Brooklyn,2025-02-10,7:30 PM,away
-CHA,LAL,@ Los Angeles,2025-02-19,10:00 PM,away
-CHA,POR,@ Portland,2025-02-22,10:00 PM,away
-CHA,GSW,@ Golden State,2025-02-25,10:00 PM,away
-CHA,WAS,vs Washington,2025-03-01,6:00 PM,home
-CHA,MIN,vs Minnesota,2025-03-05,7:00 PM,home
-CHA,BKN,vs Brooklyn,2025-03-08,6:00 PM,home
-CHA,ATL,@ Atlanta,2025-03-12,7:30 PM,away
-CHA,LAC,@ LA,2025-03-16,7:00 PM,away
-CHA,NYK,vs New York,2025-03-20,7:00 PM,home
-CHA,MIA,@ Miami,2025-03-23,6:00 PM,away
-CHA,TOR,@ Toronto,2025-03-28,7:30 PM,away
-CHA,UTA,vs Utah,2025-03-31,7:00 PM,home
-CHA,SAC,vs Sacramento,2025-04-04,7:00 PM,home
-CHA,MEM,vs Memphis,2025-04-08,7:00 PM,home
-CHA,BOS,@ Boston,2025-04-11,7:30 PM,away
+CHA,MEM,@ Memphis,2025-01-22,8:00 PM,away
+CHA,NOP,vs New Orleans,2025-01-25,7:00 PM,home
+CHA,BKN,vs Brooklyn,2025-01-29,7:00 PM,home
+CHA,DEN,vs Denver,2025-02-01,7:00 PM,home
+CHA,MIL,vs Milwaukee,2025-02-05,7:00 PM,home
+CHA,DET,@ Detroit,2025-02-09,1:00 PM,away
+CHA,ORL,@ Orlando,2025-02-12,7:00 PM,away
+CHA,DEN,@ Denver,2025-02-20,9:00 PM,away
+CHA,SAC,@ Sacramento,2025-02-24,10:00 PM,away
+CHA,DAL,@ Dallas,2025-02-27,8:30 PM,away
+CHA,GSW,vs Golden State,2025-03-03,7:00 PM,home
+CHA,CLE,vs Cleveland,2025-03-07,7:00 PM,home
+CHA,MIA,@ Miami,2025-03-10,7:30 PM,away
+CHA,SAS,@ San Antonio,2025-03-14,8:00 PM,away
+CHA,ATL,vs Atlanta,2025-03-18,7:00 PM,home
+CHA,OKC,@ Oklahoma City,2025-03-21,8:00 PM,away
+CHA,ORL,vs Orlando,2025-03-25,7:00 PM,home
+CHA,NOP,@ New Orleans,2025-03-30,7:00 PM,away
+CHA,IND,@ Indiana,2025-04-02,7:00 PM,away
+CHA,CHI,vs Chicago,2025-04-06,1:00 PM,home
+CHA,TOR,@ Toronto,2025-04-09,7:30 PM,away

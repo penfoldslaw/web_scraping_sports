@@ -127,8 +127,8 @@ def create_dataframe(relative_path, csv_path):
 if __name__ == "__main__":
     import sys
     log_file_path = "current_parser.log"
-    sys.stdout = open(log_file_path, "w")
-    sys.stderr = open(log_file_path, "w")
+    sys.stdout = open(log_file_path, "a")
+    sys.stderr = open(log_file_path, "a")
 
     # create_dataframe(r'nba_historic\nba_html_2019', r'nba_historic_csv\all_quarters')
     # create_dataframe(r'nba_historic\nba_html_2019\quarter_data\q1', r'nba_historic_csv\quarter_data\q1' )

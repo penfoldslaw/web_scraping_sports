@@ -1,21 +1,20 @@
 home_team,schedule_team,schedule_matchup,DATE,TIME,location
-DAL,CHA,@ Charlotte,2025-01-20,LIVE,away
-DAL,OKC,@ Oklahoma City,2025-01-23,8:00 PM,away
-DAL,WAS,vs Washington,2025-01-27,8:30 PM,home
-DAL,DET,@ Detroit,2025-01-31,7:00 PM,away
-DAL,PHI,@ Philadelphia,2025-02-04,7:00 PM,away
-DAL,HOU,vs Houston,2025-02-08,3:00 PM,home
-DAL,GSW,vs Golden State,2025-02-12,9:30 PM,home
-DAL,NOP,vs New Orleans,2025-02-21,9:30 PM,home
-DAL,LAL,@ Los Angeles,2025-02-25,10:00 PM,away
-DAL,MIL,vs Milwaukee,2025-03-01,8:30 PM,home
-DAL,MIL,@ Milwaukee,2025-03-05,9:30 PM,away
-DAL,PHX,vs Phoenix,2025-03-09,3:30 PM,home
-DAL,SAS,@ San Antonio,2025-03-12,8:00 PM,away
-DAL,PHI,vs Philadelphia,2025-03-16,1:00 PM,home
-DAL,DET,vs Detroit,2025-03-21,8:30 PM,home
-DAL,NYK,@ New York,2025-03-25,7:30 PM,away
-DAL,CHI,@ Chicago,2025-03-29,8:00 PM,away
-DAL,ATL,vs Atlanta,2025-04-02,8:30 PM,home
-DAL,LAC,@ LA,2025-04-05,10:30 PM,away
-DAL,TOR,vs Toronto,2025-04-11,8:30 PM,home
+DAL,MIN,vs Minnesota,2025-01-22,7:30 PM,home
+DAL,BOS,vs Boston,2025-01-25,5:30 PM,home
+DAL,NOP,@ New Orleans,2025-01-29,8:00 PM,away
+DAL,CLE,@ Cleveland,2025-02-02,3:30 PM,away
+DAL,BOS,@ Boston,2025-02-06,7:30 PM,away
+DAL,SAC,vs Sacramento,2025-02-10,8:30 PM,home
+DAL,MIA,vs Miami,2025-02-13,8:30 PM,home
+DAL,GSW,@ Golden State,2025-02-23,3:30 PM,away
+DAL,CHA,vs Charlotte,2025-02-27,8:30 PM,home
+DAL,SAC,vs Sacramento,2025-03-03,8:30 PM,home
+DAL,MEM,vs Memphis,2025-03-07,7:30 PM,home
+DAL,SAS,@ San Antonio,2025-03-10,8:30 PM,away
+DAL,HOU,@ Houston,2025-03-14,8:00 PM,away
+DAL,IND,@ Indiana,2025-03-19,7:00 PM,away
+DAL,BKN,@ Brooklyn,2025-03-24,7:30 PM,away
+DAL,ORL,@ Orlando,2025-03-27,7:00 PM,away
+DAL,BKN,vs Brooklyn,2025-03-31,8:30 PM,home
+DAL,LAC,@ LA,2025-04-04,10:30 PM,away
+DAL,LAL,vs Los Angeles,2025-04-09,7:30 PM,home

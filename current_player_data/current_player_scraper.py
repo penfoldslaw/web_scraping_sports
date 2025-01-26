@@ -46,7 +46,7 @@ driver = webdriver.Firefox(service=service,options=firefox_options)
 
 
 @retry(stop=stop_after_attempt(3), wait=wait_fixed(2))
-def scrape_data(player,season,main_folder,folder_year):
+def scrape_data(player,season,main_folder,folder_year,quarter_data='yes'):
     driver.get("https://www.nba.com/players")
     time.sleep(2)
 
@@ -109,39 +109,41 @@ def scrape_data(player,season,main_folder,folder_year):
     print(f"All quarters printed {season} {player}")
     # advance stats  
 
-    if not current_url.endswith("/boxscores-traditional"):
-        updated_url = current_url + f"/boxscores-traditional?Season={season}"
-        driver.get(updated_url)  # Navigate to the updated URL
-
-    driver.execute_script("window.scrollBy(0, 500);") 
-    time.sleep(2)
-
-    xpath_quarters=["1","2","3","4"]
-    
-    folder_quarter_data = ["q1","q2", "q3", "q4"]
-    
-    for nba_quarter, folder_name in zip(xpath_quarters, folder_quarter_data):
-        print(f"Processing: period {nba_quarter}, {folder_name}")
-
-        if not current_url.endswith(f"/boxscores-traditional?Season={season}"):
-            updated_url = current_url + f"/boxscores-traditional?Season={season}&Period={nba_quarter}"
+    if quarter_data == 'yes':
+        if not current_url.endswith("/boxscores-traditional"):
+            updated_url = current_url + f"/boxscores-traditional?Season={season}"
             driver.get(updated_url)  # Navigate to the updated URL
+
+        driver.execute_script("window.scrollBy(0, 500);") 
         time.sleep(2)
 
-        driver.execute_script("window.scrollBy(0, 500);")
+        xpath_quarters=["1","2","3","4"]
+        
+        folder_quarter_data = ["q1","q2", "q3", "q4"]
+        
+        for nba_quarter, folder_name in zip(xpath_quarters, folder_quarter_data):
+            print(f"Processing: period {nba_quarter}, {folder_name}")
 
-        time.sleep(1) 
+            if not current_url.endswith(f"/boxscores-traditional?Season={season}"):
+                updated_url = current_url + f"/boxscores-traditional?Season={season}&Period={nba_quarter}"
+                driver.get(updated_url)  # Navigate to the updated URL
+            time.sleep(2)
 
-        page_html = driver.page_source
+            driver.execute_script("window.scrollBy(0, 500);")
+
+            time.sleep(1) 
+
+            page_html = driver.page_source
 
 
-        # Save the HTML to a file
-        which_q_folder = folder_name
-        folder = os.path.join(main_folder, f"nba_html_{folder_year}", "quarter_data", which_q_folder)
-        os.makedirs(folder, exist_ok=True)
-        file_path = os.path.join(folder, f"{player}_content_{which_q_folder}.html")
-        with open(file_path, "w", encoding="utf-8") as file:
-            file.write(page_html)
+            # Save the HTML to a file
+            which_q_folder = folder_name
+            folder = os.path.join(main_folder, f"nba_html_{folder_year}", "quarter_data", which_q_folder)
+            os.makedirs(folder, exist_ok=True)
+            file_path = os.path.join(folder, f"{player}_content_{which_q_folder}.html")
+            with open(file_path, "w", encoding="utf-8") as file:
+                file.write(page_html)
+
 
 
 
@@ -176,9 +178,10 @@ if __name__ == "__main__":
     season = sys.argv[2]
     main_folder = sys.argv[3]
     folder_year = sys.argv[4]
+    quarter_data = sys.argv[5] if len(sys.argv) > 5 else 'no'
 
     try:
-        scrape_data(player,season,main_folder,folder_year)
+        scrape_data(player,season,main_folder,folder_year,quarter_data)
         driver.quit()
 
     except Exception as e:

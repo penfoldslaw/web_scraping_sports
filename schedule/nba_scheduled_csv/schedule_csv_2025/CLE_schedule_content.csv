@@ -1,21 +1,21 @@
 home_team,schedule_team,schedule_matchup,DATE,TIME,location
-CLE,PHX,vs Phoenix,2025-01-20,3:30 PM,home
-CLE,PHI,@ Philadelphia,2025-01-24,7:00 PM,away
-CLE,DET,vs Detroit,2025-01-27,7:00 PM,home
-CLE,ATL,vs Atlanta,2025-01-30,7:00 PM,home
-CLE,BOS,vs Boston,2025-02-04,7:30 PM,home
-CLE,WAS,@ Washington,2025-02-07,7:00 PM,away
-CLE,TOR,@ Toronto,2025-02-12,7:30 PM,away
-CLE,NYK,vs New York,2025-02-21,7:00 PM,home
-CLE,ORL,@ Orlando,2025-02-25,7:30 PM,away
-CLE,POR,vs Portland,2025-03-02,3:30 PM,home
-CLE,MIA,vs Miami,2025-03-05,7:00 PM,home
-CLE,MIL,@ Milwaukee,2025-03-09,8:00 PM,away
-CLE,MEM,@ Memphis,2025-03-14,8:00 PM,away
-CLE,LAC,@ LA,2025-03-18,10:30 PM,away
-CLE,PHX,@ Phoenix,2025-03-21,10:00 PM,away
-CLE,POR,@ Portland,2025-03-25,10:00 PM,away
-CLE,DET,@ Detroit,2025-03-28,7:00 PM,away
-CLE,NYK,vs New York,2025-04-02,7:00 PM,home
-CLE,SAC,vs Sacramento,2025-04-06,6:00 PM,home
-CLE,IND,@ Indiana,2025-04-10,7:00 PM,away
+CLE,HOU,@ Houston,2025-01-22,8:00 PM,away
+CLE,HOU,vs Houston,2025-01-25,7:30 PM,home
+CLE,MIA,@ Miami,2025-01-29,7:30 PM,away
+CLE,DAL,vs Dallas,2025-02-02,3:30 PM,home
+CLE,DET,@ Detroit,2025-02-05,7:00 PM,away
+CLE,MIN,vs Minnesota,2025-02-10,7:00 PM,home
+CLE,BKN,@ Brooklyn,2025-02-20,7:30 PM,away
+CLE,MEM,vs Memphis,2025-02-23,7:30 PM,home
+CLE,BOS,@ Boston,2025-02-28,7:30 PM,away
+CLE,CHI,@ Chicago,2025-03-04,8:00 PM,away
+CLE,CHA,@ Charlotte,2025-03-07,7:00 PM,away
+CLE,BKN,vs Brooklyn,2025-03-11,7:00 PM,home
+CLE,ORL,vs Orlando,2025-03-16,6:00 PM,home
+CLE,SAC,@ Sacramento,2025-03-19,10:00 PM,away
+CLE,UTA,@ Utah,2025-03-23,3:30 PM,away
+CLE,SAS,vs San Antonio,2025-03-27,7:00 PM,home
+CLE,LAC,vs LA,2025-03-30,3:30 PM,home
+CLE,SAS,@ San Antonio,2025-04-04,8:00 PM,away
+CLE,CHI,vs Chicago,2025-04-08,7:00 PM,home
+CLE,NYK,@ New York,2025-04-11,7:30 PM,away

@@ -1,21 +1,21 @@
 home_team,schedule_team,schedule_matchup,DATE,TIME,location
-ATL,NYK,@ New York,2025-01-20,3:00 PM,away
-ATL,TOR,vs Toronto,2025-01-23,7:30 PM,home
-ATL,MIN,@ Minnesota,2025-01-27,8:00 PM,away
-ATL,CLE,@ Cleveland,2025-01-30,7:00 PM,away
-ATL,DET,@ Detroit,2025-02-03,7:00 PM,away
-ATL,MIL,vs Milwaukee,2025-02-07,7:30 PM,home
-ATL,ORL,@ Orlando,2025-02-10,7:00 PM,away
-ATL,ORL,vs Orlando,2025-02-20,7:30 PM,home
-ATL,MIA,vs Miami,2025-02-24,7:30 PM,home
-ATL,OKC,vs Oklahoma City,2025-02-28,7:30 PM,home
-ATL,MIL,vs Milwaukee,2025-03-04,7:30 PM,home
-ATL,IND,vs Indiana,2025-03-08,7:30 PM,home
-ATL,CHA,vs Charlotte,2025-03-12,7:30 PM,home
-ATL,BKN,@ Brooklyn,2025-03-16,6:00 PM,away
-ATL,GSW,vs Golden State,2025-03-22,7:00 PM,home
-ATL,HOU,@ Houston,2025-03-25,8:00 PM,away
-ATL,MIL,@ Milwaukee,2025-03-30,7:00 PM,away
-ATL,DAL,@ Dallas,2025-04-02,8:30 PM,away
-ATL,UTA,vs Utah,2025-04-06,6:00 PM,home
-ATL,BKN,@ Brooklyn,2025-04-10,7:30 PM,away
+ATL,DET,vs Detroit,2025-01-22,7:30 PM,home
+ATL,TOR,vs Toronto,2025-01-25,7:30 PM,home
+ATL,HOU,vs Houston,2025-01-28,7:30 PM,home
+ATL,IND,@ Indiana,2025-02-01,5:00 PM,away
+ATL,SAS,vs San Antonio,2025-02-05,7:30 PM,home
+ATL,WAS,@ Washington,2025-02-08,7:00 PM,away
+ATL,NYK,@ New York,2025-02-12,7:30 PM,away
+ATL,DET,vs Detroit,2025-02-23,6:00 PM,home
+ATL,MIA,@ Miami,2025-02-26,7:30 PM,away
+ATL,MEM,@ Memphis,2025-03-03,8:00 PM,away
+ATL,IND,vs Indiana,2025-03-06,7:30 PM,home
+ATL,PHI,vs Philadelphia,2025-03-10,7:30 PM,home
+ATL,LAC,vs LA,2025-03-14,7:30 PM,home
+ATL,CHA,@ Charlotte,2025-03-18,7:00 PM,away
+ATL,PHI,vs Philadelphia,2025-03-23,6:00 PM,home
+ATL,MIA,@ Miami,2025-03-27,7:30 PM,away
+ATL,POR,vs Portland,2025-04-01,7:30 PM,home
+ATL,NYK,vs New York,2025-04-05,3:00 PM,home
+ATL,ORL,@ Orlando,2025-04-08,7:00 PM,away
+ATL,PHI,@ Philadelphia,2025-04-11,7:00 PM,away

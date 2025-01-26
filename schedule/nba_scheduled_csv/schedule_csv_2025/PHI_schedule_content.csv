@@ -1,21 +1,21 @@
 home_team,schedule_team,schedule_matchup,DATE,TIME,location
-PHI,DEN,@ Denver,2025-01-21,10:00 PM,away
-PHI,CHI,@ Chicago,2025-01-25,8:00 PM,away
-PHI,SAC,vs Sacramento,2025-01-29,7:30 PM,home
-PHI,BOS,vs Boston,2025-02-02,6:00 PM,home
-PHI,MIA,vs Miami,2025-02-05,7:30 PM,home
-PHI,MIL,@ Milwaukee,2025-02-09,2:00 PM,away
-PHI,BKN,@ Brooklyn,2025-02-12,7:30 PM,away
-PHI,BKN,vs Brooklyn,2025-02-22,7:30 PM,home
-PHI,NYK,@ New York,2025-02-26,7:00 PM,away
-PHI,POR,vs Portland,2025-03-03,7:00 PM,home
-PHI,BOS,@ Boston,2025-03-06,7:30 PM,away
-PHI,ATL,@ Atlanta,2025-03-10,7:30 PM,away
-PHI,IND,vs Indiana,2025-03-14,7:00 PM,home
-PHI,HOU,@ Houston,2025-03-17,8:00 PM,away
-PHI,SAS,@ San Antonio,2025-03-21,8:00 PM,away
-PHI,NOP,@ New Orleans,2025-03-24,8:00 PM,away
-PHI,MIA,vs Miami,2025-03-29,7:30 PM,home
-PHI,NYK,@ New York,2025-04-01,7:30 PM,away
-PHI,MIN,vs Minnesota,2025-04-05,7:00 PM,home
-PHI,WAS,@ Washington,2025-04-09,7:00 PM,away
+PHI,CLE,vs Cleveland,2025-01-24,7:00 PM,home
+PHI,LAL,vs Los Angeles,2025-01-28,7:30 PM,home
+PHI,DEN,vs Denver,2025-01-31,7:30 PM,home
+PHI,DAL,vs Dallas,2025-02-04,7:00 PM,home
+PHI,DET,@ Detroit,2025-02-07,7:30 PM,away
+PHI,TOR,vs Toronto,2025-02-11,7:00 PM,home
+PHI,BOS,vs Boston,2025-02-20,7:00 PM,home
+PHI,CHI,vs Chicago,2025-02-24,7:00 PM,home
+PHI,GSW,vs Golden State,2025-03-01,8:30 PM,home
+PHI,MIN,@ Minnesota,2025-03-04,8:00 PM,away
+PHI,UTA,vs Utah,2025-03-09,7:30 PM,home
+PHI,TOR,@ Toronto,2025-03-12,7:30 PM,away
+PHI,DAL,@ Dallas,2025-03-16,1:00 PM,away
+PHI,OKC,@ Oklahoma City,2025-03-19,8:00 PM,away
+PHI,ATL,@ Atlanta,2025-03-23,6:00 PM,away
+PHI,WAS,vs Washington,2025-03-26,7:00 PM,home
+PHI,TOR,vs Toronto,2025-03-30,7:30 PM,home
+PHI,MIL,vs Milwaukee,2025-04-03,7:30 PM,home
+PHI,MIA,@ Miami,2025-04-07,7:30 PM,away
+PHI,ATL,vs Atlanta,2025-04-11,7:00 PM,home

@@ -1,21 +1,20 @@
 home_team,schedule_team,schedule_matchup,DATE,TIME,location
-MEM,MIN,vs Minnesota,2025-01-20,2:30 PM,home
-MEM,NOP,vs New Orleans,2025-01-24,8:00 PM,home
-MEM,NYK,@ New York,2025-01-27,7:30 PM,away
-MEM,MIL,@ Milwaukee,2025-02-02,8:30 PM,away
-MEM,TOR,@ Toronto,2025-02-05,7:30 PM,away
-MEM,PHX,@ Phoenix,2025-02-11,10:00 PM,away
-MEM,IND,@ Indiana,2025-02-20,7:00 PM,away
-MEM,CLE,@ Cleveland,2025-02-23,7:30 PM,away
-MEM,NYK,vs New York,2025-02-28,8:00 PM,home
-MEM,ATL,vs Atlanta,2025-03-03,8:00 PM,home
-MEM,DAL,@ Dallas,2025-03-07,7:30 PM,away
-MEM,PHX,vs Phoenix,2025-03-10,8:00 PM,home
-MEM,CLE,vs Cleveland,2025-03-14,8:00 PM,home
-MEM,SAC,@ Sacramento,2025-03-17,10:00 PM,away
-MEM,LAC,@ LA,2025-03-21,10:30 PM,away
-MEM,OKC,@ Oklahoma City,2025-03-27,8:00 PM,away
-MEM,BOS,vs Boston,2025-03-31,8:00 PM,home
-MEM,MIA,@ Miami,2025-04-03,7:30 PM,away
-MEM,CHA,@ Charlotte,2025-04-08,7:00 PM,away
-MEM,DEN,@ Denver,2025-04-11,9:00 PM,away
+MEM,CHA,vs Charlotte,2025-01-22,8:00 PM,home
+MEM,UTA,vs Utah,2025-01-25,8:00 PM,home
+MEM,HOU,vs Houston,2025-01-30,9:30 PM,home
+MEM,SAS,vs San Antonio,2025-02-03,8:00 PM,home
+MEM,OKC,vs Oklahoma City,2025-02-08,8:00 PM,home
+MEM,LAC,@ LA,2025-02-12,10:30 PM,away
+MEM,ORL,@ Orlando,2025-02-21,7:00 PM,away
+MEM,PHX,vs Phoenix,2025-02-25,8:00 PM,home
+MEM,SAS,vs San Antonio,2025-03-01,8:00 PM,home
+MEM,OKC,vs Oklahoma City,2025-03-05,8:00 PM,home
+MEM,NOP,@ New Orleans,2025-03-09,7:00 PM,away
+MEM,UTA,vs Utah,2025-03-12,8:00 PM,home
+MEM,MIA,vs Miami,2025-03-15,8:00 PM,home
+MEM,POR,@ Portland,2025-03-19,10:00 PM,away
+MEM,UTA,@ Utah,2025-03-25,9:00 PM,away
+MEM,LAL,vs Los Angeles,2025-03-29,8:00 PM,home
+MEM,GSW,vs Golden State,2025-04-01,8:00 PM,home
+MEM,DET,@ Detroit,2025-04-05,7:00 PM,away
+MEM,MIN,vs Minnesota,2025-04-10,9:30 PM,home

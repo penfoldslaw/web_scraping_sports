@@ -1,20 +1,19 @@
 home_team,schedule_team,schedule_matchup,DATE,TIME,location
-ORL,TOR,@ Toronto,2025-01-21,7:30 PM,away
-ORL,DET,vs Detroit,2025-01-25,7:00 PM,home
-ORL,POR,@ Portland,2025-01-30,10:00 PM,away
-ORL,GSW,@ Golden State,2025-02-03,10:00 PM,away
-ORL,DEN,@ Denver,2025-02-06,9:00 PM,away
-ORL,ATL,vs Atlanta,2025-02-10,7:00 PM,home
-ORL,ATL,@ Atlanta,2025-02-20,7:30 PM,away
-ORL,WAS,vs Washington,2025-02-23,6:00 PM,home
-ORL,GSW,vs Golden State,2025-02-27,7:00 PM,home
-ORL,TOR,vs Toronto,2025-03-04,7:00 PM,home
-ORL,HOU,@ Houston,2025-03-10,8:00 PM,away
-ORL,MIN,@ Minnesota,2025-03-14,8:00 PM,away
-ORL,SAS,@ San Antonio,2025-03-17,8:00 PM,away
-ORL,WAS,@ Washington,2025-03-21,7:00 PM,away
-ORL,CHA,@ Charlotte,2025-03-25,7:00 PM,away
-ORL,SAC,vs Sacramento,2025-03-29,5:00 PM,home
-ORL,WAS,@ Washington,2025-04-03,7:00 PM,away
-ORL,ATL,vs Atlanta,2025-04-08,7:00 PM,home
-ORL,IND,@ Indiana,2025-04-11,7:00 PM,away
+ORL,POR,vs Portland,2025-01-23,7:00 PM,home
+ORL,MIA,@ Miami,2025-01-27,7:30 PM,away
+ORL,UTA,@ Utah,2025-02-01,5:00 PM,away
+ORL,SAC,@ Sacramento,2025-02-05,10:00 PM,away
+ORL,SAS,vs San Antonio,2025-02-08,7:00 PM,home
+ORL,CHA,vs Charlotte,2025-02-12,7:00 PM,home
+ORL,MEM,vs Memphis,2025-02-21,7:00 PM,home
+ORL,CLE,vs Cleveland,2025-02-25,7:30 PM,home
+ORL,TOR,vs Toronto,2025-03-02,6:00 PM,home
+ORL,MIL,@ Milwaukee,2025-03-08,8:00 PM,away
+ORL,CHI,vs Chicago,2025-03-12,7:00 PM,home
+ORL,CLE,@ Cleveland,2025-03-16,6:00 PM,away
+ORL,HOU,vs Houston,2025-03-19,7:00 PM,home
+ORL,LAL,vs Los Angeles,2025-03-24,7:00 PM,home
+ORL,DAL,vs Dallas,2025-03-27,7:00 PM,home
+ORL,LAC,vs LA,2025-03-31,7:00 PM,home
+ORL,NOP,@ New Orleans,2025-04-06,7:00 PM,away
+ORL,BOS,vs Boston,2025-04-09,7:00 PM,home

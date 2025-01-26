@@ -1,21 +1,20 @@
 home_team,schedule_team,schedule_matchup,DATE,TIME,location
-MIN,MEM,@ Memphis,2025-01-20,2:30 PM,away
-MIN,DEN,vs Denver,2025-01-25,3:00 PM,home
-MIN,PHX,@ Phoenix,2025-01-29,9:00 PM,away
-MIN,WAS,vs Washington,2025-02-01,8:00 PM,home
-MIN,CHI,vs Chicago,2025-02-05,8:00 PM,home
-MIN,POR,vs Portland,2025-02-08,8:00 PM,home
-MIN,MIL,vs Milwaukee,2025-02-12,8:00 PM,home
-MIN,HOU,@ Houston,2025-02-21,8:00 PM,away
-MIN,OKC,@ Oklahoma City,2025-02-24,8:00 PM,away
-MIN,UTA,@ Utah,2025-02-28,9:30 PM,away
-MIN,PHI,vs Philadelphia,2025-03-04,8:00 PM,home
-MIN,MIA,@ Miami,2025-03-07,8:00 PM,away
-MIN,DEN,@ Denver,2025-03-12,10:00 PM,away
-MIN,UTA,vs Utah,2025-03-16,7:00 PM,home
-MIN,NOP,vs New Orleans,2025-03-19,7:30 PM,home
-MIN,IND,@ Indiana,2025-03-24,7:00 PM,away
-MIN,DET,vs Detroit,2025-03-30,7:00 PM,home
-MIN,BKN,@ Brooklyn,2025-04-03,7:30 PM,away
-MIN,MIL,@ Milwaukee,2025-04-08,8:00 PM,away
-MIN,BKN,vs Brooklyn,2025-04-11,9:00 PM,home
+MIN,DAL,@ Dallas,2025-01-22,7:30 PM,away
+MIN,ATL,vs Atlanta,2025-01-27,8:00 PM,home
+MIN,UTA,@ Utah,2025-01-30,9:00 PM,away
+MIN,SAC,vs Sacramento,2025-02-03,8:00 PM,home
+MIN,HOU,vs Houston,2025-02-06,8:00 PM,home
+MIN,CLE,@ Cleveland,2025-02-10,7:00 PM,away
+MIN,OKC,vs Oklahoma City,2025-02-13,8:30 PM,home
+MIN,OKC,vs Oklahoma City,2025-02-23,9:30 PM,home
+MIN,LAL,@ Los Angeles,2025-02-27,10:30 PM,away
+MIN,PHX,@ Phoenix,2025-03-02,9:30 PM,away
+MIN,CHA,@ Charlotte,2025-03-05,7:00 PM,away
+MIN,SAS,vs San Antonio,2025-03-09,8:00 PM,home
+MIN,ORL,vs Orlando,2025-03-14,8:00 PM,home
+MIN,IND,vs Indiana,2025-03-17,8:00 PM,home
+MIN,NOP,vs New Orleans,2025-03-21,8:00 PM,home
+MIN,PHX,vs Phoenix,2025-03-28,8:00 PM,home
+MIN,DEN,@ Denver,2025-04-01,10:00 PM,away
+MIN,PHI,@ Philadelphia,2025-04-05,7:00 PM,away
+MIN,MEM,@ Memphis,2025-04-10,9:30 PM,away

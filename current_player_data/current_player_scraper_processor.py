@@ -155,6 +155,14 @@
 
 
 
+PHI = ['Tyrese Maxey', 'Joel Embiid', 'Paul Geroge']
+DEN = ['Nikola Jokic', 'Jamal Murray', 'Michael Porter Jr']
+
+WAS = ['Jordan Poole', 'Kyle Kuzma', 'Malcolm Brogdon']
+LAL = ['Anthony Davis', 'LeBron James', 'Austin Reaves']
+
+
+
 import subprocess
 import sys
 
@@ -163,7 +171,15 @@ def run_script(player, season, main_folder, year):
 
 if __name__ == "__main__":
 
-    players = ['Nikola Vučević']
+    players = [
+    'Anthony Edwards',
+    'Kyrie Irving',
+    'Julius Randle',
+    'Klay Thompson',
+    'P.J. Washington',
+    'Jaden McDaniels',
+    'Rudy Gobert']
+    
     # players =[
     #     'Nikola Vučević','Norman Powel', 'James Harden','Giannis Antetokounmpo','Kawhi Leonard','Luka Doncic','LeBron James','Damian Lillard',
     #     'Karl-Anthony Towns','Trae Young','Anthony Davis','Russell Westbrook','Bradley Beal','Kyrie Irving','Nikola Jokic',

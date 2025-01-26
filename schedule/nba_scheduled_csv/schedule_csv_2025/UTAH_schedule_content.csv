@@ -1,22 +1,21 @@
 home_team,schedule_team,schedule_matchup,DATE,TIME,location
-UTA,NOP,@ New Orleans,2025-01-20,8:00 PM,away
-UTA,MEM,@ Memphis,2025-01-25,8:00 PM,away
-UTA,GSW,@ Golden State,2025-01-28,10:00 PM,away
-UTA,ORL,vs Orlando,2025-02-01,5:00 PM,home
-UTA,GSW,vs Golden State,2025-02-05,9:00 PM,home
-UTA,LAC,@ LA,2025-02-08,10:30 PM,away
-UTA,LAL,vs Los Angeles,2025-02-12,9:00 PM,home
-UTA,OKC,vs Oklahoma City,2025-02-21,9:30 PM,home
-UTA,POR,vs Portland,2025-02-24,9:00 PM,home
-UTA,MIN,vs Minnesota,2025-02-28,9:30 PM,home
-UTA,DET,vs Detroit,2025-03-03,9:30 PM,home
-UTA,TOR,@ Toronto,2025-03-07,7:30 PM,away
-UTA,BOS,@ Boston,2025-03-10,7:30 PM,away
-UTA,TOR,vs Toronto,2025-03-14,9:30 PM,home
-UTA,CHI,vs Chicago,2025-03-17,9:00 PM,home
-UTA,BOS,vs Boston,2025-03-21,9:30 PM,home
-UTA,MEM,vs Memphis,2025-03-25,9:00 PM,home
-UTA,DEN,@ Denver,2025-03-28,9:00 PM,away
-UTA,HOU,@ Houston,2025-04-02,8:00 PM,away
-UTA,ATL,@ Atlanta,2025-04-06,6:00 PM,away
-UTA,OKC,vs Oklahoma City,2025-04-11,9:30 PM,home
+UTA,OKC,@ Oklahoma City,2025-01-22,8:00 PM,away
+UTA,MIL,vs Milwaukee,2025-01-27,9:00 PM,home
+UTA,MIN,vs Minnesota,2025-01-30,9:00 PM,home
+UTA,IND,vs Indiana,2025-02-03,9:00 PM,home
+UTA,PHX,@ Phoenix,2025-02-07,10:00 PM,away
+UTA,LAL,@ Los Angeles,2025-02-10,10:30 PM,away
+UTA,LAC,vs LA,2025-02-13,9:00 PM,home
+UTA,HOU,vs Houston,2025-02-22,9:30 PM,home
+UTA,SAC,vs Sacramento,2025-02-26,9:00 PM,home
+UTA,NOP,vs New Orleans,2025-03-02,8:00 PM,home
+UTA,WAS,@ Washington,2025-03-05,7:00 PM,away
+UTA,PHI,@ Philadelphia,2025-03-09,7:30 PM,away
+UTA,MEM,@ Memphis,2025-03-12,8:00 PM,away
+UTA,MIN,@ Minnesota,2025-03-16,7:00 PM,away
+UTA,WAS,vs Washington,2025-03-19,9:00 PM,home
+UTA,CLE,vs Cleveland,2025-03-23,3:30 PM,home
+UTA,HOU,vs Houston,2025-03-27,9:00 PM,home
+UTA,CHA,@ Charlotte,2025-03-31,7:00 PM,away
+UTA,IND,@ Indiana,2025-04-04,7:00 PM,away
+UTA,POR,vs Portland,2025-04-09,9:00 PM,home

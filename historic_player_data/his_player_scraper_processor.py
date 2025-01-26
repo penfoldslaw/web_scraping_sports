@@ -154,6 +154,29 @@
 #     asyncio.run(main())
 
 
+BYK = ['Cam Thomas', 'Cameron Johnson', "D'Angelo Russell"]
+NYK = ['Jalen Brunson', 'Karl-Anthony Towns', 'Mikal Bridges']
+
+POR = ['Shaedon Sharpe', 'Anfernee Simons', 'Jerami Grant']
+MIA = ['Tyler Herro', 'Jimmy Butler', 'Bam Adebayo']
+
+TOR = ['RJ Barrett', 'Scottie Barnes', 'Immanuel Quickely']
+ORL = ['Paolo Banchero', 'Franz Wagner', 'Jalen Suggs']
+
+PHI = ['Tyrese Maxey', 'Joel Embiid', 'Paul Geroge']
+DEN = ['Nikola Jokic', 'Jamal Murray', 'Michael Porter Jr']
+
+WAS = ['Jordan Poole', 'Kyle Kuzma', 'Malcolm Brogdon']
+LAL = ['Anthony Davis', 'LeBron James', 'Austin Reaves']
+
+OKC = ['Shai Gilgeous-Alexander', 'Cason Wallace', 'Alex Caruso', 'Jalen Williams', 'Isaiah Hartenstein']
+
+
+
+
+
+
+
 
 import subprocess
 import sys
@@ -162,14 +185,7 @@ def run_script(player, season, main_folder, year):
     subprocess.run([sys.executable, "his_player_scraper.py", player, season, main_folder, year])
 
 if __name__ == "__main__":
-    players =[
-        'Nikola Vučević','Norman Powell','James Harden','Giannis Antetokounmpo','Kawhi Leonard','Luka Doncic','LeBron James','Damian Lillard',
-        'Karl-Anthony Towns','Trae Young','Anthony Davis','Russell Westbrook','Bradley Beal','Kyrie Irving','Nikola Jokic',
-        'Devin Booker','Joel Embiid','John Collins','Domantas Sabonis','Andre Drummond','Nikola Vucevic','DeMar DeRozan',
-        'Jusuf Nurkic','Zach LaVine','Ben Simmons','Brandon Ingram','Jayson Tatum','Jimmy Butler','Pascal Siakam','DAngelo Russell',
-        'Deandre Ayton','Kyle Lowry','Bam Adebayo','Stephen Curry','Khris Middleton','Kristaps Porzingis','Donovan Mitchell',
-        'Rudy Gobert','DeAaron Fox','Jrue Holiday','Paul George','Chris Paul','CJ McCollum','Clint Capela','Zion Williamson','LaMarcus Aldridge',
-        'Julius Randle','Andrew Wiggins','Tobias Harris','Kevin Love','Spencer Dinwiddie' ]
+    players = ['Shai Gilgeous-Alexander', 'Cason Wallace', 'Alex Caruso', 'Jalen Williams', 'Isaiah Hartenstein']
     
 
     seasons = ["2019-20", "2020-21", "2021-22", "2022-23", "2023-24"]

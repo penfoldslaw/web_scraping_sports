@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "C:\Users\mandy\Documents\Github\web_scraping_sports\current_usage_data\current_usage_parser.py", line 96, in <module>
+    create_dataframe(sub_folder, csv_sub_folder)
+  File "C:\Users\mandy\Documents\Github\web_scraping_sports\current_usage_data\current_usage_parser.py", line 8, in create_dataframe
+    for filename in os.listdir(folder_path):
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'nba_usage_current/nba_html_2024-25'
+Traceback (most recent call last):
+  File "C:\Users\mandy\Documents\Github\web_scraping_sports\current_usage_data\current_usage_parser.py", line 96, in <module>
+    create_dataframe(sub_folder, csv_sub_folder)
+  File "C:\Users\mandy\Documents\Github\web_scraping_sports\current_usage_data\current_usage_parser.py", line 8, in create_dataframe
+    for filename in os.listdir(folder_path):
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'D:/nba_usage_current/nba_html_2024-25'
+Traceback (most recent call last):
+  File "C:\Users\mandy\Documents\Github\web_scraping_sports\current_usage_data\current_usage_parser.py", line 96, in <module>
+    create_dataframe(sub_folder, csv_sub_folder)
+  File "C:\Users\mandy\Documents\Github\web_scraping_sports\current_usage_data\current_usage_parser.py", line 8, in create_dataframe
+    for filename in os.listdir(folder_path):
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'D:/nba_usage_current/nba_html_2024-25'
+Contents of 2024-25_content
+524

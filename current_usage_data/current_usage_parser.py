@@ -3,7 +3,7 @@ import os
 from IPython.display import display
 
 def create_dataframe(relative_path, csv_sub_folder):
-    folder_path = f"nba_usage_current/{relative_path}"  #f"schedule/nba_schedules/nba_html_{year}"            #nba_html_2019-20 
+    folder_path = f"D:/nba_usage_current/{relative_path}"  #f"schedule/nba_schedules/nba_html_{year}"            #nba_html_2019-20 
 
     for filename in os.listdir(folder_path):
         file_path = os.path.join(folder_path, filename)

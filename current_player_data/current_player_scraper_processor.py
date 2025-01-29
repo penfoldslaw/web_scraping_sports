@@ -171,15 +171,7 @@ def run_script(player, season, main_folder, year):
 
 if __name__ == "__main__":
 
-    players = [
-    'Anthony Edwards',
-    'Kyrie Irving',
-    'Julius Randle',
-    'Klay Thompson',
-    'P.J. Washington',
-    'Jaden McDaniels',
-    'Rudy Gobert']
-    
+    players = ['Shai Gilgeous-Alexander', 'Cason Wallace', 'Alex Caruso', 'Jalen Williams', 'Isaiah Hartenstein']
     # players =[
     #     'Nikola Vučević','Norman Powel', 'James Harden','Giannis Antetokounmpo','Kawhi Leonard','Luka Doncic','LeBron James','Damian Lillard',
     #     'Karl-Anthony Towns','Trae Young','Anthony Davis','Russell Westbrook','Bradley Beal','Kyrie Irving','Nikola Jokic',
@@ -191,7 +183,7 @@ if __name__ == "__main__":
     
 
     seasons = ["2024-25"]
-    main_folder = "nba_player_current"
+    main_folder = "D:/nba_player_current"
     years = ["2024-25"] #old logic was to use the same year for all seasons keeping it because it is not clear if the year is used for anything else
     
     for player in players:

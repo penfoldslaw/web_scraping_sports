@@ -189,7 +189,7 @@ if __name__ == "__main__":
     
 
     seasons = ["2019-20", "2020-21", "2021-22", "2022-23", "2023-24"]
-    main_folder = "nba_player_historic"
+    main_folder = "D:/nba_player_historic"
     years = ["2019-20", "2020-21", "2021-22", "2022-23", "2023-24"] #old logic was to use the same year for all seasons keeping it because it is not clear if the year is used for anything else
     
     for player in players:

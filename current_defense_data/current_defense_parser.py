@@ -107,7 +107,7 @@ def defense_parser(sub_folder, csv_sub_folder):
             df[columns_to_convert] = df[columns_to_convert].apply(pd.to_numeric, errors='coerce')
 
             #save to csv
-            path = f'nba_dh_csv/{csv_sub_folder}'
+            path = f'D:/nba_dh_csv_current/{csv_sub_folder}'
             csv_path = path
             os.makedirs(csv_path, exist_ok=True)
             df.to_csv(f"{csv_path}/{modified_filename}.csv", index=False)

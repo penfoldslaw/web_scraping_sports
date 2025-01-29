@@ -10,18 +10,18 @@ if __name__ == "__main__":
     seasons = ["2019-20","2020-21","2021-22", "2022-23", "2023-24"]
     for season in seasons:
         relative_path = [
-            r"nba_player_historic\nba_html_{season}".format(season=season), 
-            r"nba_player_historic\nba_html_{season}\quarter_data\q1".format(season=season), 
-            r"nba_player_historic\nba_html_{season}\quarter_data\q2".format(season=season), 
-            r"nba_player_historic\nba_html_{season}\quarter_data\q3".format(season=season), 
-            r"nba_player_historic\nba_html_{season}\quarter_data\q4".format(season=season)]
+            r"D:\nba_player_historic\nba_html_{season}".format(season=season), 
+            r"D:\nba_player_historic\nba_html_{season}\quarter_data\q1".format(season=season), 
+            r"D:\nba_player_historic\nba_html_{season}\quarter_data\q2".format(season=season), 
+            r"D:\nba_player_historic\nba_html_{season}\quarter_data\q3".format(season=season), 
+            r"D:\nba_player_historic\nba_html_{season}\quarter_data\q4".format(season=season)]
         
         csv_path = [
-            r"nba_ph_csv\season_{season}\all_quarters".format(season=season), 
-            r"nba_ph_csv\season_{season}\quarter_data\q1".format(season=season), 
-            r"nba_ph_csv\season_{season}\quarter_data\q2".format(season=season), 
-            r"nba_ph_csv\season_{season}\quarter_data\q3".format(season=season), 
-            r"nba_ph_csv\season_{season}\quarter_data\q4".format(season=season)]
+            r"D:\nba_ph_csv_historic\season_{season}\all_quarters".format(season=season), 
+            r"D:\nba_ph_csv_historic\season_{season}\quarter_data\q1".format(season=season), 
+            r"D:\nba_ph_csv_historic\season_{season}\quarter_data\q2".format(season=season), 
+            r"D:\nba_ph_csv_historic\season_{season}\quarter_data\q3".format(season=season), 
+            r"D:\nba_ph_csv_historic\season_{season}\quarter_data\q4".format(season=season)]
     
         threads = []
         for r_folder, csv__folder in zip(relative_path, csv_path):

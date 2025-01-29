@@ -12,6 +12,8 @@ from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
 from tenacity import retry, stop_after_attempt, wait_fixed
+from selenium.webdriver.support.ui import Select
+
 
 service = Service(executable_path="../firefox_drive/geckodriver.exe", log_path="geckodriver.log")
 #driver = webdriver.Firefox(service=service)
@@ -30,8 +32,8 @@ service = Service(executable_path="../firefox_drive/geckodriver.exe", log_path="
 
 #  Firefox options
 firefox_options = Options()
-firefox_options.add_argument("--headless")  # Run in headless mode if needed
-#firefox_options.add_argument("--start-maximized")  # Run in headless mode if needed
+#firefox_options.add_argument("--headless")  # Run in headless mode if needed
+firefox_options.add_argument("--start-maximized")  # Run in headless mode if needed
 
 # Initialize the Firefox WebDriver
 driver = webdriver.Firefox(service=service,options=firefox_options)
@@ -43,26 +45,56 @@ driver = webdriver.Firefox(service=service,options=firefox_options)
 # )
 
 
-def schedule_scraper(team,year):
-    driver.get(f"https://www.espn.com/nba/team/schedule/_/name/{team}/season/{year}")
-    time.sleep(3)
 
+
+@retry(stop=stop_after_attempt(3), wait=wait_fixed(2))
+def scrape_data(season,main_folder,folder_year):
+
+    driver.get(f"https://www.nba.com/stats/players/usage?dir=A&sort=USG_PCT&Season={season}")
+    time.sleep(2)
+
+
+    # # After the player name has been searched this clicks the player note that this has only been tested for one player coming up not multiple
+    all_link = driver.find_element(By.XPATH, "//*[@id='__next']/div[2]/div[2]/div[3]/section[2]/div/div[2]/div[2]/div[1]/div[3]/div/label/div/select")
+    #all_link.click()  # This simulates a click
+
+    # Create a Select object
+    select = Select(all_link)
+
+    # Select the "All" option by visible text
+    select.select_by_visible_text("All")
+
+    time.sleep(2)
+
+    driver.execute_script("window.scrollBy(0, 500);")
+
+    time.sleep(2)
+
+
+    # Extract the entire HTML page
     page_html = driver.page_source
 
-    folder = os.path.join("D:/nba_schedules", f"nba_html_{year}")
-    file_path = os.path.join(folder, f"{team}_schedule_content.html")
+
+    # Save the HTML to a file
+    folder = os.path.join(main_folder, f"nba_html_{folder_year}")
+    file_path = os.path.join(folder, f"{season}_content.html")
     os.makedirs(folder, exist_ok=True)
     with open(file_path, "w", encoding="utf-8") as file:
         file.write(page_html)
 
-    print(f"{team} {year} has been completed!!!")
+
+    #time.sleep(30)
+    print(f"All quarters printed {season}")
+    # advance stats  
 
 
+
+    print(driver.title.encode('ascii', 'replace').decode())
 
 if __name__ == "__main__":
     import sys
     import datetime
-    log_file_path = "schedule_scraper.log"
+    log_file_path = "current_player_usage.log"
     sys.stdout = open(log_file_path, "a")
     sys.stderr = open(log_file_path, "a")
 
@@ -73,13 +105,22 @@ if __name__ == "__main__":
 
     log_with_timestamp("Scraping data...") 
 
-    if len(sys.argv) != 3:
-        print("Usage: python defense_scraper.py <team> <year> ")
+    if len(sys.argv) != 4:
+        print("Usage: python scraper.py <season> <main_folder> <year>")
         sys.exit(1)
 
-    
-    team = sys.argv[1]
-    year = sys.argv[2]
-    # defense_scraper(r"nba_defense_historic", "2020-21", "2020-21")
-    schedule_scraper (team,year)
-    driver.quit()
+    # Get arguments from the command line
+
+    season = sys.argv[1]
+    main_folder = sys.argv[2]
+    folder_year = sys.argv[3]
+
+    try:
+        scrape_data(season,main_folder,folder_year)
+        driver.quit()
+
+    except Exception as e:
+        print(f"Function failed after retries: {e}")
+
+
+

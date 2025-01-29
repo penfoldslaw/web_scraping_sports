@@ -9,7 +9,7 @@ def run_script(main_folder, folder_season, data_season):
     )
 
 if __name__ == "__main__":
-    main_folder = "nba_defense_current"
+    main_folder = "D:/nba_defense_current"
     folder_season = ["2024-25"]
     data_season = ["2024-25"]
 

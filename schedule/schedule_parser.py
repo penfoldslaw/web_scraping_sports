@@ -151,7 +151,7 @@ def schedule_parser(year, csv_sub_folder):
             #display(df.head(2))
 
             #save to csv
-            path = f'nba_scheduled_csv/{csv_sub_folder}'
+            path = f'D:/nba_scheduled_csv/{csv_sub_folder}'
             csv_path = path
             os.makedirs(csv_path, exist_ok=True)
             df.to_csv(f"{csv_path}/{modified_filename}.csv", index=False)

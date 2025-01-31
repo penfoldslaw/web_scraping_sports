@@ -1,9 +1,12 @@
 import threading
 import subprocess
 import sys
+from pathlib import Path
+
 
 def run_script(relative_path, csv_path):
-    subprocess.run([sys.executable, "current_player_parser.py", relative_path, csv_path])
+    path = Path().resolve()
+    subprocess.run([sys.executable,path / "current_player_parser.py", relative_path, csv_path])
 
 if __name__ == "__main__":
 

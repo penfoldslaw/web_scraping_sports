@@ -9,9 +9,12 @@
 
 import subprocess
 import sys
+from pathlib import Path
+
 
 def run_script(season, main_folder, year):
-    subprocess.run([sys.executable, "current_usage_scraper.py",season, main_folder, year])
+    path = Path().resolve()
+    subprocess.run([sys.executable,path / "current_usage_scraper.py",season, main_folder, year])
 
 if __name__ == "__main__":
     

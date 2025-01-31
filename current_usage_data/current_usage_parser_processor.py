@@ -1,7 +1,10 @@
 import sys
 import subprocess
+from pathlib import Path
+
 def run_script(sub_folder, csv_sub_folder):
-    subprocess.run([sys.executable, "current_usage_parser.py", sub_folder, csv_sub_folder])
+    path = Path().resolve()
+    subprocess.run([sys.executable,path / "current_usage_parser.py", sub_folder, csv_sub_folder])
 
 if __name__ == "__main__":
     

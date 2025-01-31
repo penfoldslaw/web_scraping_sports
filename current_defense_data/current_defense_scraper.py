@@ -12,8 +12,12 @@ import sys
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
+from pathlib import Path
 
-service = Service(executable_path="../firefox_drive/geckodriver.exe", log_path="geckodriver.log")
+path = Path().resolve()
+# service = Service(executable_path=path / "../firefox_drive/geckodriver.exe", log_path="geckodriver.log") # for inside directory run
+service = Service(executable_path=path / "firefox_drive/geckodriver.exe", log_path="geckodriver.log")
+
 
 
 #  Firefox options
@@ -25,6 +29,9 @@ firefox_options.add_argument("--headless")  # Run in headless mode if needed
 driver = webdriver.Firefox(service=service,options=firefox_options)
 
 def defense_scraper(main_folder,folder_season,data_season):
+    log_file_path = "defense_scraper.log"
+    sys.stdout = open(log_file_path, "w")
+    sys.stderr = open(log_file_path, "w")
     
     web_site_list = [
     f"https://www.nba.com/stats/teams/advanced?Season={data_season}",
@@ -58,9 +65,6 @@ def defense_scraper(main_folder,folder_season,data_season):
 
 
 if __name__ == "__main__":
-    log_file_path = "defense_scraper.log"
-    sys.stdout = open(log_file_path, "w")
-    sys.stderr = open(log_file_path, "w")
 
     if len(sys.argv) != 4:
         print("Usage: python defense_scraper.py <main_folder> <folder_season> <data_season>")

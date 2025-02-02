@@ -12,9 +12,13 @@ from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
 from tenacity import retry, stop_after_attempt, wait_fixed
+import sys
+import datetime
+from pathlib import Path
 
-service = Service(executable_path="../firefox_drive/geckodriver.exe", log_path="geckodriver.log")
-#driver = webdriver.Firefox(service=service)
+path = Path(__file__).resolve().parents[1]
+# service = Service(executable_path=path / "../firefox_drive/geckodriver.exe", log_path="geckodriver.log") # for inside directory run
+service = Service(executable_path=path / "firefox_drive/geckodriver.exe", log_path="geckodriver.log")
 
 # Chrome options
 # chrome_options = Options()
@@ -44,6 +48,17 @@ driver = webdriver.Firefox(service=service,options=firefox_options)
 
 
 def schedule_scraper(team,year):
+    log_file_path = "current_logs/schedule_scraper.log"
+    sys.stdout = open(log_file_path, "a")
+    sys.stderr = open(log_file_path, "a")
+
+    def log_with_timestamp(message):
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"{timestamp} - {message}")
+        print(f"{timestamp} - {message}", file=sys.stderr)
+
+    log_with_timestamp("Scraping data...") 
+
     driver.get(f"https://www.espn.com/nba/team/schedule/_/name/{team}/season/{year}")
     time.sleep(3)
 
@@ -62,7 +77,7 @@ def schedule_scraper(team,year):
 if __name__ == "__main__":
     import sys
     import datetime
-    log_file_path = "schedule_scraper.log"
+    log_file_path = "current_logs/schedule_scraper.log"
     sys.stdout = open(log_file_path, "a")
     sys.stderr = open(log_file_path, "a")
 

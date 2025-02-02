@@ -1,9 +1,14 @@
 from bs4 import BeautifulSoup
 import os
 from IPython.display import display
+import sys
 
 def schedule_parser(year, csv_sub_folder):
-    folder_path = f"nba_schedules/nba_html_{year}"  #f"schedule/nba_schedules/nba_html_{year}"            #nba_html_2019-20 
+    log_file_path = "current_logs/schedule_parser.log"
+    sys.stdout = open(log_file_path, "w")
+    sys.stderr = open(log_file_path, "w")
+
+    folder_path = f"D:/nba_schedules/nba_html_{year}"  #f"schedule/nba_schedules/nba_html_{year}"            #nba_html_2019-20 
 
     for filename in os.listdir(folder_path):
         file_path = os.path.join(folder_path, filename)

@@ -12,12 +12,13 @@ import sys
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
+from tenacity import retry, stop_after_attempt, wait_fixed
 from pathlib import Path
 
-path = Path().resolve()
+
+path = Path(__file__).resolve().parents[1]
 # service = Service(executable_path=path / "../firefox_drive/geckodriver.exe", log_path="geckodriver.log") # for inside directory run
 service = Service(executable_path=path / "firefox_drive/geckodriver.exe", log_path="geckodriver.log")
-
 
 
 #  Firefox options
@@ -28,8 +29,9 @@ firefox_options.add_argument("--headless")  # Run in headless mode if needed
 # Initialize the Firefox WebDriver
 driver = webdriver.Firefox(service=service,options=firefox_options)
 
+@retry(stop=stop_after_attempt(3), wait=wait_fixed(2))
 def defense_scraper(main_folder,folder_season,data_season):
-    log_file_path = "defense_scraper.log"
+    log_file_path = "current_logs/defense_scraper.log"
     sys.stdout = open(log_file_path, "w")
     sys.stderr = open(log_file_path, "w")
     
@@ -62,7 +64,6 @@ def defense_scraper(main_folder,folder_season,data_season):
             file.write(page_html)
 
         print(f"{file_names} {data_season} has been completed!!!")
-
 
 if __name__ == "__main__":
 

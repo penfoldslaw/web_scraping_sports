@@ -1,6 +1,9 @@
 # StartPython.ps1
-$scriptPath = "current_player_scraper_processor.py"  # Replace with your actual script path
-$scriptPath_parser = "current_player_parser_processor.py"
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+Write-Output "This is what you are looking for: $scriptDir"
+
+$scriptPath = Join-Path -Path $scriptDir "current_player_scraper_processor.py"  # Replace with your actual script path
+$scriptPath_parser = Join-Path -Path $scriptDir "current_player_parser_processor.py"
 
 Write-Host "Starting Python script: $scriptPath" -ForegroundColor Green
 
@@ -21,7 +24,7 @@ $process_parser = Start-Process -FilePath "python" -ArgumentList $scriptPath_par
 if ($process_parser) {
     Write-Host "Parser script is running... (PID: $($process_parser.Id))" -ForegroundColor Yellow
     $process_parser | Wait-Process
-    Write-Host "Parser script has completed." -ForegroundColor Cyan
+    Write-Host "player Parser script has completed." -ForegroundColor Cyan
 } else {
     Write-Host "Failed to start the Parser script script log." -ForegroundColor Red
 }

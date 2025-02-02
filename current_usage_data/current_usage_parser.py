@@ -1,8 +1,13 @@
 from bs4 import BeautifulSoup
 import os
 from IPython.display import display
+import sys
 
 def create_dataframe(relative_path, csv_sub_folder):
+    log_file_path = "current_logs/current_usage_parser.log"
+    sys.stdout = open(log_file_path, "a")
+    sys.stderr = open(log_file_path, "a")
+
     folder_path = f"D:/nba_usage_current/{relative_path}"  #f"schedule/nba_schedules/nba_html_{year}"            #nba_html_2019-20 
 
     for filename in os.listdir(folder_path):

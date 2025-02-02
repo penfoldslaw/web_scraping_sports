@@ -13,9 +13,12 @@ from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
 from tenacity import retry, stop_after_attempt, wait_fixed
 from pathlib import Path
+import sys
+import datetime
 
-path= Path().resolve()
-service = Service(executable_path=path / "../firefox_drive/geckodriver.exe", log_path="geckodriver.log")
+path = Path(__file__).resolve().parents[1]
+# service = Service(executable_path=path / "../firefox_drive/geckodriver.exe", log_path="geckodriver.log") # for inside directory run
+service = Service(executable_path=path / "firefox_drive/geckodriver.exe", log_path="geckodriver.log")
 #driver = webdriver.Firefox(service=service)
 
 # Chrome options
@@ -49,6 +52,20 @@ driver = webdriver.Firefox(service=service,options=firefox_options)
 
 @retry(stop=stop_after_attempt(3), wait=wait_fixed(2))
 def scrape_data(player,season,main_folder,folder_year,quarter_data='yes'):
+    log_file_path = "current_logs/current_scraper.log"
+
+    # Open the log file in append mode ("a")
+    sys.stdout = open(log_file_path, "a")
+    sys.stderr = open(log_file_path, "a")
+
+    def log_with_timestamp(message):
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"{timestamp} - {message}", file=sys.stderr)
+
+    log_with_timestamp("Scraping data...") 
+
+
+
     driver.get("https://www.nba.com/players")
     time.sleep(2)
 
@@ -146,13 +163,10 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data='yes'):
             with open(file_path, "w", encoding="utf-8") as file:
                 file.write(page_html)
 
-
-
-
     
-    # time.sleep(10)
+        # time.sleep(10)
 
-    print(driver.title.encode('ascii', 'replace').decode())
+        print(driver.title.encode('ascii', 'replace').decode())
 
 if __name__ == "__main__":
     import sys

@@ -1,7 +1,12 @@
 from bs4 import BeautifulSoup
 import os
+import sys
 
 def create_dataframe(relative_path, csv_path):
+    log_file_path = "current_logs/current_parser.log"
+    sys.stdout = open(log_file_path, "a")
+    sys.stderr = open(log_file_path, "a")
+
 
     # Specify the directory containing the files
     folder_path = relative_path      #r'nba_historic\nba_html_2019'

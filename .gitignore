@@ -10,4 +10,9 @@ feature_core.ipynb
 schedule_parser.ipynb
 his_player_usage.log
 his_usage_parser.log
+current_usage_parser.log
+current_usage_scraper.log
+schedule_parser.log
+schedule_scraper.log
 __pycache__
+

@@ -13,15 +13,13 @@ from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
 from tenacity import retry, stop_after_attempt, wait_fixed
 from selenium.webdriver.support.ui import Select
-from pathlib import Path
 import sys
 import datetime
-
+from pathlib import Path
 
 path = Path(__file__).resolve().parents[1]
 # service = Service(executable_path=path / "../firefox_drive/geckodriver.exe", log_path="geckodriver.log") # for inside directory run
 service = Service(executable_path=path / "firefox_drive/geckodriver.exe", log_path="geckodriver.log")
-#driver = webdriver.Firefox(service=service)
 
 # Chrome options
 # chrome_options = Options()
@@ -55,19 +53,8 @@ driver = webdriver.Firefox(service=service,options=firefox_options)
 @retry(stop=stop_after_attempt(3), wait=wait_fixed(2))
 def scrape_data(season,main_folder,folder_year):
 
-    log_file_path = "current_logs/current_usage_scraper.log"
-    sys.stdout = open(log_file_path, "w")
-    sys.stderr = open(log_file_path, "w")
-
-    def log_with_timestamp(message):
-        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"{timestamp} - {message}")
-        print(f"{timestamp} - {message}", file=sys.stderr)
-
-    log_with_timestamp("Scraping data...") 
-
     driver.get(f"https://www.nba.com/stats/players/usage?dir=A&sort=USG_PCT&Season={season}")
-    time.sleep(3)
+    time.sleep(2)
 
 
     # # After the player name has been searched this clicks the player note that this has only been tested for one player coming up not multiple
@@ -108,18 +95,18 @@ def scrape_data(season,main_folder,folder_year):
     print(driver.title.encode('ascii', 'replace').decode())
 
 if __name__ == "__main__":
-    # import sys
-    # import datetime
-    # log_file_path = "current_player_usage.log"
-    # sys.stdout = open(log_file_path, "a")
-    # sys.stderr = open(log_file_path, "a")
+    import sys
+    import datetime
+    log_file_path = "history_logs/his_usage_scraper.log"
+    sys.stdout = open(log_file_path, "a")
+    sys.stderr = open(log_file_path, "a")
 
-    # def log_with_timestamp(message):
-    #     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    #     print(f"{timestamp} - {message}")
-    #     print(f"{timestamp} - {message}", file=sys.stderr)
+    def log_with_timestamp(message):
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"{timestamp} - {message}")
+        print(f"{timestamp} - {message}", file=sys.stderr)
 
-    # log_with_timestamp("Scraping data...") 
+    log_with_timestamp("Scraping data...") 
 
     if len(sys.argv) != 4:
         print("Usage: python scraper.py <season> <main_folder> <year>")

@@ -2,8 +2,10 @@
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 Write-Output "This is what you are looking for: $scriptDir"
 
-$scriptPath = Join-Path -Path $scriptDir "his_defense_scarper_processor.py"  # Replace with your actual script path
-$scriptPath_parser = Join-Path -Path $scriptDir "his_defense_parser_processor.py"
+
+# StartPython.ps1
+$scriptPath = Join-Path -Path $scriptDir "his_usage_scraper_processor.py"  # Replace with your actual script path
+$scriptPath_parser = Join-Path -Path $scriptDir "his_usage_parser_processor.py"
 
 Write-Host "Starting Python script: $scriptPath" -ForegroundColor Green
 

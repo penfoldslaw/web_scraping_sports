@@ -12,20 +12,24 @@ import sys
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
+from pathlib import Path
 
-service = Service(executable_path="../firefox_drive/geckodriver.exe", log_path="geckodriver.log")
+
+path = Path(__file__).resolve().parents[1]
+# service = Service(executable_path=path / "../firefox_drive/geckodriver.exe", log_path="geckodriver.log") # for inside directory run
+service = Service(executable_path=path / "firefox_drive/geckodriver.exe", log_path="geckodriver.log")
 
 
 #  Firefox options
 firefox_options = Options()
-#firefox_options.add_argument("--headless")  # Run in headless mode if needed
-firefox_options.add_argument("--start-maximized")  # Run in headless mode if needed
+firefox_options.add_argument("--headless")  # Run in headless mode if needed
+#firefox_options.add_argument("--start-maximized")  # Run in headless mode if needed
 
 # Initialize the Firefox WebDriver
 driver = webdriver.Firefox(service=service,options=firefox_options)
 
 def defense_scraper(main_folder,folder_season,data_season):
-    
+
     web_site_list = [
     f"https://www.nba.com/stats/teams/advanced?Season={data_season}",
     f"https://www.nba.com/stats/teams/advanced?Season={data_season}&Period=1",
@@ -56,11 +60,12 @@ def defense_scraper(main_folder,folder_season,data_season):
 
         print(f"{file_names} {data_season} has been completed!!!")
 
-    driver.quit()
+
+
 
 
 if __name__ == "__main__":
-    log_file_path = "his_defense_scraper.log"
+    log_file_path = "history_logs/his_defense_scraper.log"
     sys.stdout = open(log_file_path, "w")
     sys.stderr = open(log_file_path, "w")
 

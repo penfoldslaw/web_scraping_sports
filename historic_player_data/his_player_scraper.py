@@ -12,8 +12,11 @@ from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
 from tenacity import retry, stop_after_attempt, wait_fixed
+from pathlib import Path
 
-service = Service(executable_path="../firefox_drive/geckodriver.exe", log_path="geckodriver.log")
+path = Path(__file__).resolve().parents[1]
+# service = Service(executable_path=path / "../firefox_drive/geckodriver.exe", log_path="geckodriver.log") # for inside directory run
+service = Service(executable_path=path / "firefox_drive/geckodriver.exe", log_path="geckodriver.log")
 #driver = webdriver.Firefox(service=service)
 
 # Chrome options
@@ -153,7 +156,7 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data='yes'):
 if __name__ == "__main__":
     import sys
     import datetime
-    log_file_path = "his_player_scraper.log"
+    log_file_path = "history_logs/his_player_scraper.log"
     sys.stdout = open(log_file_path, "a")
     sys.stderr = open(log_file_path, "a")
 

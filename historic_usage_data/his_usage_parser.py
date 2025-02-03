@@ -1,14 +1,9 @@
 from bs4 import BeautifulSoup
 import os
 from IPython.display import display
-import sys
 
 def create_dataframe(relative_path, csv_sub_folder):
-    log_file_path = "current_logs/current_usage_parser.log"
-    sys.stdout = open(log_file_path, "a")
-    sys.stderr = open(log_file_path, "a")
-
-    folder_path = f"D:/nba_usage_current/{relative_path}"  #f"schedule/nba_schedules/nba_html_{year}"            #nba_html_2019-20 
+    folder_path = f"D:/nba_usage_historic/{relative_path}"  #f"schedule/nba_schedules/nba_html_{year}"            #nba_html_2019-20 
 
     for filename in os.listdir(folder_path):
         file_path = os.path.join(folder_path, filename)
@@ -77,7 +72,7 @@ def create_dataframe(relative_path, csv_sub_folder):
 
 
             #save to csv
-            path = f'D:/nba_usage_csv_current/{csv_sub_folder}'
+            path = f'D:/nba_usage_csv_historic/{csv_sub_folder}'
             csv_path = path
             os.makedirs(csv_path, exist_ok=True)
             df.to_csv(f"{csv_path}/{modified_filename}.csv", index=False)
@@ -86,10 +81,10 @@ def create_dataframe(relative_path, csv_sub_folder):
 
 
 if __name__ == "__main__":
-    # import sys
-    # log_file_path = "current_usage_parser.log"
-    # sys.stdout = open(log_file_path, "a")
-    # sys.stderr = open(log_file_path, "a")
+    import sys
+    log_file_path = "history_logs/his_usage_parser.log"
+    sys.stdout = open(log_file_path, "a")
+    sys.stderr = open(log_file_path, "a")
 
     if len(sys.argv) != 3:
         print("Usage: python his_usage_parser.py <sub_folder> <csv_sub_folder>")

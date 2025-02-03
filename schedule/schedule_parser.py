@@ -165,10 +165,10 @@ def schedule_parser(year, csv_sub_folder):
 
 
 if __name__ == "__main__":
-    import sys
-    log_file_path = "schedule_parser.log"
-    sys.stdout = open(log_file_path, "w")
-    sys.stderr = open(log_file_path, "w")
+    # import sys
+    # log_file_path = "schedule_parser.log"
+    # sys.stdout = open(log_file_path, "w")
+    # sys.stderr = open(log_file_path, "w")
 
     if len(sys.argv) != 3:
         print("Usage: python defense_parser.py <year> <csv_sub_folder>")

@@ -1,9 +1,12 @@
 from bs4 import BeautifulSoup
 import os
-
+import sys
 
 def defense_parser(sub_folder, csv_sub_folder):
-    folder_path = f"nba_defense_historic/{sub_folder}"                #nba_html_2019-20 
+    log_file_path = "history_logs/defense_parser.log"
+    sys.stdout = open(log_file_path, "a")
+    sys.stderr = open(log_file_path, "a")
+    folder_path = f"D:/nba_defense_historic/{sub_folder}"                #nba_html_2019-20 
 
     for filename in os.listdir(folder_path):
         file_path = os.path.join(folder_path, filename)
@@ -107,7 +110,7 @@ def defense_parser(sub_folder, csv_sub_folder):
             df[columns_to_convert] = df[columns_to_convert].apply(pd.to_numeric, errors='coerce')
 
             #save to csv
-            path = f'D:/nba_dh_csv/{csv_sub_folder}'
+            path = f'D:/nba_defense_history_csv/{csv_sub_folder}'
             csv_path = path
             os.makedirs(csv_path, exist_ok=True)
             df.to_csv(f"{csv_path}/{modified_filename}.csv", index=False)
@@ -118,10 +121,10 @@ def defense_parser(sub_folder, csv_sub_folder):
             print(len(df))
 
 if __name__ == "__main__":
-    import sys
-    log_file_path = "his_defense_parser.log"
-    sys.stdout = open(log_file_path, "w")
-    sys.stderr = open(log_file_path, "w")
+    # import sys
+    # log_file_path = "history_logs/his_defense_parser.log"
+    # sys.stdout = open(log_file_path, "w")
+    # sys.stderr = open(log_file_path, "w")
 
     if len(sys.argv) != 3:
         print("Usage: python defense_parser.py <sub_folder> <csv_sub_folder>")

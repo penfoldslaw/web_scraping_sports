@@ -169,21 +169,21 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data='yes'):
         print(driver.title.encode('ascii', 'replace').decode())
 
 if __name__ == "__main__":
-    import sys
-    import datetime
+    # import sys
+    # import datetime
 
-    log_file_path = "current_scraper.log"
+    # log_file_path = "current_scraper.log"
 
-    # Open the log file in append mode ("a")
-    sys.stdout = open(log_file_path, "a")
-    sys.stderr = open(log_file_path, "a")
+    # # Open the log file in append mode ("a")
+    # sys.stdout = open(log_file_path, "a")
+    # sys.stderr = open(log_file_path, "a")
 
-    def log_with_timestamp(message):
-        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"{timestamp} - {message}")
-        print(f"{timestamp} - {message}", file=sys.stderr)
+    # def log_with_timestamp(message):
+    #     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    #     print(f"{timestamp} - {message}")
+    #     print(f"{timestamp} - {message}", file=sys.stderr)
 
-    log_with_timestamp("Scraping data...") 
+    # log_with_timestamp("Scraping data...") 
 
     if len(sys.argv) != 5:
         print("Usage: python scraper.py <player> <season> <main_folder> <year>")

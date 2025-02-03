@@ -1,13 +1,16 @@
 import threading
 import subprocess
 import sys
+from pathlib import Path
 
 def run_script(relative_path, csv_path):
-    subprocess.run([sys.executable, "his_player_parser.py", relative_path, csv_path])
+    path = Path(__file__).resolve().parent
+
+    subprocess.run([sys.executable, path / "his_player_parser.py", relative_path, csv_path])
 
 if __name__ == "__main__":
 
-    seasons = ["2019-20","2020-21","2021-22", "2022-23", "2023-24"]
+    seasons = ["2022-23", "2023-24"]
     for season in seasons:
         relative_path = [
             r"D:\nba_player_historic\nba_html_{season}".format(season=season), 
@@ -17,11 +20,11 @@ if __name__ == "__main__":
             r"D:\nba_player_historic\nba_html_{season}\quarter_data\q4".format(season=season)]
         
         csv_path = [
-            r"D:\nba_ph_csv_historic\season_{season}\all_quarters".format(season=season), 
-            r"D:\nba_ph_csv_historic\season_{season}\quarter_data\q1".format(season=season), 
-            r"D:\nba_ph_csv_historic\season_{season}\quarter_data\q2".format(season=season), 
-            r"D:\nba_ph_csv_historic\season_{season}\quarter_data\q3".format(season=season), 
-            r"D:\nba_ph_csv_historic\season_{season}\quarter_data\q4".format(season=season)]
+            r"D:\nba_player_csv_historic\season_{season}\all_quarters".format(season=season), 
+            r"D:\nba_player_csv_historic\season_{season}\quarter_data\q1".format(season=season), 
+            r"D:\nba_player_csv_historic\season_{season}\quarter_data\q2".format(season=season), 
+            r"D:\nba_player_csv_historic\season_{season}\quarter_data\q3".format(season=season), 
+            r"D:\nba_player_csv_historic\season_{season}\quarter_data\q4".format(season=season)]
     
         threads = []
         for r_folder, csv__folder in zip(relative_path, csv_path):

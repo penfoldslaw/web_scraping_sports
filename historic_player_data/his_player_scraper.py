@@ -33,8 +33,8 @@ service = Service(executable_path=path / "firefox_drive/geckodriver.exe", log_pa
 
 #  Firefox options
 firefox_options = Options()
-firefox_options.add_argument("--headless")  # Run in headless mode if needed
-#firefox_options.add_argument("--start-maximized")  # Run in headless mode if needed
+#firefox_options.add_argument("--headless")  # Run in headless mode if needed
+firefox_options.add_argument("--start-maximized")  # Run in headless mode if needed
 
 # Initialize the Firefox WebDriver
 driver = webdriver.Firefox(service=service,options=firefox_options)
@@ -49,7 +49,7 @@ driver = webdriver.Firefox(service=service,options=firefox_options)
 
 
 @retry(stop=stop_after_attempt(3), wait=wait_fixed(2))
-def scrape_data(player,season,main_folder,folder_year,quarter_data='yes'):
+def scrape_data(player,season,main_folder,folder_year,quarter_data):
     driver.get("https://www.nba.com/players")
     time.sleep(2)
 
@@ -167,7 +167,7 @@ if __name__ == "__main__":
 
     log_with_timestamp("Scraping data...") 
 
-    if len(sys.argv) != 5:
+    if len(sys.argv) != 6:
         print("Usage: python scraper.py <player> <season> <main_folder> <year>")
         sys.exit(1)
 

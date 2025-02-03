@@ -182,10 +182,9 @@ import subprocess
 import sys
 from pathlib import Path
 
-def run_script(player, season, main_folder, year):
+def run_script(player, season, main_folder, year, quarter_data):
     path = Path(__file__).resolve().parent
-
-    subprocess.run([sys.executable,path / "his_player_scraper.py", player, season, main_folder, year])
+    subprocess.run([sys.executable,path / "his_player_scraper.py", player, season, main_folder, year, quarter_data])
 
 if __name__ == "__main__":
     players = ['Shai Gilgeous-Alexander', 'Cason Wallace', 'Alex Caruso', 'Jalen Williams', 'Isaiah Hartenstein']
@@ -197,6 +196,6 @@ if __name__ == "__main__":
     
     for player in players:
         for season, year in zip(seasons, years):
-            run_script(player, season, main_folder, year)
+            run_script(player, season, main_folder, year,'yes')
     
     print("All scripts have finished executing.")

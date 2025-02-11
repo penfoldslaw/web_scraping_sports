@@ -41,14 +41,14 @@ Write-Host "Started Python script $pythonScript with PID: $($pythonProcess.Id)"
 # Example usage:
 # $processes = Start-NestedScripts -PowerShellScripts @("run_python1.ps1", "run_python2.ps1")
 
-# $processes_1 = Start-NestedScripts -PowerShellScripts @("historic_defense_data\his_defense_script.ps1")
-# $processes_1 | Wait-Process
+$processes_1 = Start-NestedScripts -PowerShellScripts @("historic_defense_data\his_defense_script.ps1")
+$processes_1 | Wait-Process
 
 $processes_2 = Start-NestedScripts -PowerShellScripts @("historic_player_data\his_player_script.ps1")
 $processes_2 | Wait-Process
 
-# $processes_3 = Start-NestedScripts -PowerShellScripts @("historic_usage_data\his_usage_script.ps1")
-# $processes_3 | Wait-Process
+$processes_3 = Start-NestedScripts -PowerShellScripts @("historic_usage_data\his_usage_script.ps1")
+$processes_3 | Wait-Process
 
-# $processes_4 = Start-NestedScripts -PowerShellScripts @("schedule\schedule_script.ps1")
-# $processes_4 | Wait-Process
+$processes_4 = Start-NestedScripts -PowerShellScripts @("schedule\schedule_script.ps1")
+$processes_4 | Wait-Process

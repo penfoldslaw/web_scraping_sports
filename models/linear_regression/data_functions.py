@@ -47,6 +47,8 @@ def his_player_defense_data(player_base_path, defense_base_path,player, date):
     try:
         merged_df = pd.merge(single_player_df, defense_df, how='inner', left_on=['Away', 'season'], right_on=['TEAM', 'season_defense']).reset_index(drop=True)
         merged_df = merged_df.sort_values(by="Date")
+        defense_current_player = defense_df[['TEAM','PACE']]
+
     except Exception as e:
         print(f"Data most likely doesn't exist for {player} or  defense doesn't exit for this {date} or error checker {e}")
 
@@ -55,7 +57,7 @@ def his_player_defense_data(player_base_path, defense_base_path,player, date):
     pd.set_option('display.width', 1000)  # Adjust column width for better readability
     
 
-    return merged_df
+    return merged_df, defense_current_player
 
 
 def current_player_defense_data(player_base_path, defense_base_path,schedule_base_path,player,date,schedule_team):
@@ -97,10 +99,11 @@ def current_player_defense_data(player_base_path, defense_base_path,schedule_bas
         merged_df = pd.merge(single_player_df, defense_df, how='inner', left_on=['Away', 'season'], right_on=['TEAM', 'season_defense']).reset_index(drop=True)
         merged_df = merged_df.sort_values(by="Date")
         merged_df_schedule = pd.merge(merged_df, schedule_df, how='inner', left_on='Team',right_on='home_team').drop_duplicates().reset_index(drop=True)
+        defense_current_player = defense_df[['TEAM','PACE','OffRtg']]
     except Exception as e:
         print(f"Data most likely doesn't exist for {player} or  defense doesn't exit for this {date} or error checker {e}")
     
-    return merged_df_schedule
+    return merged_df_schedule , defense_current_player
 
 
 if __name__ == "__main__":

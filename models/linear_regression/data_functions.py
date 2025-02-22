@@ -13,6 +13,29 @@ def build_data_path(base_path, **Kwargs):
     
 
 def his_player_defense_data(player_base_path, defense_base_path,player, date):
+
+    """
+        Retrieves and merges player, defensive, and schedule data for a given player and date.
+
+        This function loads player statistics, defensive metrics, and schedule details 
+        from CSV files, merges them, and returns a combined dataset with relevant statistics.
+
+        Parameters:
+            player_base_path (str): The base path for player data files.
+            defense_base_path (str): The base path for defensive statistics files.
+            player (str): The player's name.
+            date (str): The specific date for which data is needed.
+            schedule_team (str): The team name used for retrieving the schedule data.
+
+        Returns:
+            tuple:
+                - merged_df_schedule (DataFrame): A DataFrame containing merged player, 
+                defense, and schedule data.
+                - defense_historic_player (DataFrame): A DataFrame with defensive stats 
+                (TEAM, PACE, OffRtg) for the player's team.
+    """
+
+
     player_dataframes = {}  # Dictionary to store each player's DataFrame
     defense_dataframes = {}  # Dictionary to store each player's defense DataFrame
 
@@ -47,7 +70,7 @@ def his_player_defense_data(player_base_path, defense_base_path,player, date):
     try:
         merged_df = pd.merge(single_player_df, defense_df, how='inner', left_on=['Away', 'season'], right_on=['TEAM', 'season_defense']).reset_index(drop=True)
         merged_df = merged_df.sort_values(by="Date")
-        defense_current_player = defense_df[['TEAM','PACE']]
+        defense_current_player = defense_df
 
     except Exception as e:
         print(f"Data most likely doesn't exist for {player} or  defense doesn't exit for this {date} or error checker {e}")
@@ -61,6 +84,32 @@ def his_player_defense_data(player_base_path, defense_base_path,player, date):
 
 
 def current_player_defense_data(player_base_path, defense_base_path,schedule_base_path,player,date,schedule_team):
+
+    """
+        Retrieves and merges player, defensive, and schedule data for a given player and date.
+
+        This function loads player statistics, defensive metrics, and schedule details 
+        from CSV files, merges them, and returns a combined dataset with relevant statistics.
+
+        Parameters:
+            player_base_path (str): The base path for player data files.
+            defense_base_path (str): The base path for defensive statistics files.
+            schedule_base_path (str): The base path for game schedule files.
+            player (str): The player's name.
+            date (str): The specific date for which data is needed.
+            schedule_team (str): The team name used for retrieving the schedule data.
+
+        Returns:
+            tuple:
+                - merged_df_schedule (DataFrame): A DataFrame containing merged player, 
+                defense, and schedule data.
+                - defense_current_player (DataFrame): A DataFrame with defensive stats 
+                (TEAM, PACE, OffRtg) for the player's team.
+    """
+
+
+
+
     single_player_df = pd.DataFrame()
     defense_df = pd.DataFrame()
     schedule_df = pd.DataFrame()
@@ -104,6 +153,86 @@ def current_player_defense_data(player_base_path, defense_base_path,schedule_bas
         print(f"Data most likely doesn't exist for {player} or  defense doesn't exit for this {date} or error checker {e}")
     
     return merged_df_schedule , defense_current_player
+
+
+
+def his_usage_team(player_names: dict, date_list: list, usage_path,player_base_path,defense_base_path):
+    """
+        Computes historical usage data for a given set of players over a list of dates.
+
+        This function merges player statistics, usage data, and defensive statistics 
+        to create a dataset containing various metrics such as usage percentage (USG%), 
+        team pace, offensive rating, and possession data.
+
+        Parameters:
+            player_names (dict): A dictionary mapping player names to their respective teams.
+            date_list (list): A list of dates for which data should be collected.
+            usage_path (str): The base path to the usage data files.
+            player_base_path (str): The base path to the player statistics data files.
+            defense_base_path (str): The base path to the defensive statistics data files.
+
+        Returns:
+            tuple:
+                - current_player_dic (dict): A dictionary where each key is a player, and 
+                the value is a DataFrame containing their historical merged statistics.
+                - current_defense_df (DataFrame): The latest available defensive statistics DataFrame.
+    """
+
+
+    current_player_dic = {}
+
+    for player, team in player_names.items():
+        current_player_frames =[]
+
+        for date in date_list:
+            usage_path =build_data_path(usage_path,date=date)
+            usage_data = pd.read_csv(usage_path)
+
+            #merging player and defense dat into one
+            merged_data, current_defense_df = his_player_defense_data(player_base_path,defense_base_path,player,date)
+
+            #adding season to usage_data
+            usage_data['season'] = date
+
+            #Getting the player usage percentage for usage data and adding to merge
+            player_usage = usage_data.loc[usage_data['Player'] == player, 'USG%'].values[0]
+            merged_data['USG'] = player_usage
+
+            #adding the current player team pace
+            team_stat = current_defense_df.loc[current_defense_df['TEAM'] == team, 'PACE'].values[0]
+            merged_data["team_pace"] = team_stat
+
+            # adding current player team OffRtg
+            team_offrtg = current_defense_df.loc[current_defense_df['TEAM'] == team, 'OffRtg'].values[0]
+            merged_data["team_offrtg"] = team_offrtg
+
+            team_poss = current_defense_df.loc[current_defense_df['TEAM'] == team, 'POSS'].values[0]
+            merged_data["team_poss"] = team_poss
+            
+            # Exclude rows where the TEAM column matches the given team
+            merged_data = merged_data[merged_data['TEAM'] != team]
+
+
+            # merged_data = merged_data[['season','Date', 'Home/Away_game' ,'Matchup' ,'PTS','MIN_x', 'Team', 'TEAM', 'FGA', 'USG', 'DefRtg', 'PACE','team_pace']]
+
+            # Turn date into seconds
+            merged_data['Date_in_Seconds'] = pd.to_datetime(merged_data['Date']).astype('int64') // 10**9
+            merged_data = merged_data.sort_values(by="Date_in_Seconds")
+
+
+            # Turn Home/Away game into 1 and 0
+            merged_data['home_away'] = merged_data['Home/Away_game'].apply(lambda x: 1 if x == 'Away' else 0)
+            # Dropping duplicates
+            merged_data = merged_data.drop_duplicates()
+            
+            # Append the DataFrame for this date to the player's list
+            current_player_frames.append(merged_data)
+
+        # Combine all dates for the current player into one DataFrame
+        current_player_dic[player] = pd.concat(current_player_frames, ignore_index=True)
+
+
+    return current_player_dic, current_defense_df
 
 
 if __name__ == "__main__":

@@ -103,11 +103,15 @@ def defense_parser(sub_folder, csv_sub_folder):
             
             df['TEAM'] = df['TEAM'].map(rename_team)
 
+            df['POSS'] = df['POSS'].str.replace(',', '')
+
             columns_to_convert = [
                'OffRtg', 'DefRtg', 'NetRtg', 'AST%', 'AST/TO', 'ASTRatio', 'OREB%', 'DREB%', 'REB%', 'TOV%', 'eFG%', 'TS%', 'PACE', 'PIE', 'POSS']
             
              # Converting selected columns to float
             df[columns_to_convert] = df[columns_to_convert].apply(pd.to_numeric, errors='coerce')
+
+            print(df)
 
             #save to csv
             path = f'D:/nba_defense_history_csv/{csv_sub_folder}'

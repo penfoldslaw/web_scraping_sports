@@ -17,4 +17,4 @@ schedule_scraper.log
 *.log       # Ignores all .log files anywhere
 his_player_scraper.log
 __pycache__
-
+myenv

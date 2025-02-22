@@ -105,6 +105,8 @@ def defense_parser(sub_folder, csv_sub_folder):
             
             df['TEAM'] = df['TEAM'].map(rename_team)
 
+            df['POSS'] = df['POSS'].str.replace(',', '')
+
             columns_to_convert = [
                'OffRtg', 'DefRtg', 'NetRtg', 'AST%', 'AST/TO', 'ASTRatio', 'OREB%', 'DREB%', 'REB%', 'TOV%', 'eFG%', 'TS%', 'PACE', 'PIE', 'POSS']
             

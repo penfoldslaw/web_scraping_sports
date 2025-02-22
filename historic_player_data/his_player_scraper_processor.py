@@ -171,6 +171,10 @@ LAL = ['Anthony Davis', 'LeBron James', 'Austin Reaves']
 
 OKC = ['Shai Gilgeous-Alexander', 'Cason Wallace', 'Alex Caruso', 'Jalen Williams', 'Isaiah Hartenstein']
 
+bos = ['Derrick White', 'Jayson Tatum', 'Kristaps Porzingis']
+
+sas = ['Chris Paul',"De'Aaron Fox", "Devin Vassell","Harrison Barnes", "Victor Wembanyama"]
+
 
 
 
@@ -187,7 +191,7 @@ def run_script(player, season, main_folder, year, quarter_data):
     subprocess.run([sys.executable,path / "his_player_scraper.py", player, season, main_folder, year, quarter_data])
 
 if __name__ == "__main__":
-    players = ['Shai Gilgeous-Alexander', 'Cason Wallace', 'Alex Caruso', 'Jalen Williams', 'Isaiah Hartenstein']
+    players = ["Chris Paul","De'Aaron Fox", "Devin Vassell","Harrison Barnes", "Victor Wembanyama"]
     
 
     seasons = [ "2022-23", "2023-24"]

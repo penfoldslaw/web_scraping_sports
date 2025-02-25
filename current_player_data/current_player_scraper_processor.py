@@ -27,7 +27,7 @@ def run_script(player, season, main_folder, year):
     subprocess.run([sys.executable,path / "current_player_scraper.py", player, season, main_folder, year])
 
 if __name__ == "__main__":
-    players = players = ["Chris Paul","De'Aaron Fox", "Devin Vassell","Harrison Barnes", "Victor Wembanyama"]
+    players = ["Chris Paul","De'Aaron Fox", "Devin Vassell","Harrison Barnes", "Victor Wembanyama"]
     
 
     seasons = ["2024-25"]

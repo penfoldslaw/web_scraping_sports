@@ -33,8 +33,8 @@ service = Service(executable_path=path / "firefox_drive/geckodriver.exe", log_pa
 
 #  Firefox options
 firefox_options = Options()
-#firefox_options.add_argument("--headless")  # Run in headless mode if needed
-firefox_options.add_argument("--start-maximized")  # Run in headless mode if needed
+firefox_options.add_argument("--headless")  # Run in headless mode if needed
+# firefox_options.add_argument("--start-maximized")  # Run in headless mode if needed
 
 # Initialize the Firefox WebDriver
 driver = webdriver.Firefox(service=service,options=firefox_options)

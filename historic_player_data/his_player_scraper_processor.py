@@ -180,8 +180,6 @@ sas = ['Chris Paul',"De'Aaron Fox", "Devin Vassell","Harrison Barnes", "Victor W
 
 
 
-
-
 import subprocess
 import sys
 from pathlib import Path
@@ -191,7 +189,21 @@ def run_script(player, season, main_folder, year, quarter_data):
     subprocess.run([sys.executable,path / "his_player_scraper.py", player, season, main_folder, year, quarter_data])
 
 if __name__ == "__main__":
-    players = ["Chris Paul","De'Aaron Fox", "Devin Vassell","Harrison Barnes", "Victor Wembanyama"]
+    players = [
+    "Jayson Tatum",
+    "Nikola Jokic",
+    "Jamal Murray",
+    "Jaylen Brown",
+    "Derrick White",
+    "Payton Pritchard",
+    "Michael Porter Jr.",
+    "Russell Westbrook",
+    "Christian Braun",
+    "Al Horford",
+    "Julian Strawther",
+    "Sam Hauser",
+    "Zeke Nnaji",
+    "Luke Kornet"]
     
 
     seasons = [ "2022-23", "2023-24"]

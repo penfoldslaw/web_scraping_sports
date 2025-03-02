@@ -39,7 +39,7 @@ Write-Host "Started Python script $pythonScript with PID: $($pythonProcess.Id)"
 #>
 
 # Example usage:
-$processes = Start-NestedScripts -PowerShellScripts @("run_python1.ps1", "run_python2.ps1")
+# $processes = Start-NestedScripts -PowerShellScripts @("run_python1.ps1", "run_python2.ps1")
 
 $processes_1 = Start-NestedScripts -PowerShellScripts @("historic_defense_data\his_defense_script.ps1")
 $processes_1 | Wait-Process

@@ -2,6 +2,11 @@ from data_functions import his_player_defense_data, current_player_defense_data,
 import pandas as pd
 import numpy as np
 from IPython.display import display
+from sklearn.model_selection import GridSearchCV
+from sklearn.linear_model import Lasso
+from sklearn.preprocessing import StandardScaler
+import pandas as pd
+import numpy as np
 
 def his_usage_team(player_names: dict, date_list: list, usage_path,player_base_path,defense_base_path):
     current_player_dic = {}
@@ -148,6 +153,37 @@ def fga_prediction(player_names: dict, date_list: list, usage_path, player_base_
     return fga_prediction_results
 
 
+def select_features(player_names, date_list, usage_path, player_base_path, defense_base_path, target):
+    player_df, _ = his_usage_team(player_names, date_list, usage_path, player_base_path, defense_base_path)
+    
+    selected_features_dict = {}
+    
+    for player, df in player_df.items():
+        df_X = df.drop(columns=[target,'PTS','Date','Matchup','Team','Home/Away_game','W/L', 'Away', 'season', 'TEAM', 'season_defense'])
+        
+        scaler = StandardScaler()
+        X = scaler.fit_transform(df_X)
+        y = df[target]  # Target variable
+        
+        # Grid search parameters for Lasso
+        param_grid = {'alpha': [0.001, 0.01, 0.1, 1, 10]}
+        grid_search = GridSearchCV(Lasso(), param_grid, cv=5, scoring='r2')
+        grid_search.fit(X, y)
+        
+        # Get the best alpha and fit Lasso
+        best_alpha = grid_search.best_params_['alpha']
+        best_lasso = Lasso(alpha=best_alpha)
+        best_lasso.fit(X, y)
+        
+        # Select non-zero coefficient features
+        X = pd.DataFrame(X, columns=df_X.columns)
+        selected_features = X.columns[best_lasso.coef_ != 0].tolist()
+        selected_features_dict[player] = selected_features
+        
+    return selected_features_dict
+
+
+
 if __name__ == "__main__":
     raise ImportError("This script is intended to be imported as a module, not executed directly.")
 
@@ -164,6 +200,39 @@ if __name__ == "__main__":
 
 # for player, fga_predictions in results.items():
 #     print(fga_predictions)
+
+
+
+#example of how to use select_features
+# player_names = {
+#     "Jayson Tatum": "BOS",
+#     # "Nikola Jokic": "DEN",
+#     "Jamal Murray": "DEN",
+#     "Jaylen Brown": "BOS",
+#     "Derrick White": "BOS",
+#     "Payton Pritchard": "BOS",
+#     "Michael Porter Jr.": "DEN",
+#     "Russell Westbrook": "DEN",
+#     "Christian Braun": "DEN",
+#     "Al Horford": "BOS",
+#     # "Julian Strawther": "DEN",
+#     "Sam Hauser": "BOS",
+#     "Zeke Nnaji": "DEN",
+#     "Luke Kornet": "BOS"
+# }
+# date_list = ["2022-23","2023-24","2024-25"]
+# usage_path = "D:/nba_usage_csv_historic/usage_csv_{date}/{date}_content.csv"
+# schedule_base_path = "D:/nba_scheduled_csv/schedule_csv_2025/{schedule_team}_schedule_content.csv"
+# player_base_path = "D:/nba_player_csv_historic/season_{date}/all_quarters/{player}_content.csv"
+# defense_base_path = "D:/nba_defense_history_csv/defense_csv_{date}/all_quarter_defense_content.csv"
+
+
+# feature_dic = select_features(player_names, date_list, usage_path, player_base_path, defense_base_path,'PTS')
+
+# for player, features in feature_dic.items():
+#     # print(player)
+#     features = feature_dic[player] 
+#     print(player,':',features)
    
 
             

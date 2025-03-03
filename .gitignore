@@ -18,3 +18,4 @@ schedule_scraper.log
 his_player_scraper.log
 __pycache__
 myenv
+history_logs

@@ -190,20 +190,18 @@ def run_script(player, season, main_folder, year, quarter_data):
 
 if __name__ == "__main__":
     players = [
-    "Jayson Tatum",
-    "Nikola Jokic",
-    "Jamal Murray",
-    "Jaylen Brown",
-    "Derrick White",
-    "Payton Pritchard",
-    "Michael Porter Jr.",
-    "Russell Westbrook",
-    "Christian Braun",
-    "Al Horford",
-    "Julian Strawther",
-    "Sam Hauser",
-    "Zeke Nnaji",
-    "Luke Kornet"]
+    "Devin Booker",
+    "Anthony Edwards",
+    "Kevin Durant",
+    "Naz Reid",
+    "Julius Randle",
+    "Bradley Beal",
+    "Bol Bol",
+    "Donte DiVincenzo",
+    "Jaden McDaniels",
+    "Nick Richards",
+    "Mike Conley"]
+
     
 
     seasons = [ "2022-23", "2023-24"]
@@ -212,6 +210,7 @@ if __name__ == "__main__":
     
     for player in players:
         for season, year in zip(seasons, years):
-            run_script(player, season, main_folder, year,'yes')
+            # run_script(player, season, main_folder, year,'yes')
+            run_script(player, season, main_folder, year,'no')
     
     print("All scripts have finished executing.")

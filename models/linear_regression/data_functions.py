@@ -44,9 +44,9 @@ def his_player_defense_data(player_base_path, defense_base_path,player, date):
 
     # Get the data paths using the helper function and the custom base paths
     path = build_data_path(player_base_path, player=player, date=date)
-    print(path)
+    # print(path)
     path_defense = build_data_path(defense_base_path, date=date)
-    print(path_defense)
+    # print(path_defense)
 
     # Check if files exist and process them
     if os.path.exists(path) and os.path.exists(path_defense):

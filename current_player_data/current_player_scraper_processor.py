@@ -28,17 +28,37 @@ def run_script(player, season, main_folder, year):
 
 if __name__ == "__main__":
     players = [
-    "Devin Booker",
-    "Anthony Edwards",
-    "Kevin Durant",
-    "Naz Reid",
-    "Julius Randle",
-    "Bradley Beal",
-    "Bol Bol",
-    "Donte DiVincenzo",
-    "Jaden McDaniels",
-    "Nick Richards",
-    "Mike Conley"]
+    "Mark Williams",
+    "Miles Bridges",
+    "Jimmy Butler",
+    "LaMelo Ball",
+    "Stephen Curry",
+    "Brandin Podziemski",
+    "Nick Smith Jr.",
+    "Josh Green",
+    "Moses Moody",
+    "Draymond Green",
+    "Paul George",
+    "Tyrese Maxey",
+    "Kelly Oubre Jr.",
+    "Andre Drummond",
+    "Shaedon Sharpe",
+    "Quentin Grimes",
+    "Deni Avdija",
+    "Anfernee Simons",
+    "Toumani Camara",
+    "Donovan Clingan",
+    "Bam Adebayo",
+    "Tyler Herro",
+    "Andrew Wiggins",
+    "Bilal Coulibaly",
+    "Alexandre Sarr",
+    "Khris Middleton",
+    "Carlton Carrington",
+    "Davion Mitchell",
+    "Kyshawn George",
+    "Haywood Highsmith"
+    ]
 
     seasons = ["2024-25"]
     main_folder = "D:/nba_player_current"

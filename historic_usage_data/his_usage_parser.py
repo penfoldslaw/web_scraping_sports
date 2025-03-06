@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import os
 from IPython.display import display
+from unidecode import unidecode
 
 def create_dataframe(relative_path, csv_sub_folder):
     folder_path = f"D:/nba_usage_historic/{relative_path}"  #f"schedule/nba_schedules/nba_html_{year}"            #nba_html_2019-20 
@@ -67,6 +68,8 @@ def create_dataframe(relative_path, csv_sub_folder):
 
             df[int_columns] = df[int_columns].astype(int)
             df[float_columns] = df[float_columns].astype(float)
+            df['Player'] = df['Player'].apply(unidecode)
+
 
             #df.info()
 

@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import os
 from IPython.display import display
 import sys
+from unidecode import unidecode
 
 def create_dataframe(relative_path, csv_sub_folder):
     log_file_path = "current_logs/current_usage_parser.log"
@@ -72,6 +73,8 @@ def create_dataframe(relative_path, csv_sub_folder):
 
             df[int_columns] = df[int_columns].astype(int)
             df[float_columns] = df[float_columns].astype(float)
+            df['Player'] = df['Player'].apply(unidecode)
+
 
             #df.info()
 

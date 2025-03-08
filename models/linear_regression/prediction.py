@@ -55,7 +55,7 @@ def prediction(player_names: dict, date_list: list, usage_path, player_base_path
         target = prediction_target
 
         # Split data into training and testing sets based on a timestamp
-        timestamp = int(pd.Timestamp('2024-12-31').timestamp())
+        timestamp = int(pd.Timestamp('2025-02-26').timestamp())
         train_data = df[df['Date_in_Seconds'] < timestamp]
         test_data = df[df['Date_in_Seconds'] >= timestamp]
 

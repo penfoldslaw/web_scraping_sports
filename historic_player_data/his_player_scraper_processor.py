@@ -155,7 +155,6 @@
 
 
 BYK = ['Cam Thomas', 'Cameron Johnson', "D'Angelo Russell"]
-NYK = ['Jalen Brunson', 'Karl-Anthony Towns', 'Mikal Bridges']
 
 POR = ['Shaedon Sharpe', 'Anfernee Simons', 'Jerami Grant']
 MIA = ['Tyler Herro', 'Jimmy Butler', 'Bam Adebayo']
@@ -222,6 +221,9 @@ players_past = [
 
 
 
+
+
+
 import subprocess
 import sys
 from pathlib import Path
@@ -232,49 +234,53 @@ def run_script(player, season, main_folder, year, quarter_data):
 
 if __name__ == "__main__":
     players = [
-    # "Franz Wagner",
-    # "Paolo Banchero",
-    # "Coby White",
-    # "Josh Giddey",
-    # "Zach Collins",
-    # "Matas Buzelis",
-    # "Cole Anthony",
-    # "Wendell Carter Jr.",
-    # "Kevin Huerter",
-    # "Kentavious Caldwell-Pope",
-    # "Stephen Curry",
-    # "Cameron Thomas",
-    # "Cameron Johnson",
-    # "Brandin Podziemski",
-    # "D'Angelo Russell",
-    "Moses Moody",
-    "Buddy Hield",
-    "Nicolas Claxton",
-    "Draymond Green",
-    "Trendon Watford",
-    "Ziaire Williams",
-    "Keon Johnson",
-    "Day'Ron Sharpe",
-    "Quinten Post",
-    "Tyrese Martin",
-    "Jalen Wilson",
-    "Gui Santos",
-    "Kevon Looney",
-    "Zion Williamson",
-    "Alperen Sengun",
-    "Jalen Green",
-    "CJ McCollum",
-    "Trey Murphy III",
-    "Dillon Brooks",
-    "Amen Thompson",
-    "Jabari Smith Jr.",
-    "Tari Eason",
-    "Jordan Hawkins",
-    "Kelly Olynyk",
-    "Bruce Brown",
-    "Yves Missi",
-    "Jose Alvarado",
-    "Karlo Matkovic"]
+    "Kevin Durant",
+    "Devin Booker",
+    "Nikola Jokic",
+    "Jamal Murray",
+    "Michael Porter Jr.",
+    "Bradley Beal",
+    "Christian Braun",
+    "Russell Westbrook",
+    "Aaron Gordon",
+    "Bol Bol",
+    "Nick Richards",
+    "Grayson Allen",
+    "Royce O'Neale",
+    "Mason Plumlee",
+    "DeMar DeRozan",
+    "Zach LaVine",
+    "Devin Vassell",
+    "De'Aaron Fox",
+    "Stephon Castle",
+    "Keldon Johnson",
+    "Jonas Valanciunas",
+    "Keegan Murray",
+    "Keon Ellis",
+    "Harrison Barnes",
+    "Jeremy Sochan",
+    "Chris Paul",
+    "Jake Laravia",
+    "Julian Champagnie",
+    "Trey Lyles",
+    "Bismack Biyombo",
+    "Markelle Fultz",
+    "James Harden",
+    "Karl-Anthony Towns",
+    "Kawhi Leonard",
+    "Mikal Bridges",
+    "Bogdan Bogdanovic",
+    "OG Anunoby",
+    "Ivica Zubac",
+    "Miles McBride",
+    "Josh Hart",
+    "Cameron Payne",
+    "Amir Coffey",
+    "Kris Dunn",
+    "Precious Achiuwa",
+    "Drew Eubanks",
+    "Nicolas Batum"]
+
 
 
 

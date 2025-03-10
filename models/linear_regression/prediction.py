@@ -7,8 +7,8 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 import pandas
-from feature_function import his_usage_team, select_features
-from data_functions import his_player_defense_data, current_player_defense_data, build_data_path
+from feature_function import select_features
+from data_functions import his_player_defense_data, current_player_defense_data, build_data_path, his_usage_team
 import pandas as pd
 import numpy as np
 from IPython.display import display
@@ -21,7 +21,7 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 
-def prediction(player_names: dict, date_list: list, usage_path, player_base_path, defense_base_path, schedule_base_path, selected_feature_target, prediction_target):
+def prediction(player_names: dict, date_list: list, stats_path: dict, player_base_path, defense_base_path, schedule_base_path ,selected_feature_target, prediction_target):
     """
     Predicts future data for NBA players using historical data and rolling averages.
 
@@ -38,11 +38,11 @@ def prediction(player_names: dict, date_list: list, usage_path, player_base_path
     Returns:
         pd.DataFrame: A DataFrame containing predicted values and RMSE for each player.
     """
-    fga_prediction_data, df_defense = his_usage_team(player_names, date_list, usage_path, player_base_path, defense_base_path)
+    fga_prediction_data, df_defense = his_usage_team(player_names, date_list, stats_path, player_base_path, defense_base_path)
     fga_prediction_results = {}
 
     # Select the best features for each player
-    feature_dic = select_features(player_names, date_list, usage_path, player_base_path, defense_base_path, selected_feature_target)
+    feature_dic = select_features(player_names, date_list, stats_path, player_base_path, defense_base_path, selected_feature_target)
 
     for player, team in player_names.items():
         # Load schedule data for the player's team

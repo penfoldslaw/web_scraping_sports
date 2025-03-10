@@ -74,6 +74,8 @@ def create_dataframe(relative_path, csv_sub_folder):
             df[int_columns] = df[int_columns].astype(int)
             df[float_columns] = df[float_columns].astype(float)
             df['Player'] = df['Player'].apply(unidecode)
+            df.columns = [col + '_usg' for col in df.columns]
+
 
 
             #df.info()
@@ -89,10 +91,6 @@ def create_dataframe(relative_path, csv_sub_folder):
 
 
 if __name__ == "__main__":
-    # import sys
-    # log_file_path = "current_usage_parser.log"
-    # sys.stdout = open(log_file_path, "a")
-    # sys.stderr = open(log_file_path, "a")
 
     if len(sys.argv) != 3:
         print("Usage: python his_usage_parser.py <sub_folder> <csv_sub_folder>")

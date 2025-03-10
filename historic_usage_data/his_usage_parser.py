@@ -70,6 +70,9 @@ def create_dataframe(relative_path, csv_sub_folder):
             df[float_columns] = df[float_columns].astype(float)
             df['Player'] = df['Player'].apply(unidecode)
 
+            df.columns = [col + '_usg' for col in df.columns]
+
+
 
             #df.info()
 

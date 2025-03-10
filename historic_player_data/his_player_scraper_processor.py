@@ -224,6 +224,10 @@ players_past = [
 
 
 
+
+
+
+
 import subprocess
 import sys
 from pathlib import Path
@@ -234,58 +238,47 @@ def run_script(player, season, main_folder, year, quarter_data):
 
 if __name__ == "__main__":
     players = [
-    "Kevin Durant",
-    "Devin Booker",
-    "Nikola Jokic",
-    "Jamal Murray",
-    "Michael Porter Jr.",
-    "Bradley Beal",
-    "Christian Braun",
-    "Russell Westbrook",
-    "Aaron Gordon",
-    "Bol Bol",
-    "Nick Richards",
-    "Grayson Allen",
-    "Royce O'Neale",
-    "Mason Plumlee",
-    "DeMar DeRozan",
-    "Zach LaVine",
-    "Devin Vassell",
-    "De'Aaron Fox",
-    "Stephon Castle",
-    "Keldon Johnson",
-    "Jonas Valanciunas",
-    "Keegan Murray",
-    "Keon Ellis",
-    "Harrison Barnes",
-    "Jeremy Sochan",
-    "Chris Paul",
-    "Jake Laravia",
-    "Julian Champagnie",
-    "Trey Lyles",
-    "Bismack Biyombo",
-    "Markelle Fultz",
-    "James Harden",
-    "Karl-Anthony Towns",
-    "Kawhi Leonard",
-    "Mikal Bridges",
-    "Bogdan Bogdanovic",
-    "OG Anunoby",
-    "Ivica Zubac",
-    "Miles McBride",
-    "Josh Hart",
-    "Cameron Payne",
-    "Amir Coffey",
-    "Kris Dunn",
-    "Precious Achiuwa",
-    "Drew Eubanks",
-    "Nicolas Batum"]
-
-
-
-
-
-
+    # "Scottie Barnes",
+    # "Jordan Poole",
+    # "RJ Barrett",
+    # "Jakob Poeltl",
+    # "Khris Middleton",
+    # "Bilal Coulibaly",
+    # "Alexandre Sarr",
+    # "Jamal Shead",
+    # "Kyshawn George",
+    # "Corey Kispert",
+    # "Marcus Smart",
+    # "Carlton Carrington",
+    # "Richaun Holmes",
+    # "Orlando Robinson",
+    "Damian Lillard",
+    "Giannis Antetokounmpo",
+    "Franz Wagner",
+    "Paolo Banchero",
+    "Kyle Kuzma",
+    "Brook Lopez",
+    "Cole Anthony",
+    "Wendell Carter Jr.",
+    "Taurean Prince",
+    "Kentavious Caldwell-Pope",
+    "Anthony Black",
+    "Jonathan Isaac",
+    "Goga Bitadze",
+    "Tristan da Silva"
+    # "LeBron James",
+    # "Luka Doncic",
+    # "Jayson Tatum",
+    # "Jaylen Brown",
+    # "Kristaps Porzingis",
+    # "Austin Reaves",
+    # "Derrick White",
+    # "Payton Pritchard",
+    # "Jrue Holiday",
+    # "Dorian Finney-Smith",
+    # "Dalton Knecht",
+    # "Gabe Vincent"
+    ]
     
 
     seasons = [ "2022-23", "2023-24"]

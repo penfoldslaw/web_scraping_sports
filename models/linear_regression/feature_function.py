@@ -1,4 +1,4 @@
-from data_functions import his_player_defense_data, current_player_defense_data, build_data_path
+from data_functions import his_player_defense_data, current_player_defense_data, build_data_path, his_usage_team
 import pandas as pd
 import numpy as np
 from IPython.display import display
@@ -8,61 +8,6 @@ from sklearn.preprocessing import StandardScaler
 import pandas as pd
 import numpy as np
 
-def his_usage_team(player_names: dict, date_list: list, usage_path,player_base_path,defense_base_path):
-    current_player_dic = {}
-
-    for player, team in player_names.items():
-        current_player_frames =[]
-
-        for date in date_list:
-            usage_path =build_data_path(usage_path,date=date)
-            usage_data = pd.read_csv(usage_path)
-
-            #merging player and defense dat into one
-            merged_data, current_defense_df = his_player_defense_data(player_base_path,defense_base_path,player,date)
-
-            #adding season to usage_data
-            usage_data['season'] = date
-
-            #Getting the player usage percentage for usage data and adding to merge
-            player_usage = usage_data.loc[usage_data['Player'] == player, 'USG%'].values[0]
-            merged_data['USG'] = player_usage
-
-            #adding the current player team pace
-            team_stat = current_defense_df.loc[current_defense_df['TEAM'] == team, 'PACE'].values[0]
-            merged_data["team_pace"] = team_stat
-
-            # adding current player team OffRtg
-            team_offrtg = current_defense_df.loc[current_defense_df['TEAM'] == team, 'OffRtg'].values[0]
-            merged_data["team_offrtg"] = team_offrtg
-
-            team_poss = current_defense_df.loc[current_defense_df['TEAM'] == team, 'POSS'].values[0]
-            merged_data["team_poss"] = team_poss
-            
-            # Exclude rows where the TEAM column matches the given team
-            merged_data = merged_data[merged_data['TEAM'] != team]
-
-
-            # merged_data = merged_data[['season','Date', 'Home/Away_game' ,'Matchup' ,'PTS','MIN_x', 'Team', 'TEAM', 'FGA', 'USG', 'DefRtg', 'PACE','team_pace']]
-
-            # Turn date into seconds
-            merged_data['Date_in_Seconds'] = pd.to_datetime(merged_data['Date']).astype('int64') // 10**9
-            merged_data = merged_data.sort_values(by="Date_in_Seconds")
-
-
-            # Turn Home/Away game into 1 and 0
-            merged_data['home_away'] = merged_data['Home/Away_game'].apply(lambda x: 1 if x == 'Away' else 0)
-            # Dropping duplicates
-            merged_data = merged_data.drop_duplicates()
-            
-            # Append the DataFrame for this date to the player's list
-            current_player_frames.append(merged_data)
-
-        # Combine all dates for the current player into one DataFrame
-        current_player_dic[player] = pd.concat(current_player_frames, ignore_index=True)
-
-
-    return current_player_dic, current_defense_df
 
 
 def fga_prediction(player_names: dict, date_list: list, usage_path, player_base_path, defense_base_path, schedule_base_path):
@@ -153,38 +98,10 @@ def fga_prediction(player_names: dict, date_list: list, usage_path, player_base_
     return fga_prediction_results
 
 
-# def select_features(player_names, date_list, usage_path, player_base_path, defense_base_path, target):
-#     player_df, _ = his_usage_team(player_names, date_list, usage_path, player_base_path, defense_base_path)
-    
-#     selected_features_dict = {}
-    
-#     for player, df in player_df.items():
-#         df_X = df.drop(columns=[target,'PTS','Date','Matchup','Team','Home/Away_game','W/L', 'Away', 'season', 'TEAM', 'season_defense'])
-        
-#         scaler = StandardScaler()
-#         X = scaler.fit_transform(df_X)
-#         y = df[target]  # Target variable
-        
-#         # Grid search parameters for Lasso
-#         param_grid = {'alpha': [0.001, 0.01, 0.1, 1, 10]}
-#         grid_search = GridSearchCV(Lasso(), param_grid, cv=5, scoring='r2')
-#         grid_search.fit(X, y)
-        
-#         # Get the best alpha and fit Lasso
-#         best_alpha = grid_search.best_params_['alpha']
-#         best_lasso = Lasso(alpha=best_alpha)
-#         best_lasso.fit(X, y)
-        
-#         # Select non-zero coefficient features
-#         X = pd.DataFrame(X, columns=df_X.columns)
-#         selected_features = X.columns[best_lasso.coef_ != 0].tolist()
-#         selected_features_dict[player] = selected_features
-        
-#     return selected_features_dict
 
 
-def select_features(player_names, date_list, usage_path, player_base_path, defense_base_path, target):
-    player_df, _ = his_usage_team(player_names, date_list, usage_path, player_base_path, defense_base_path)
+def select_features(player_names, date_list, stats_path, player_base_path, defense_base_path, target):
+    player_df, _ = his_usage_team(player_names, date_list, stats_path, player_base_path, defense_base_path)
     
     selected_features_dict = {}
     

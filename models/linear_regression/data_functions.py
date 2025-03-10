@@ -156,7 +156,30 @@ def current_player_defense_data(player_base_path, defense_base_path,schedule_bas
 
 
 
-def his_usage_team(player_names: dict, date_list: list, usage_path,player_base_path,defense_base_path):
+def tracking_and_usage(stats_path:dict,date):
+    stats_dataframe = {}  # Dictionary to store each stats DataFrame
+    # all_stats_df = pd.DataFrame()  # Initialize a DataFrame for the each stats
+
+    for stats_name,stats_data in stats_path.items():
+
+
+        all_path =build_data_path(stats_data,date=date)
+
+        if os.path.exists(all_path):
+            ind_stats_df = pd.read_csv(all_path)
+            ind_stats_df['season'] = date
+            # all_stats_df = pd.concat([all_stats_df, ind_stats_df], ignore_index=True)
+        else:
+            print(f'{date} not found for {stats_name}')
+
+
+        stats_dataframe[stats_name] = ind_stats_df
+
+    return stats_dataframe
+
+
+
+def his_usage_team(player_names: dict, date_list: list,stats_path:dict,player_base_path,defense_base_path):
     """
         Computes historical usage data for a given set of players over a list of dates.
 
@@ -185,18 +208,47 @@ def his_usage_team(player_names: dict, date_list: list, usage_path,player_base_p
         current_player_frames =[]
 
         for date in date_list:
-            usage_path =build_data_path(usage_path,date=date)
-            usage_data = pd.read_csv(usage_path)
+            # usage_path =build_data_path(usage_path,date=date)
+            # usage_data = pd.read_csv(usage_path)
 
             #merging player and defense dat into one
             merged_data, current_defense_df = his_player_defense_data(player_base_path,defense_base_path,player,date)
 
-            #adding season to usage_data
-            usage_data['season'] = date
+            def add_one_stats(merged_data, one_stat_data, player, player_column, columns):
+                """Efficiently adds stats for a player to the merged dataset. stats are from usage and everything from tracking data csv"""
+                one_stat_data["season"] = date
+                player_data = one_stat_data.loc[one_stat_data[player_column] == player, columns]
 
-            #Getting the player usage percentage for usage data and adding to merge
-            player_usage = usage_data.loc[usage_data['Player'] == player, 'USG%'].values[0]
-            merged_data['USG'] = player_usage
+                if not player_data.empty:
+                    # Create a new DataFrame with the selected columns to merge
+                    new_columns = pd.DataFrame([player_data.iloc[0].values], columns=columns, index=merged_data.index)
+                    merged_data = pd.concat([merged_data, new_columns], axis=1)
+
+                return merged_data
+
+            
+            
+            
+            track_data = tracking_and_usage(stats_path,date)
+            keys_list = list(track_data.keys())
+
+            for idx, (track_name, track_df) in enumerate(track_data.items()):
+                if track_name == keys_list[idx]:  # Ensures correct mapping
+                    columns = list(track_df.columns)
+                    if track_name == "usage_path":
+                        player_column = columns.pop(1)
+                        columns.pop(1)
+                    else:
+                        player_column = columns.pop(0)  # Extract player identifier column
+                        columns.pop(0)
+                    merged_data = add_one_stats(merged_data, track_df, player, player_column, columns)
+
+            # #adding season to usage_data
+            # usage_data['season'] = date
+
+            # #Getting the player usage percentage for usage data and adding to merge
+            # player_usage = usage_data.loc[usage_data['Player'] == player, 'USG%'].values[0]
+            # merged_data['USG'] = player_usage
 
             #adding the current player team pace
             team_stat = current_defense_df.loc[current_defense_df['TEAM'] == team, 'PACE'].values[0]

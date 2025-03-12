@@ -63,6 +63,9 @@ $processes_3 | Wait-Process
 $processes_4 = Start-NestedScripts -PowerShellScripts @("schedule\schedule_script.ps1")
 $processes_4 | Wait-Process
 
+$processes_5 = Start-NestedScripts -PowerShellScripts @("track_data\track_script.ps1")
+$processes_5 | Wait-Process
+
 
 $processes_4 = Start-NestedScripts -PowerShellScripts @("mover.ps1")
 $processes_4 | Wait-Process

@@ -100,8 +100,53 @@ def fga_prediction(player_names: dict, date_list: list, usage_path, player_base_
 
 
 
-def select_features(player_names, date_list, stats_path, player_base_path, defense_base_path, target):
-    player_df, _ = his_usage_team(player_names, date_list, stats_path, player_base_path, defense_base_path)
+# def select_features(player_names, date_list, stats_path, player_base_path, defense_base_path, target):
+#     player_df, _ = his_usage_team(player_names, date_list, stats_path, player_base_path, defense_base_path)
+    
+#     selected_features_dict = {}
+    
+#     max_features_player = None
+#     max_features = 0
+
+#     for player, df in player_df.items():
+#         df_X = df.drop(columns=[target,'Date','Matchup','Team','Home/Away_game','W/L', 'Away', 'season', 'TEAM', 'season_defense'])
+        
+#         scaler = StandardScaler()
+#         X = scaler.fit_transform(df_X)
+#         y = df[target]  # Target variable
+        
+#         # Grid search parameters for Lasso
+#         param_grid = {'alpha': [0.001, 0.01, 0.1, 1, 10]}
+#         grid_search = GridSearchCV(Lasso(), param_grid, cv=5, scoring='r2')
+#         grid_search.fit(X, y)
+        
+#         # Get the best alpha and fit Lasso
+#         best_alpha = grid_search.best_params_['alpha']
+#         best_lasso = Lasso(alpha=best_alpha)
+#         best_lasso.fit(X, y)
+        
+#         # Select non-zero coefficient features
+#         X = pd.DataFrame(X, columns=df_X.columns)
+#         selected_features = X.columns[best_lasso.coef_ != 0].tolist()
+        
+#         # Store selected features
+#         selected_features_dict[player] = selected_features
+        
+#         # Track the player with the most features
+#         if len(selected_features) > max_features:
+#             max_features = len(selected_features)
+#             max_features_player = player
+
+#     # If a player has no selected features, assign the features of the player with the most features
+#     for player in selected_features_dict:
+#         if not selected_features_dict[player]:  # If empty
+#             selected_features_dict[player] = selected_features_dict.get(max_features_player, [])
+
+#     return selected_features_dict
+
+
+def select_features(player_names, date_list, usage_path, player_base_path, defense_base_path, target):
+    player_df, _ = his_usage_team(player_names, date_list, usage_path, player_base_path, defense_base_path)
     
     selected_features_dict = {}
     
@@ -109,20 +154,23 @@ def select_features(player_names, date_list, stats_path, player_base_path, defen
     max_features = 0
 
     for player, df in player_df.items():
-        df_X = df.drop(columns=[target,'Date','Matchup','Team','Home/Away_game','W/L', 'Away', 'season', 'TEAM', 'season_defense'])
+        df_X = df.drop(columns=[target, 'Date', 'Matchup', 'Team', 'Home/Away_game', 'W/L', 'Away', 'season', 'TEAM', 'season_defense'])
         
+        # Apply StandardScaler to scale the features
         scaler = StandardScaler()
         X = scaler.fit_transform(df_X)
         y = df[target]  # Target variable
         
         # Grid search parameters for Lasso
         param_grid = {'alpha': [0.001, 0.01, 0.1, 1, 10]}
-        grid_search = GridSearchCV(Lasso(), param_grid, cv=5, scoring='r2')
+        
+        # Use GridSearchCV to find the best alpha
+        grid_search = GridSearchCV(Lasso(max_iter=5000000000), param_grid, cv=5, scoring='r2')  # Increase max_iter here
         grid_search.fit(X, y)
         
         # Get the best alpha and fit Lasso
         best_alpha = grid_search.best_params_['alpha']
-        best_lasso = Lasso(alpha=best_alpha)
+        best_lasso = Lasso(alpha=best_alpha, max_iter=5000000000)  # Ensure enough iterations for convergence
         best_lasso.fit(X, y)
         
         # Select non-zero coefficient features

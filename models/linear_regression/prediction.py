@@ -20,6 +20,8 @@ import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, mean_squared_error
+from scipy.stats import linregress
+
 
 def prediction(player_names: dict, date_list: list, stats_path: dict, player_base_path, defense_base_path, schedule_base_path ,selected_feature_target, prediction_target):
     """
@@ -70,19 +72,11 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         y_pred = model.predict(X_test)
 
         # Calculate error metrics
-        mae = mean_absolute_error(y_test, y_pred)
-        mse = mean_squared_error(y_test, y_pred)
-        rmse = np.sqrt(mse)
+        # mae = mean_absolute_error(y_test, y_pred)
+        # mse = mean_squared_error(y_test, y_pred)
+        # rmse = np.sqrt(mse)
 
-        print(f"{player}, MAE: {mae}, RMSE: {rmse}")
-
-        # Compute exponentially weighted moving average (EWMA) for minutes played
-        alpha = 0.2
-        df['EWMA_MIN'] = df['MIN_x'].ewm(span=(2/alpha - 1), adjust=False).mean()
-        last_actual = df['MIN_x'].iloc[-1]
-        last_smoothed = df['EWMA_MIN'].iloc[-1]
-        next_value = alpha * last_actual + (1 - alpha) * last_smoothed
-        next_value = round(next_value, 2)
+        # print(f"{player}, MAE: {mae}, RMSE: {rmse}")
 
         # Define feature exclusion lists
         exclude_features = ['RANK', 'OffRtg', 'W', 'L', 'DefRtg', 'NetRtg', 'AST%', 'AST/TO', 'ASTRatio',
@@ -102,7 +96,7 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
                            for feature in exclude_features if feature in df_for_schedule.columns}
         
  
-        print(schedule_values)  # Debugging: Ensure schedule values are correctly retrieved
+        # print(schedule_values)  # Debugging: Ensure schedule values are correctly retrieved
 
         # Extract rolling average features
         rolling_features = [col for col in features if col not in exclude_features]
@@ -121,14 +115,96 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         # Ensure feature order is consistent with model input
         df_last_rolling = df_last_rolling.reindex(columns=features)
         X_future = df_last_rolling
-        display(X_future)  # Debugging: Display final feature set for prediction
 
-        # Make future predictions
+        # Step 1: Calculate mean and standard deviation of the target variable (PTS, REB, etc.)
+        mean_target = y_train.mean()
+        std_target = y_train.std()
+
+        # Step 2: Define reasonable bounds (e.g., within 3 standard deviations) so target stay within range
+        lower_bound = mean_target - 3 * std_target
+        upper_bound = mean_target + 3 * std_target
+
+        
+
+        # future predictions happens here
         future_predictions = model.predict(X_future).astype('int')
-        fga_prediction_results[player] = [future_predictions[0].round(1), rmse]
 
-        # Format results into a DataFrame
-        df_results = pd.DataFrame.from_dict(fga_prediction_results, orient='index', columns=[target, 'RMSE'])
+        # so future prediction stay within range example austin revese ast when to 321
+        future_predictions = np.clip(future_predictions, lower_bound, upper_bound).astype('int')
+
+        # creating rolling mean average for the target to figure out the cv
+        df[f"Rolling_Mean_{target}"] = df[target].rolling(window=20).mean()
+        df[f"Rolling_Std_{target}"] = df[target].rolling(window=20).std()
+        df[f"Rolling_CV_{target}"] = df[f"Rolling_Std_{target}"] / df[f"Rolling_Mean_{target}"]
+
+        
+
+        # figuring out the confidence level of the two scores provided
+        rounded_future_prediction = future_predictions[0]
+
+
+
+        # print(player)
+        # display(df[[f"Rolling_CV_{target}"]].tail(1))
+
+        if pd.isna(df[f"Rolling_CV_{target}"].iloc[-1]) or np.isinf(df[f"Rolling_CV_{target}"].iloc[-1]):
+            df.loc[df.index[-1], f"Rolling_CV_{target}"] = 0
+
+        rolling_cv = df[f"Rolling_CV_{target}"].iloc[-1]
+        highest_cv_seen = df[f"Rolling_CV_{target}"].max()
+
+        cv_fluctuate = rolling_cv * rounded_future_prediction
+
+        if cv_fluctuate > rounded_future_prediction:
+            cv_low_prediction = abs(cv_fluctuate - rounded_future_prediction)
+        else:
+            cv_low_prediction = abs(rounded_future_prediction- cv_fluctuate)
+
+        
+        # cv_low_prediction = abs(rounded_future_prediction- cv_fluctuate)
+
+        cv_high_prediction = rounded_future_prediction + cv_fluctuate
+
+        player_prediction = f"{cv_low_prediction.astype('int')} to {rounded_future_prediction}"
+
+
+        if rolling_cv > 1:
+            confidence_score = max(0, 1 - (rolling_cv / highest_cv_seen))
+        else:
+            confidence_score = 1 - rolling_cv  # More stability → Higher confidence
+
+        confidence_score_percentage = round(confidence_score * 100, 2)
+
+
+        # Get last 4 game to get the slope for when a player is trending
+        recent_games = df[target].tail(4)
+        
+
+
+        # Fit a linear regression (x = game number, y = points)
+        slope, intercept, r_value, p_value, std_err = linregress(range(len(recent_games)), recent_games)
+
+        long_term_cv = df["PTS"].rolling(10).std() / df["PTS"].rolling(10).mean()
+
+        # Set dynamic base threshold (scaled by long-term CV)
+        base_threshold = max(0.2, min(0.6, 0.3 + 0.2 * long_term_cv.iloc[-1]))
+
+        # Compute dynamic middle threshold (adjusted for rolling CV)
+        middle_threshold = max(0.2, min(0.8, base_threshold * (1 + rolling_cv)))
+        
+        # Check if the slope is close to zero (i.e., in the middle)
+        if -middle_threshold <= slope <= middle_threshold:
+            trend_status = "stable"
+        elif slope > 0:
+            trend_status = "trending up"
+        else:
+            trend_status = "trending down"
+
+        # display(X_future)  # Debugging: Display final feature set for prediction
+
+
+        fga_prediction_results[player] = [player_prediction, trend_status, confidence_score_percentage]
+        df_results = pd.DataFrame.from_dict(fga_prediction_results, orient='index', columns=[target, 'trend_status', 'confidence_level' ])
         df_results.reset_index(inplace=True)
         df_results.rename(columns={'index': 'Player'}, inplace=True)
 

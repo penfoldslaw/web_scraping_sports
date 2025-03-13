@@ -249,12 +249,17 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
             exact_point = 0
 
 
-        fga_prediction_results[player] = [player_prediction, trend_status, confidence_score_percentage, exact_point]
-        df_results = pd.DataFrame.from_dict(fga_prediction_results, orient='index', columns=[target, 'trend_status', 'confidence_level' ,  'safebet'])
+        fga_prediction_results[player] = [player_prediction,confidence_score_percentage,exact_point]
+        if target == 'FGA':
+            target = 'PTS'
+        
+        
+        df_results = pd.DataFrame.from_dict(fga_prediction_results, orient='index', columns=[target,f'confidence_level_{target}' ,  f'middlebet_{target}'])
         # Reset index and rename it properly
         df_results.reset_index(inplace=True)
         df_results.rename(columns={'index': 'Player'}, inplace=True)
         df_results.to_csv(f'{target}_output.csv', index=False)
+        # display(df_results)
 
     return df_results
 

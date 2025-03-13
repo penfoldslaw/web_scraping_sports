@@ -51,7 +51,7 @@ driver = webdriver.Firefox(service=service,options=firefox_options)
 @retry(stop=stop_after_attempt(3), wait=wait_fixed(2))
 def scrape_data(player,season,main_folder,folder_year,quarter_data):
     driver.get("https://www.nba.com/players")
-    time.sleep(2)
+    time.sleep(4)
 
     # This locates the search bar by its 'aria-label' attribute
     search_bar = driver.find_element(By.XPATH, "//input[@aria-label='Player Natural Search Bar']")
@@ -65,21 +65,21 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data):
     search_bar.send_keys(Keys.RETURN)
     
     # This is so it gives it time to reload
-    time.sleep(2)
+    time.sleep(4)
 
 
     # After the player name has been searched this clicks the player note that this has only been tested for one player coming up not multiple
     player_link = driver.find_element(By.XPATH, "//div[@class='RosterRow_playerName__G28lg']")
     player_link.click()  # This simulates a click
 
-    time.sleep(2)
+    time.sleep(4)
 
 
     #this click the stats page 
     stats_link = driver.find_element(By.XPATH, "//ul[@class='InnerNavTabs_list__tIFRN']/li[2]")
     stats_link.click()
 
-    time.sleep(3)
+    time.sleep(4)
 
 
     current_url = driver.current_url
@@ -92,7 +92,7 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data):
    
 
 
-    time.sleep(2)
+    time.sleep(4)
 
     # Extract the entire HTML page
     page_html = driver.page_source
@@ -117,7 +117,7 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data):
             driver.get(updated_url)  # Navigate to the updated URL
 
         driver.execute_script("window.scrollBy(0, 500);") 
-        time.sleep(2)
+        time.sleep(4)
 
         xpath_quarters=["1","2","3","4"]
         
@@ -129,7 +129,7 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data):
             if not current_url.endswith(f"/boxscores-traditional?Season={season}"):
                 updated_url = current_url + f"/boxscores-traditional?Season={season}&Period={nba_quarter}"
                 driver.get(updated_url)  # Navigate to the updated URL
-            time.sleep(2)
+            time.sleep(4)
 
             driver.execute_script("window.scrollBy(0, 500);")
 

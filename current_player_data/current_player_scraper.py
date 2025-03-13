@@ -82,14 +82,14 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data='yes'):
     search_bar.send_keys(Keys.RETURN)
     
     # This is so it gives it time to reload
-    time.sleep(2)
+    time.sleep(4)
 
 
     # After the player name has been searched this clicks the player note that this has only been tested for one player coming up not multiple
     player_link = driver.find_element(By.XPATH, "//div[@class='RosterRow_playerName__G28lg']")
     player_link.click()  # This simulates a click
 
-    time.sleep(2)
+    time.sleep(4)
 
 
     #this click the stats page 
@@ -109,7 +109,7 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data='yes'):
    
 
 
-    time.sleep(2)
+    time.sleep(4)
 
     # Extract the entire HTML page
     page_html = driver.page_source
@@ -135,7 +135,7 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data='yes'):
             driver.get(updated_url)  # Navigate to the updated URL
 
         driver.execute_script("window.scrollBy(0, 500);") 
-        time.sleep(2)
+        time.sleep(4)
 
         xpath_quarters=["1","2","3","4"]
         
@@ -147,11 +147,11 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data='yes'):
             if not current_url.endswith(f"/boxscores-traditional?Season={season}"):
                 updated_url = current_url + f"/boxscores-traditional?Season={season}&Period={nba_quarter}"
                 driver.get(updated_url)  # Navigate to the updated URL
-            time.sleep(2)
+            time.sleep(4)
 
             driver.execute_script("window.scrollBy(0, 500);")
 
-            time.sleep(1) 
+            time.sleep(4) 
 
             page_html = driver.page_source
 

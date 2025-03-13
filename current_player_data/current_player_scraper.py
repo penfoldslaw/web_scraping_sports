@@ -35,6 +35,7 @@ service = Service(executable_path=path / "firefox_drive/geckodriver.exe", log_pa
 
 #  Firefox options
 firefox_options = Options()
+firefox_options.set_preference("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
 # firefox_options.add_argument("--headless")  # Run in headless mode if needed
 firefox_options.add_argument("--start-maximized")  # Run in headless mode if needed
 
@@ -67,7 +68,7 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data='yes'):
 
 
     driver.get("https://www.nba.com/players")
-    time.sleep(2)
+    time.sleep(5)
 
     # This locates the search bar by its 'aria-label' attribute
     search_bar = driver.find_element(By.XPATH, "//input[@aria-label='Player Natural Search Bar']")
@@ -166,7 +167,8 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data='yes'):
     
         # time.sleep(10)
 
-        print(driver.title.encode('ascii', 'replace').decode())
+    print(driver.title.encode('ascii', 'replace').decode())
+    driver.quit()
 
 if __name__ == "__main__":
     # import sys
@@ -198,7 +200,7 @@ if __name__ == "__main__":
 
     try:
         scrape_data(player,season,main_folder,folder_year,quarter_data)
-        driver.quit()
+        # driver.quit()
 
     except Exception as e:
         print(f"Function failed after retries: {e}")

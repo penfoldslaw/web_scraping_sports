@@ -12,6 +12,7 @@ from data_functions import his_player_defense_data, current_player_defense_data,
 import pandas as pd
 import numpy as np
 from IPython.display import display
+import sys
 
 
 
@@ -66,6 +67,15 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         X_test = test_data[features].fillna(0)
         y_test = test_data[target].fillna(0) 
 
+        # print(f"X_train shape: {X_train.shape}")
+        # print(f"y_train shape: {y_train.shape}")
+
+        if not features:  # If feature_columns is an empty list
+            print(f"Skipping training: No selected {target} features.")
+            sys.exit(1) 
+
+
+
         # Train linear regression model
         model = LinearRegression()
         model.fit(X_train, y_train)
@@ -116,11 +126,12 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         df_last_rolling = df_last_rolling.reindex(columns=features)
         X_future = df_last_rolling
 
+        # display(X_future.head(10))
         # Step 1: Calculate mean and standard deviation of the target variable (PTS, REB, etc.)
         mean_target = y_train.mean()
         std_target = y_train.std()
 
-        # Step 2: Define reasonable bounds (e.g., within 3 standard deviations) so target stay within range
+        # Step 2: Define reasonable bounds (e.g., within 3 standard deviations)
         lower_bound = mean_target - 3 * std_target
         upper_bound = mean_target + 3 * std_target
 
@@ -129,22 +140,20 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         # future predictions happens here
         future_predictions = model.predict(X_future).astype('int')
 
-        # so future prediction stay within range example austin revese ast when to 321
         future_predictions = np.clip(future_predictions, lower_bound, upper_bound).astype('int')
 
-        # creating rolling mean average for the target to figure out the cv
+
+
+        # creating rolling mean average
         df[f"Rolling_Mean_{target}"] = df[target].rolling(window=20).mean()
         df[f"Rolling_Std_{target}"] = df[target].rolling(window=20).std()
         df[f"Rolling_CV_{target}"] = df[f"Rolling_Std_{target}"] / df[f"Rolling_Mean_{target}"]
 
-        
-
-        # figuring out the confidence level of the two scores provided
-        rounded_future_prediction = future_predictions[0]
-
-
+        rounded_future_prediction = abs(future_predictions[0])
 
         # print(player)
+        # display(X_future.head(10))
+        # print(player, target, rounded_future_prediction)
         # display(df[[f"Rolling_CV_{target}"]].tail(1))
 
         if pd.isna(df[f"Rolling_CV_{target}"].iloc[-1]) or np.isinf(df[f"Rolling_CV_{target}"].iloc[-1]):
@@ -157,16 +166,13 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
 
         if cv_fluctuate > rounded_future_prediction:
             cv_low_prediction = abs(cv_fluctuate - rounded_future_prediction)
-        else:
-            cv_low_prediction = abs(rounded_future_prediction- cv_fluctuate)
 
-        
-        # cv_low_prediction = abs(rounded_future_prediction- cv_fluctuate)
-
+        cv_low_prediction = abs(rounded_future_prediction- cv_fluctuate)
         cv_high_prediction = rounded_future_prediction + cv_fluctuate
 
         player_prediction = f"{cv_low_prediction.astype('int')} to {rounded_future_prediction}"
 
+        
 
         if rolling_cv > 1:
             confidence_score = max(0, 1 - (rolling_cv / highest_cv_seen))
@@ -176,7 +182,12 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         confidence_score_percentage = round(confidence_score * 100, 2)
 
 
-        # Get last 4 game to get the slope for when a player is trending
+        lower_bound, upper_bound = cv_low_prediction, rounded_future_prediction
+
+
+
+
+        # Get last 10 games
         recent_games = df[target].tail(4)
         
 
@@ -200,13 +211,50 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         else:
             trend_status = "trending down"
 
-        # display(X_future)  # Debugging: Display final feature set for prediction
+
+        ##### this is for safebet column ############
+        import math
+        # Step 1: Calculate the midpoint of the range
+        midpoint = (lower_bound + upper_bound) / 2
+        midpoint = math.floor(midpoint)
+    
+        
+        # Step 2: Adjust the prediction based on confidence score
+        if confidence_score_percentage > 60:
+            # High confidence - stick closer to midpoint
+            if trend_status == "trending up":
+                # Trending up - lean towards the higher end
+                exact_point = round(midpoint)
+            elif trend_status == "trending down":
+                # Trending down - lean towards the lower end
+                exact_point = lower_bound
+            else:
+                # Stable - pick midpoint or the closest round number
+                exact_point = round(midpoint)
+        else:
+            # Low confidence - lean more conservatively towards the edges
+            if trend_status == "trending up":
+                # Trending up - lean towards the higher end
+                exact_point = round(midpoint + 1)  # Slight bias to upper end
+            elif trend_status == "trending down":
+                # Trending down - lean towards the lower end
+                exact_point = round(midpoint - 1)  # Slight bias to lower end
+            else:
+                # Stable - pick midpoint but be cautious (lean lower)
+                exact_point = round(midpoint - 1)
+
+        exact_point = int(exact_point)
+
+        if exact_point == -1:
+            exact_point = 0
 
 
-        fga_prediction_results[player] = [player_prediction, trend_status, confidence_score_percentage]
-        df_results = pd.DataFrame.from_dict(fga_prediction_results, orient='index', columns=[target, 'trend_status', 'confidence_level' ])
+        fga_prediction_results[player] = [player_prediction, trend_status, confidence_score_percentage, exact_point]
+        df_results = pd.DataFrame.from_dict(fga_prediction_results, orient='index', columns=[target, 'trend_status', 'confidence_level' ,  'safebet'])
+        # Reset index and rename it properly
         df_results.reset_index(inplace=True)
         df_results.rename(columns={'index': 'Player'}, inplace=True)
+        df_results.to_csv(f'{target}_output.csv', index=False)
 
     return df_results
 

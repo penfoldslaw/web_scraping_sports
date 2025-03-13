@@ -37,6 +37,7 @@ service = Service(executable_path=path / "firefox_drive/geckodriver.exe", log_pa
 
 #  Firefox options
 firefox_options = Options()
+firefox_options.set_preference("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
 #firefox_options.add_argument("--headless")  # Run in headless mode if needed
 firefox_options.add_argument("--start-maximized")  # Run in headless mode if needed
 
@@ -67,7 +68,7 @@ def scrape_data(season,main_folder,folder_year):
     log_with_timestamp("Scraping data...") 
 
     driver.get(f"https://www.nba.com/stats/players/usage?dir=A&sort=USG_PCT&Season={season}")
-    time.sleep(3)
+    time.sleep(5)
 
 
     # # After the player name has been searched this clicks the player note that this has only been tested for one player coming up not multiple
@@ -80,11 +81,11 @@ def scrape_data(season,main_folder,folder_year):
     # Select the "All" option by visible text
     select.select_by_visible_text("All")
 
-    time.sleep(2)
+    time.sleep(5)
 
     driver.execute_script("window.scrollBy(0, 500);")
 
-    time.sleep(2)
+    time.sleep(5)
 
 
     # Extract the entire HTML page

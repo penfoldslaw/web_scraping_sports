@@ -24,6 +24,7 @@ service = Service(executable_path=path / "firefox_drive/geckodriver.exe", log_pa
 #  Firefox options
 firefox_options = Options()
 firefox_options.add_argument("--headless")  # Run in headless mode if needed
+firefox_options.set_preference("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
 #firefox_options.add_argument("--start-maximized")  # Run in headless mode if needed
 
 # Initialize the Firefox WebDriver
@@ -52,7 +53,7 @@ def defense_scraper(main_folder,folder_season,data_season):
 
     for web_site, file_names in zip(web_site_list, file_names) :
         driver.get(web_site)
-        time.sleep(3)
+        time.sleep(5)
 
         page_html = driver.page_source
         

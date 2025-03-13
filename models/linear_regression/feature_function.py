@@ -165,12 +165,12 @@ def select_features(player_names, date_list, usage_path, player_base_path, defen
         param_grid = {'alpha': [0.001, 0.01, 0.1, 1, 10]}
         
         # Use GridSearchCV to find the best alpha
-        grid_search = GridSearchCV(Lasso(max_iter=5000000000), param_grid, cv=5, scoring='r2')  # Increase max_iter here
+        grid_search = GridSearchCV(Lasso(max_iter=50000), param_grid, cv=5, scoring='r2')  # Increase max_iter here
         grid_search.fit(X, y)
         
         # Get the best alpha and fit Lasso
         best_alpha = grid_search.best_params_['alpha']
-        best_lasso = Lasso(alpha=best_alpha, max_iter=5000000000)  # Ensure enough iterations for convergence
+        best_lasso = Lasso(alpha=best_alpha, max_iter=50000)  # Ensure enough iterations for convergence
         best_lasso.fit(X, y)
         
         # Select non-zero coefficient features

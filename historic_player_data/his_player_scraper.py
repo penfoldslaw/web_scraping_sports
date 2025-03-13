@@ -148,10 +148,12 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data):
 
 
 
+
     
     # time.sleep(10)
 
     print(driver.title.encode('ascii', 'replace').decode())
+    driver.quit()
 
 if __name__ == "__main__":
     import sys
@@ -180,7 +182,7 @@ if __name__ == "__main__":
 
     try:
         scrape_data(player,season,main_folder,folder_year,quarter_data)
-        driver.quit()
+        # driver.quit()
 
     except Exception as e:
         print(f"Function failed after retries: {e}")

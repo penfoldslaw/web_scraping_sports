@@ -13,6 +13,8 @@ import pandas as pd
 import numpy as np
 from IPython.display import display
 import sys
+from datetime import datetime
+import os
 
 
 
@@ -54,8 +56,23 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
 
         # Retrieve player-specific prediction data
         df = fga_prediction_data[player]
+
+
         features = feature_dic[player] 
+
+        # some players can't connect to the his_usage datatframe well I don't why
+        features = [feature for feature in features if feature in df.columns]
+        
+        if not features:
+            print(f"No valid features found for {player} for predicting {prediction_target}")
+            continue
+
+
+
         target = prediction_target
+
+        # print(f"Available columns for {player}: {df.columns.tolist()}")
+        # print(f"Selected features for {player}: {features}")
 
         # Split data into training and testing sets based on a timestamp
         timestamp = int(pd.Timestamp('2025-02-26').timestamp())
@@ -67,8 +84,15 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         X_test = test_data[features].fillna(0)
         y_test = test_data[target].fillna(0) 
 
+        # display(X_train.head(1))
         # print(f"X_train shape: {X_train.shape}")
         # print(f"y_train shape: {y_train.shape}")
+        # print(X_train.head())  # View first few rows
+        # print(y_train.head())  # View first few rows
+
+        # print(features)  # Check selected feature names
+        # print(X_train.columns)  # See available columns
+
 
         if not features:  # If feature_columns is an empty list
             print(f"Skipping training: No selected {target} features.")
@@ -188,12 +212,13 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
 
 
         # Get last 10 games
-        recent_games = df[target].tail(4)
+        recent_games = df[target].tail(10)
         
 
 
         # Fit a linear regression (x = game number, y = points)
-        slope, intercept, r_value, p_value, std_err = linregress(range(len(recent_games)), recent_games)
+        x = np.arange(1, len(recent_games) + 1)
+        slope, intercept, r_value, p_value, std_err = linregress(x, recent_games)
 
         long_term_cv = df["PTS"].rolling(10).std() / df["PTS"].rolling(10).mean()
 
@@ -249,16 +274,20 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
             exact_point = 0
 
 
-        fga_prediction_results[player] = [player_prediction,confidence_score_percentage,exact_point]
+        fga_prediction_results[player] = [team,player_prediction,confidence_score_percentage,exact_point]
         if target == 'FGA':
             target = 'PTS'
         
         
-        df_results = pd.DataFrame.from_dict(fga_prediction_results, orient='index', columns=[target,f'confidence_level_{target}' ,  f'middlebet_{target}'])
+        df_results = pd.DataFrame.from_dict(fga_prediction_results, orient='index', columns=['team',target,f'confidence_level_{target}' ,  f'middlebet_{target}'])
         # Reset index and rename it properly
         df_results.reset_index(inplace=True)
         df_results.rename(columns={'index': 'Player'}, inplace=True)
-        df_results.to_csv(f'{target}_output.csv', index=False)
+        today_date = datetime.today().strftime('%Y-%m-%d')
+        #create a directory if one doesn't exist
+        directory = f'prediction_output/{target}_outputs'
+        os.makedirs(directory, exist_ok=True)    
+        df_results.to_csv(f'{directory}/{target}_output_{today_date}.csv', index=False)
         # display(df_results)
 
     return df_results

@@ -135,6 +135,9 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data):
                 file_path = os.path.join(folder, f"{player}_content_{which_q_folder}.html")
                 with open(file_path, "w", encoding="utf-8") as file:
                     file.write(page_html)
+
+            print(driver.title.encode('ascii', 'replace').decode())
+            driver.quit()
     else:
 
         driver.get("https://www.nba.com/players")

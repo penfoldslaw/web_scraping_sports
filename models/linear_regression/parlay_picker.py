@@ -14,7 +14,7 @@ def create_parlays(player_data, num_groups, players_per_group, min_confidence=90
         for stat in stats:
             stat_range = row[stat]
             confidence = row[f'confidence_level_{stat}']
-            safebet = row[f'middlebet_{stat}']
+            safebet = row[f'recentgames_{stat}']
 
             # Only add players with confidence level at or above the minimum
             if confidence >= min_confidence:
@@ -91,7 +91,7 @@ def create_parlays(player_data, num_groups, players_per_group, min_confidence=90
             'Stat': [],
             'Stat Range': [],
             'Confidence': [],
-            'middlebet': []
+            'recentgames': []
         }
         total_confidence = 0
         for player, team, stat, stat_range, confidence, safebet in parlay:
@@ -100,7 +100,7 @@ def create_parlays(player_data, num_groups, players_per_group, min_confidence=90
             parlay_data['Stat'].append(stat)
             parlay_data['Stat Range'].append(stat_range)
             parlay_data['Confidence'].append(confidence)
-            parlay_data['middlebet'].append(safebet)
+            parlay_data['recentgames'].append(safebet)
             total_confidence += confidence
         
         # Calculate the average confidence score for this parlay
@@ -132,7 +132,7 @@ def create_parlays_high(player_data, num_groups, players_per_group):
         for stat in stats:
             stat_range = row[stat]
             confidence = row[f'confidence_level_{stat}']
-            safebet = row[f'middlebet_{stat}']
+            safebet = row[f'recentgames_{stat}']
 
             all_players.append((player_name, stat, stat_range, confidence, safebet))
             confidence_levels.append(confidence)  # Store confidence levels
@@ -159,7 +159,7 @@ def create_parlays_high(player_data, num_groups, players_per_group):
             'Stat': [p[1] for p in selected_players],
             'Stat Range': [p[2] for p in selected_players],
             'Confidence': [p[3] for p in selected_players],
-            'middlebet': [p[4] for p in selected_players],
+            'recentgames': [p[4] for p in selected_players],
         }
         df = pd.DataFrame(parlay_data)
 

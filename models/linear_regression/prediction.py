@@ -75,7 +75,7 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         # print(f"Selected features for {player}: {features}")
 
         # Split data into training and testing sets based on a timestamp
-        timestamp = int(pd.Timestamp('2025-02-26').timestamp())
+        timestamp = int(pd.Timestamp('2025-03-01').timestamp())
         train_data = df[df['Date_in_Seconds'] < timestamp]
         test_data = df[df['Date_in_Seconds'] >= timestamp]
 
@@ -194,7 +194,7 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         cv_low_prediction = abs(rounded_future_prediction- cv_fluctuate)
         cv_high_prediction = rounded_future_prediction + cv_fluctuate
 
-        player_prediction = f"{cv_low_prediction.astype('int')} to {rounded_future_prediction}"
+        player_prediction = f"{cv_low_prediction.astype('int')} - {rounded_future_prediction} - {cv_high_prediction.astype('int')}"
 
         
 
@@ -213,6 +213,7 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
 
         # Get last 10 games
         recent_games = df[target].tail(10)
+
         
 
 
@@ -273,13 +274,19 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         if exact_point == -1:
             exact_point = 0
 
-
-        fga_prediction_results[player] = [team,player_prediction,confidence_score_percentage,exact_point]
         if target == 'FGA':
             target = 'PTS'
+
+        # trend_df = df[target].tail(10).tolist()
+        trend_df = df[target].tail(10).tolist()[::-1]
+
+
+
+        fga_prediction_results[player] = [team,player_prediction,confidence_score_percentage,trend_df]
+
         
         
-        df_results = pd.DataFrame.from_dict(fga_prediction_results, orient='index', columns=['team',target,f'confidence_level_{target}' ,  f'middlebet_{target}'])
+        df_results = pd.DataFrame.from_dict(fga_prediction_results, orient='index', columns=['team',target,f'confidence_level_{target}' ,f'recentgames_{target}'])
         # Reset index and rename it properly
         df_results.reset_index(inplace=True)
         df_results.rename(columns={'index': 'Player'}, inplace=True)

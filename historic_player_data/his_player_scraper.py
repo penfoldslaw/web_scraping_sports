@@ -14,6 +14,8 @@ from webdriver_manager.firefox import GeckoDriverManager
 from tenacity import retry, stop_after_attempt, wait_fixed
 from pathlib import Path
 from nba_api.stats.static import players
+import sys
+import datetime
 
 
 path = Path(__file__).resolve().parents[1]
@@ -44,7 +46,7 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data):
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         print(f"{timestamp} - {message}", file=sys.stderr)
 
-    log_with_timestamp("Scraping data...")
+    log_with_timestamp(f"Scraping data...{player}")
 
 
     def get_player_id(player_name):
@@ -60,8 +62,6 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data):
 
     if player_id is not None:
         driver.get(f"https://www.nba.com/stats/player/{player_id}/boxscores-traditional?Season={season}")
-        # https://www.nba.com/stats/player/2544/boxscores-traditional?Season=2022-23
-
 
         time.sleep(3)
 
@@ -82,6 +82,8 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data):
         # Extract the entire HTML page
         page_html = driver.page_source
 
+        
+
 
         # Save the HTML to a file
         #main_folder = main_folder
@@ -93,7 +95,6 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data):
 
            
            
-        current_url = driver.current_url
 
         
 
@@ -102,6 +103,8 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data):
         # advance stats  
 
         if quarter_data == 'yes':
+            current_url = driver.current_url
+
             if not current_url.endswith("/boxscores-traditional"):
                 updated_url = current_url + f"/boxscores-traditional?Season={season}"
                 driver.get(updated_url)  # Navigate to the updated URL
@@ -135,7 +138,7 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data):
                 file_path = os.path.join(folder, f"{player}_content_{which_q_folder}.html")
                 with open(file_path, "w", encoding="utf-8") as file:
                     file.write(page_html)
-
+                    
             print(driver.title.encode('ascii', 'replace').decode())
             driver.quit()
     else:
@@ -244,18 +247,7 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data):
     driver.quit()
 
 if __name__ == "__main__":
-    import sys
-    import datetime
-    log_file_path = "history_logs/his_player_scraper.log"
-    sys.stdout = open(log_file_path, "a")
-    sys.stderr = open(log_file_path, "a")
 
-    def log_with_timestamp(message):
-        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"{timestamp} - {message}")
-        print(f"{timestamp} - {message}", file=sys.stderr)
-
-    log_with_timestamp("Scraping data...") 
 
     if len(sys.argv) != 6:
         print("Usage: python scraper.py <player> <season> <main_folder> <year>")

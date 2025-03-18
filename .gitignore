@@ -1,0 +1,27 @@
+his_player_parser.log
+his_player_scaper.log
+his_defense_parser.log
+his_defense_scaper.log
+defense_parser.log
+defense_scraper.log
+current_scraper.log
+current_parser.log
+feature_core.ipynb
+schedule_parser.ipynb
+his_player_usage.log
+his_usage_parser.log
+current_usage_parser.log
+current_usage_scraper.log
+schedule_parser.log
+schedule_scraper.log
+*.log       # Ignores all .log files anywhere
+his_player_scraper.log
+__pycache__
+myenv
+history_logs
+geckodriver
+gecodriver.exe
+current_logs
+box_score_log
+
+

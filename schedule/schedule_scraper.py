@@ -65,6 +65,12 @@ def schedule_scraper(team,year):
 
     page_html = driver.page_source
 
+    if team == 'NO':
+        team = 'NOP'
+    
+    if team == 'UTAH':
+        team = 'UTA'
+
     folder = os.path.join("D:/nba_schedules", f"nba_html_{year}")
     file_path = os.path.join(folder, f"{team}_schedule_content.html")
     os.makedirs(folder, exist_ok=True)

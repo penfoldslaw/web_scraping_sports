@@ -51,20 +51,20 @@ $processes_2 | Wait-Process
 
 #### current starts here
 
-# $processes_1 = Start-NestedScripts -PowerShellScripts @("current_defense_data\current_defense_script.ps1")
-# $processes_1 | Wait-Process
+$processes_1 = Start-NestedScripts -PowerShellScripts @("current_defense_data\current_defense_script.ps1")
+$processes_1 | Wait-Process
 
 $processes_2 = Start-NestedScripts -PowerShellScripts @("current_player_data\current_player_script.ps1")
 $processes_2 | Wait-Process
 
-# $processes_3 = Start-NestedScripts -PowerShellScripts @("current_usage_data\current_usage_script.ps1")
-# $processes_3 | Wait-Process
+$processes_3 = Start-NestedScripts -PowerShellScripts @("current_usage_data\current_usage_script.ps1")
+$processes_3 | Wait-Process
 
-# $processes_4 = Start-NestedScripts -PowerShellScripts @("schedule\schedule_script.ps1")
-# $processes_4 | Wait-Process
+$processes_4 = Start-NestedScripts -PowerShellScripts @("schedule\schedule_script.ps1")
+$processes_4 | Wait-Process
 
-# $processes_5 = Start-NestedScripts -PowerShellScripts @("track_data\track_script.ps1")
-# $processes_5 | Wait-Process
+$processes_5 = Start-NestedScripts -PowerShellScripts @("track_data\track_script.ps1")
+$processes_5 | Wait-Process
 
 
 $processes_4 = Start-NestedScripts -PowerShellScripts @("mover.ps1")

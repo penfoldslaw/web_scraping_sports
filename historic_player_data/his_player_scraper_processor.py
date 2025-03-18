@@ -237,7 +237,7 @@ def run_script(player, season, main_folder, year, quarter_data):
     subprocess.run([sys.executable,path / "his_player_scraper.py", player, season, main_folder, year, quarter_data])
 
 if __name__ == "__main__":
-    players = ['Rudy Gobert']
+    players = ['Ricky Council IV', 'Jared Butler', 'Johnny Juzang', 'Walker Kessler', 'Ochai Agbaji', 'Ryan Dunn', 'Tyus Jones', 'Luke Kennard', 'Jordan Goodwin', 'Jaxson Hayes']
 
     seasons = [ "2022-23", "2023-24"]
     main_folder = "D:/nba_player_historic"

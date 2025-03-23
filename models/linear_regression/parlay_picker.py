@@ -338,42 +338,110 @@ def create_parlays(player_data, num_groups, players_per_group, min_confidence=90
 
 
 def create_parlays_high(player_data, num_groups, players_per_group, min_confidence=90, threepm_confidence=40):
+    """
+    Create optimal betting parlays with improved selection algorithm to prevent duplicate player-stat combinations
+    in the same group while maximizing overall confidence.
+    
+    Args:
+        player_data (DataFrame): DataFrame containing player stats and confidence levels
+        num_groups (int): Number of parlay groups to create
+        players_per_group (int): Number of players/stats per parlay group
+        min_confidence (float): Minimum confidence threshold for non-3PM stats (default: 90)
+        threepm_confidence (float): Minimum confidence threshold for 3PM stats (default: 40)
+        
+    Returns:
+        tuple: (list of parlay DataFrames, list of tuples with parlay names and confidence scores)
+    """
     # List of all possible player data points (player, stat, and range)
     all_players = []
     confidence_levels = []
 
+    # Process player data and filter by confidence thresholds
     for idx, row in player_data.iterrows():
         player_name = row['Player']
-        team = row['team']  # Added team field
+        team = row['team']
         stats = ['REB', 'AST', 'PTS', '3PM']
+        
         for stat in stats:
+            if stat not in row or f'confidence_level_{stat}' not in row:
+                continue
+                
             stat_range = row[stat]
             confidence = row[f'confidence_level_{stat}']
-            safebet = row[f'recentgames_{stat}']
-
+            safebet = row.get(f'recentgames_{stat}', 0)  # Use get with default to avoid KeyError
+            
             # Apply different confidence thresholds based on stat type
-            if stat == '3PM':
-                # Add 3PM stats with confidence level at or above threepm_confidence
-                if confidence >= threepm_confidence:
-                    all_players.append((player_name, team, stat, stat_range, confidence, safebet))
-                    confidence_levels.append(confidence)
-            else:
-                # For other stats, use the regular minimum confidence
-                if confidence >= min_confidence:
-                    all_players.append((player_name, team, stat, stat_range, confidence, safebet))
-                    confidence_levels.append(confidence)
-
+            threshold = threepm_confidence if stat == '3PM' else min_confidence
+            
+            if confidence >= threshold:
+                all_players.append((player_name, team, stat, stat_range, confidence, safebet))
+                confidence_levels.append(confidence)
+    
+    # Sort by confidence (highest first) to prioritize high-confidence picks
+    sorted_data = sorted(zip(all_players, confidence_levels), key=lambda x: x[1], reverse=True)
+    all_players = [item[0] for item in sorted_data]
+    confidence_levels = [item[1] for item in sorted_data]
+    
     parlays = []
     group_confidence_scores = []
     
-    for _ in range(num_groups):
+    # Create the specified number of parlay groups
+    for group_idx in range(num_groups):
         if len(all_players) < players_per_group:
             break  # Stop if we don't have enough players for a full group
-
-        # Weighted selection of players
-        selected_indices = random.choices(range(len(all_players)), weights=confidence_levels, k=players_per_group)
-        selected_players = [all_players[i] for i in selected_indices]
         
+        selected_players = []
+        selected_indices = []
+        
+        # Track players already in this group to avoid duplicates
+        players_in_group = set()
+        
+        # Try to select players_per_group players for this parlay
+        remaining_attempts = len(all_players)  # Limit attempts to avoid infinite loop
+        
+        while len(selected_players) < players_per_group and remaining_attempts > 0:
+            remaining_attempts -= 1
+            
+            # Get candidates that aren't already in the group (weighted by confidence)
+            valid_indices = []
+            valid_weights = []
+            
+            for i, player_data in enumerate(all_players):
+                if i not in selected_indices:
+                    player_name, _, stat, _, _, _ = player_data
+                    player_stat_key = (player_name, stat)
+                    
+                    # Skip if this player-stat combo is already in the group
+                    if player_stat_key in players_in_group:
+                        continue
+                        
+                    valid_indices.append(i)
+                    valid_weights.append(confidence_levels[i])
+            
+            # If no valid candidates remain, break the loop
+            if not valid_indices:
+                break
+                
+            # Select a player based on weighted confidence
+            try:
+                selected_idx = random.choices(valid_indices, weights=valid_weights, k=1)[0]
+                
+                player_name, team, stat, stat_range, confidence, safebet = all_players[selected_idx]
+                player_stat_key = (player_name, stat)
+                
+                # Add to selected players and mark as used
+                selected_players.append(all_players[selected_idx])
+                selected_indices.append(selected_idx)
+                players_in_group.add(player_stat_key)
+                
+            except IndexError:
+                # No more valid players to select
+                break
+        
+        # If we couldn't get enough players, skip this group
+        if len(selected_players) < players_per_group:
+            continue
+            
         # Remove selected players from the pool (in reverse index order to avoid index shifting)
         for idx in sorted(selected_indices, reverse=True):
             del all_players[idx]
@@ -382,21 +450,32 @@ def create_parlays_high(player_data, num_groups, players_per_group, min_confiden
         # Organize selected players into DataFrame
         parlay_data = {
             'Player': [p[0] for p in selected_players],
-            'team': [p[1] for p in selected_players],
+            'Team': [p[1] for p in selected_players],
             'Stat': [p[2] for p in selected_players],
             'Stat Range': [p[3] for p in selected_players],
             'Confidence': [p[4] for p in selected_players],
-            'recentgames': [p[5] for p in selected_players],
+            'Recent Games': [p[5] for p in selected_players],
         }
         df = pd.DataFrame(parlay_data)
 
         # Calculate the group's average confidence
         avg_confidence = sum(parlay_data['Confidence']) / len(parlay_data['Confidence'])
-        group_confidence_scores.append((f"Parlay {len(parlays)+1}", avg_confidence))
+        group_confidence_scores.append((f"Parlay {group_idx+1}", round(avg_confidence, 2)))
 
         parlays.append(df)
 
-    return parlays, group_confidence_scores
+    # Sort parlays by confidence score (highest first)
+    sorted_results = sorted(zip(parlays, group_confidence_scores), key=lambda x: x[1][1], reverse=True)
+    
+    # Rename parlays based on new ordering
+    sorted_parlays = []
+    sorted_scores = []
+    
+    for i, (parlay, (_, score)) in enumerate(sorted_results):
+        sorted_parlays.append(parlay)
+        sorted_scores.append((f"Parlay {i+1}", score))
+
+    return sorted_parlays, sorted_scores
 
 
 if __name__ == "__main__":

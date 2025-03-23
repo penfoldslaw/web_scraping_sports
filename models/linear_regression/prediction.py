@@ -58,6 +58,22 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         df = fga_prediction_data[player]
 
 
+
+        # Convert schedule dates to timestamp format
+        schedule_df['Date_in_Seconds'] = pd.to_datetime(schedule_df['DATE']).astype('int64') // 10**9
+        schedule_df['home_away'] = schedule_df['location'].apply(lambda x: 1 if x == 'away' else 0)
+
+        first_team = schedule_df['schedule_team'].iloc[0]
+
+        # this is for getting the last row of the team the player played against so it can be used to predict what comes next
+        filtered_df = df[df['Away'] == first_team]
+
+        #print("filter start here")
+        # display(filtered_df)
+
+        # display(df.head(50))
+
+
         features = feature_dic[player] 
 
         # some players can't connect to the his_usage datatframe well I don't why
@@ -75,7 +91,7 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         # print(f"Selected features for {player}: {features}")
 
         # Split data into training and testing sets based on a timestamp
-        timestamp = int(pd.Timestamp('2025-03-01').timestamp())
+        timestamp = int(pd.Timestamp('2025-03-15').timestamp())
         train_data = df[df['Date_in_Seconds'] < timestamp]
         test_data = df[df['Date_in_Seconds'] >= timestamp]
 
@@ -150,6 +166,30 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         df_last_rolling = df_last_rolling.reindex(columns=features)
         X_future = df_last_rolling
 
+
+        if not filtered_df.empty:  # Ensure there is at least one matching row
+            last_row = filtered_df.iloc[-1]
+            last_row = last_row.to_frame().T 
+
+        else:
+            print(f"No rows found for TEAM: {schedule_team_result} for {player} using last game features")
+            last_row = df.iloc[-1]  # Handle the case where no match is found
+
+        # print(features,f" this is player {player}  this is target {target}" )
+        last_row = last_row[features]
+        # display(last_row)
+
+        # Ensure it's a DataFrame
+        if isinstance(last_row, pd.Series):
+            last_row = last_row.to_frame().T
+        else:
+            last_row = pd.DataFrame(last_row)
+
+
+        # display(last_row)
+
+
+
         # display(X_future.head(10))
         # Step 1: Calculate mean and standard deviation of the target variable (PTS, REB, etc.)
         mean_target = y_train.mean()
@@ -162,7 +202,7 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         
 
         # future predictions happens here
-        future_predictions = model.predict(X_future).astype('int')
+        future_predictions = model.predict(last_row)
 
         future_predictions = np.clip(future_predictions, lower_bound, upper_bound).astype('int')
 

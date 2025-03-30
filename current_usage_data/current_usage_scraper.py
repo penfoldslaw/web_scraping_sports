@@ -70,6 +70,8 @@ def scrape_data(season,main_folder,folder_year):
     driver.get(f"https://www.nba.com/stats/players/usage?dir=A&sort=USG_PCT&Season={season}")
     time.sleep(5)
 
+    driver.execute_script("window.scrollBy(0, 200);")
+
 
     # # After the player name has been searched this clicks the player note that this has only been tested for one player coming up not multiple
     all_link = driver.find_element(By.XPATH, "//*[@id='__next']/div[2]/div[2]/div[3]/section[2]/div/div[2]/div[2]/div[1]/div[3]/div/label/div/select")

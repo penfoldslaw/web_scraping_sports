@@ -58,7 +58,6 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         df = fga_prediction_data[player]
 
 
-
         # Convert schedule dates to timestamp format
         schedule_df['Date_in_Seconds'] = pd.to_datetime(schedule_df['DATE']).astype('int64') // 10**9
         schedule_df['home_away'] = schedule_df['location'].apply(lambda x: 1 if x == 'away' else 0)
@@ -67,12 +66,9 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
 
         # this is for getting the last row of the team the player played against so it can be used to predict what comes next
         filtered_df = df[df['Away'] == first_team]
+        
 
-        #print("filter start here")
-        # display(filtered_df)
-
-        # display(df.head(50))
-
+        last_5_games = df.tail(10)
 
         features = feature_dic[player] 
 
@@ -91,9 +87,9 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         # print(f"Selected features for {player}: {features}")
 
         # Split data into training and testing sets based on a timestamp
-        timestamp = int(pd.Timestamp('2025-03-15').timestamp())
-        train_data = df[df['Date_in_Seconds'] < timestamp]
-        test_data = df[df['Date_in_Seconds'] >= timestamp]
+        timestamp = int(pd.Timestamp('2025-03-24').timestamp())
+        train_data = df#[df['Date_in_Seconds'] < timestamp]
+        test_data = df#[df['Date_in_Seconds'] >= timestamp]
 
         X_train = train_data[features].fillna(0)
         y_train = train_data[target].fillna(0)
@@ -119,7 +115,7 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         # Train linear regression model
         model = LinearRegression()
         model.fit(X_train, y_train)
-        y_pred = model.predict(X_test)
+        # y_pred = model.predict(X_test)
 
         # Calculate error metrics
         # mae = mean_absolute_error(y_test, y_pred)
@@ -167,26 +163,30 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         X_future = df_last_rolling
 
 
-        if not filtered_df.empty:  # Ensure there is at least one matching row
-            last_row = filtered_df.iloc[-1]
-            last_row = last_row.to_frame().T 
-
-        else:
-            print(f"No rows found for TEAM: {schedule_team_result} for {player} using last game features")
-            last_row = df.iloc[-1]  # Handle the case where no match is found
-
-        # print(features,f" this is player {player}  this is target {target}" )
-        last_row = last_row[features]
-        # display(last_row)
-
-        # Ensure it's a DataFrame
-        if isinstance(last_row, pd.Series):
-            last_row = last_row.to_frame().T
-        else:
-            last_row = pd.DataFrame(last_row)
 
 
-        # display(last_row)
+        # display(last_5_games)
+
+        combined_df_recent_team_played = pd.concat([last_5_games,filtered_df])
+
+        combined_df_recent_team_played = combined_df_recent_team_played[features]
+
+        combined_df_recent_team_played = combined_df_recent_team_played.reset_index(drop=True)
+
+
+        # display(combined_df_recent_team_played)
+
+        # Define the rolling window size (e.g., 3 for the last 3 games)
+        window_size = 2
+
+        # Apply rolling average for each feature (adjust the columns as needed)
+        rolling_avg_df = combined_df_recent_team_played.rolling(window=window_size, min_periods=1).mean()
+
+        # Reset index to align with original DataFrame if necessary
+        rolling_avg_df = rolling_avg_df.reset_index(drop=True)
+
+        rolling_avg_df_use = rolling_avg_df.iloc[[-1]]
+
 
 
 
@@ -202,7 +202,7 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         
 
         # future predictions happens here
-        future_predictions = model.predict(last_row)
+        future_predictions = model.predict(rolling_avg_df_use)
 
         future_predictions = np.clip(future_predictions, lower_bound, upper_bound).astype('int')
 
@@ -261,7 +261,7 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         x = np.arange(1, len(recent_games) + 1)
         slope, intercept, r_value, p_value, std_err = linregress(x, recent_games)
 
-        long_term_cv = df["PTS"].rolling(10).std() / df["PTS"].rolling(10).mean()
+        long_term_cv = df[target].rolling(10).std() / df[target].rolling(10).mean()
 
         # Set dynamic base threshold (scaled by long-term CV)
         base_threshold = max(0.2, min(0.6, 0.3 + 0.2 * long_term_cv.iloc[-1]))

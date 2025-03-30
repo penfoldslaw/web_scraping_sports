@@ -33,7 +33,13 @@ driver = webdriver.Firefox(service=service,options=firefox_options)
 
 
 @retry(stop=stop_after_attempt(3), wait=wait_fixed(2))
+
 def scrape_data(http, matchup,main_folder,date_of_match):
+    directory = "box_score_log"
+    os.makedirs(directory, exist_ok= True)
+    log_file_path = "box_score_log/box_score_scraper.log"
+    sys.stdout = open(log_file_path, "a")
+    sys.stderr = open(log_file_path, "a")
 
     # log_path = "box_score_data/box_score_log"
     # os.makedirs(log_path, exist_ok= True)

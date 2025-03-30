@@ -9,9 +9,9 @@ def run_script(folder_path_html, folder_path_csv, date_of_match):
 
 if __name__ == "__main__":
     
-    folder_path_html = "box_score_data/box_score/nba_html_3-14-25"
-    folder_path_csv = "box_score_data/box_score_csv"
-    date_of_match = "3-14-25"
+    folder_path_html = r"D:\box_score_data\box_score_html\nba_html_3-15-25"
+    folder_path_csv = "box_score_csv" 
+    date_of_match = "3-15-25"
     
     # for c_folder, csv_s_folder in zip(folder_path_html, folder_path_csv):
     #     run_script(c_folder, csv_s_folder, date_of_match)

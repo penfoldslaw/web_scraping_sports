@@ -10,14 +10,17 @@ def run_script(http,matchup,main_folder,date_of_match):
 
 if __name__ == "__main__":
     https = [
-        "https://www.nba.com/game/bos-vs-mia-0022400958/box-score",
-        "https://www.nba.com/game/lac-vs-atl-0022400960/box-score",
-        "https://www.nba.com/game/cha-vs-sas-0022400964/box-score"
+        "https://www.nba.com/game/nyk-vs-gsw-0022400974/box-score",
+        "https://www.nba.com/game/ind-vs-mil-0022400972/box-score",
+        "https://www.nba.com/game/okc-vs-det-0022400969/box-score",
+        "https://www.nba.com/game/mia-vs-mem-0022400971/box-score",
+        "https://www.nba.com/game/chi-vs-hou-0022400970/box-score",
+        "https://www.nba.com/game/was-vs-den-0022400975/box-score"
     ]
     
-    matchups = ["bos-mia", "lac-atl", "cha-sas"]
+    matchups = ["nyk-vs-gsw", "ind-vs-mil", "okc-vs-det","mia-vs-mem","chi-vs-hou", "was-vs-den"]
     main_folder = "D:/box_score_data/box_score_html"  # Changed to string
-    date_of_match = "3-14-25"  # Changed to string
+    date_of_match = "3-15-25"  # Changed to string
 
     # for http in https:
     #     for matchup in matchups:

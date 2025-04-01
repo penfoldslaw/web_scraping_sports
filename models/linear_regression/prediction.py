@@ -55,7 +55,11 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         schedule_df = pd.read_csv(schedule_path)
 
         # Retrieve player-specific prediction data
-        df = fga_prediction_data[player]
+        df = fga_prediction_data.get(player)
+
+        if df is None:
+            print(f"Skipping {player} - No data available.")
+            continue  # Move to the next player
 
 
         # Convert schedule dates to timestamp format
@@ -70,11 +74,16 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
 
         last_5_games = df.tail(10)
 
-        features = feature_dic[player] 
+        # Retrieve the selected features for the current player from the feature dictionary.
+        # If the player is not found in feature_dic, return an empty list instead of None to avoid errors.
+        features = feature_dic.get(player, [])
+
+
 
         # some players can't connect to the his_usage datatframe well I don't why
         features = [feature for feature in features if feature in df.columns]
         
+        # If no valid features remain, print a message and skip the player.
         if not features:
             print(f"No valid features found for {player} for predicting {prediction_target}")
             continue
@@ -231,10 +240,32 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         if cv_fluctuate > rounded_future_prediction:
             cv_low_prediction = abs(cv_fluctuate - rounded_future_prediction)
 
-        cv_low_prediction = abs(rounded_future_prediction- cv_fluctuate)
+        # cv_low_prediction = abs(rounded_future_prediction- cv_fluctuate)
+        # cv_high_prediction = rounded_future_prediction + cv_fluctuate
+
+
+
+        # player_prediction = f"{cv_low_prediction.astype('int')} - {rounded_future_prediction} - {cv_high_prediction.astype('int')}"
+
+        cv_low_prediction = abs(rounded_future_prediction - cv_fluctuate)
         cv_high_prediction = rounded_future_prediction + cv_fluctuate
 
-        player_prediction = f"{cv_low_prediction.astype('int')} - {rounded_future_prediction} - {cv_high_prediction.astype('int')}"
+        # Convert to integers
+        cv_low_prediction = cv_low_prediction.astype(int)
+        cv_high_prediction = cv_high_prediction.astype(int)
+        rounded_future_prediction = rounded_future_prediction.astype(int)
+
+        # Apply the logic to modify cv_low_prediction
+        if cv_low_prediction == 0 and rounded_future_prediction == 0 and cv_high_prediction == 0:
+            cv_low_prediction = 0  # Set to 0 if all are 0
+        elif cv_low_prediction > 0:
+            pass  # Keep cv_low_prediction as is if it's already greater than 0
+        else:
+            cv_low_prediction = 1  # Otherwise, set to 1
+
+        # Construct the player prediction string
+        player_prediction = f"{cv_low_prediction} - {rounded_future_prediction} - {cv_high_prediction}"
+
 
         
 

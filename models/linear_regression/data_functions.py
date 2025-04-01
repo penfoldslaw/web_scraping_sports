@@ -341,6 +341,10 @@ def his_usage_team(player_names: dict, date_list: list,stats_path:dict,player_ba
             # Append the DataFrame for this date to the player's list
             current_player_frames.append(merged_data)
 
+        if not current_player_frames:  # Check if list is empty
+            print(f"Skipping {player} - No valid data found.")
+            continue  # Skip this player
+
         # Combine all dates for the current player into one DataFrame
         current_player_dic[player] = pd.concat(current_player_frames, ignore_index=True)
         pd.set_option('display.max_rows', 1000)  # Maximum number of rows to display

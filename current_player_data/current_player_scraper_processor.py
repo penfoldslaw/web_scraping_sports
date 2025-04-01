@@ -27,74 +27,37 @@ def run_script(player, season, main_folder, year):
     subprocess.run([sys.executable,path / "current_player_scraper.py", player, season, main_folder, year])
 
 if __name__ == "__main__":
-    players = [
-    "Donovan Mitchell",
-    "Sam Merrill",
-    "Darius Garland",
-    "Evan Mobley",
-    "Jarrett Allen",
-    "Tim Hardaway Jr.",
-    "Ausar Thompson",
-    "Dennis Schroder",
-    "Tobias Harris",
-    "Jalen Duren",
-    "Kris Dunn",
-    "Norman Powell",
-    "James Harden",
-    "Kawhi Leonard",
-    "Ivica Zubac",
-    "Keon Johnson",
-    "Ziaire Williams",
-    "D'Angelo Russell",
-    "Cameron Johnson",
-    "Nic Claxton",
-    "Josh Green",
-    "DaQuan Jeffries",
-    "KJ Simpson",
-    "Miles Bridges",
-    "Mark Williams",
-    "Ja'Kobe Walter",
-    "Jamison Battle",
-    "Immanuel Quickley",
-    "Scottie Barnes",
-    "Jakob Poeltl",
-    "Mikal Bridges",
-    "Josh Hart",
-    "Tyler Kolek",
-    "OG Anunoby",
-    "Karl-Anthony Towns",
-    "Devin Booker",
-    "Ryan Dunn",
-    "Collin Gillespie",
-    "Kevin Durant",
-    "Nick Richards",
-    "Anthony Edwards",
-    "Jaden McDaniels",
-    "Mike Conley",
-    "Julius Randle",
-    "Rudy Gobert",
-    "Brandin Podziemski",
-    "Moses Moody",
-    "Stephen Curry",
-    "Jimmy Butler III",
-    "Draymond Green",
-    "Jordan Hawkins",
-    "Bruce Brown",
-    "Jose Alvarado",
-    "Kelly Olynyk",
-    "Yves Missi",
-    "Collin Sexton",
-    "Cody Williams",
-    "Isaiah Collier",
-    "Kyle Filipowski",
-    "Walker Kessler",
-    "Christian Braun",
-    "Michael Porter Jr.",
-    "Jamal Murray",
-    "Aaron Gordon",
-    "Nikola Jokic"
-]
+    import pandas as pd
+    import os 
 
+
+    matchup = ["PHX","MIL", "PHI", "NYK", "POR", "ATL", "GSW", "MEM", "TOR", "CHI", "ORL", "SAS", "MIN","DEN"]
+    df_list = []  # List to store dataframes
+    for team in matchup:
+        roster_path = f"D:\\roster_folder\\2024\\{team}_roster_file.csv"  # Construct the file path
+
+
+
+        # Iterate through all files in the directory
+        if os.path.exists(roster_path):  # Check if file exists
+            df = pd.read_csv(roster_path)  # Read CSV file
+            df_list.append(df)  # Append DataFrame to the list
+
+
+
+
+            # Concatenate all the box score dataframes into one
+            df= pd.concat(df_list, ignore_index=True)
+            
+
+
+            df =df['PLAYER_uni'].tolist()
+
+    list_of_names = df
+
+    print(list_of_names) # check history for all comments on what this is doing
+
+    players = list_of_names
 
 
 

@@ -154,12 +154,28 @@ def select_features(player_names, date_list, usage_path, player_base_path, defen
     max_features = 0
 
     for player, df in player_df.items():
+
+        if df is None:
+            print(f"Skipping {player} - No data available.")
+            continue  # Move to the next player
+
+
+
         df_X = df.drop(columns=[target, 'Date', 'Matchup', 'Team', 'Home/Away_game', 'W/L', 'Away', 'season', 'TEAM', 'season_defense'])
+
+        
+
+
         
         # Apply StandardScaler to scale the features
         scaler = StandardScaler()
         X = scaler.fit_transform(df_X)
         y = df[target]  # Target variable
+
+        # Skip player if not enough data
+        if X.shape[0] < 5:
+            print(f"Skipping {player} due to insufficient data ({X.shape[0]} samples).")
+            continue
         
         # Grid search parameters for Lasso
         param_grid = {'alpha': [0.001, 0.01, 0.1, 1, 10]}

@@ -8,15 +8,15 @@ $scriptPath_parser = Join-Path -Path $scriptDir "current_player_parser_processor
 Write-Host "Starting Python script: $scriptPath" -ForegroundColor Green
 
 # Explicitly call python.exe
-$process = Start-Process -FilePath "python" -ArgumentList $scriptPath -NoNewWindow -PassThru
+# $process = Start-Process -FilePath "python" -ArgumentList $scriptPath -NoNewWindow -PassThru
 
-if ($process) {
-    Write-Host "Scraper script script is running... (PID: $($process.Id))" -ForegroundColor Yellow
-    $process | Wait-Process
-    Write-Host "Scraper script has completed." -ForegroundColor Cyan
-} else {
-    Write-Host "Failed to start the Scraper script check log." -ForegroundColor Red
-}
+# if ($process) {
+#     Write-Host "Scraper script script is running... (PID: $($process.Id))" -ForegroundColor Yellow
+#     $process | Wait-Process
+#     Write-Host "Scraper script has completed." -ForegroundColor Cyan
+# } else {
+#     Write-Host "Failed to start the Scraper script check log." -ForegroundColor Red
+# }
 
 
 $process_parser = Start-Process -FilePath "python" -ArgumentList $scriptPath_parser -NoNewWindow -PassThru

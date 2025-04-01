@@ -8,10 +8,11 @@ def run_script(folder_path_html, folder_path_csv, date_of_match):
     subprocess.run([sys.executable, path / "box_parser.py", folder_path_html, folder_path_csv, date_of_match])
 
 if __name__ == "__main__":
-    
-    folder_path_html = r"D:\box_score_data\box_score_html\nba_html_3-15-25"
-    folder_path_csv = "box_score_csv" 
-    date_of_match = "3-15-25"
+
+    date_of_match = "3-31-25"
+    folder_path_html = rf"D:\box_score_data\box_score_html\nba_html_{date_of_match}"
+    folder_path_csv = f"box_score_csv/matchup_{date_of_match}" 
+
     
     # for c_folder, csv_s_folder in zip(folder_path_html, folder_path_csv):
     #     run_script(c_folder, csv_s_folder, date_of_match)

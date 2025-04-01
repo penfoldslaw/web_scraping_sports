@@ -9,18 +9,25 @@ def run_script(http,matchup,main_folder,date_of_match):
 
 
 if __name__ == "__main__":
+    import re
+
     https = [
-        "https://www.nba.com/game/nyk-vs-gsw-0022400974/box-score",
-        "https://www.nba.com/game/ind-vs-mil-0022400972/box-score",
-        "https://www.nba.com/game/okc-vs-det-0022400969/box-score",
-        "https://www.nba.com/game/mia-vs-mem-0022400971/box-score",
-        "https://www.nba.com/game/chi-vs-hou-0022400970/box-score",
-        "https://www.nba.com/game/was-vs-den-0022400975/box-score"
+
+        "https://www.nba.com/game/hou-vs-lal-0022401096/box-score"
+
     ]
-    
-    matchups = ["nyk-vs-gsw", "ind-vs-mil", "okc-vs-det","mia-vs-mem","chi-vs-hou", "was-vs-den"]
+
+    matchups = []
+    pattern = re.compile(r"/game/([a-z]{3}-vs-[a-z]{3})")
+
+    for http in https:
+        match = pattern.search(http)
+        if match:
+            matchups.append(match.group(1))
+
+
     main_folder = "D:/box_score_data/box_score_html"  # Changed to string
-    date_of_match = "3-15-25"  # Changed to string
+    date_of_match = "3-31-25"  # Changed to string
 
     # for http in https:
     #     for matchup in matchups:

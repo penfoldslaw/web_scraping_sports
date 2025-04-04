@@ -1,9 +1,13 @@
-
-
-
 import subprocess
 import sys
 from pathlib import Path
+import os
+import pandas as pd
+import configparser as cp
+import ast 
+# Move up one level to reach web_scraping_sports
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from get_matchup import fetch_matchup_list  
 
 def run_script(player, season, main_folder, year, quarter_data):
     path = Path(__file__).resolve().parent
@@ -12,9 +16,13 @@ def run_script(player, season, main_folder, year, quarter_data):
 if __name__ == "__main__":
     import os
     import pandas as pd
+    import configparser as cp
+    import ast 
+
+    
 
     # Only input you need to make get the teams playing or you want
-    matchup = ["PHX","MIL", "PHI", "NYK", "POR", "ATL", "GSW", "MEM", "TOR", "CHI", "ORL", "SAS", "MIN","DEN"]
+    matchup = fetch_matchup_list()
     df_list = []  # List to store dataframes
     for team in matchup:
         # gets roster data from all teams

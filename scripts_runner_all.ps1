@@ -29,6 +29,9 @@ function Start-NestedScripts {
     return $processes
 }
 
+
+
+
 # Example PowerShell script content (save as run_python1.ps1):
 <#
 # Sample content for your PowerShell scripts:
@@ -51,8 +54,10 @@ $processes_2 | Wait-Process
 
 #### current starts here
 
-# $processes_1 = Start-NestedScripts -PowerShellScripts @("current_defense_data\current_defense_script.ps1")
-# $processes_1 | Wait-Process
+
+
+$processes_1 = Start-NestedScripts -PowerShellScripts @("current_defense_data\current_defense_script.ps1")
+$processes_1 | Wait-Process
 
 $processes_2 = Start-NestedScripts -PowerShellScripts @("current_player_data\current_player_script.ps1")
 $processes_2 | Wait-Process

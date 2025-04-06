@@ -100,6 +100,12 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         train_data = df#[df['Date_in_Seconds'] < timestamp]
         test_data = df#[df['Date_in_Seconds'] >= timestamp]
 
+
+        train_data_chose = df#[df['Date_in_Seconds'] < timestamp]
+        test_data_chose = df#[df['Date_in_Seconds'] >= timestamp]
+
+
+
         X_train = train_data[features].fillna(0)
         y_train = train_data[target].fillna(0)
         X_test = test_data[features].fillna(0)

@@ -58,4 +58,7 @@ def get_team_roster():
         roster_df.to_csv(fr"{directory}/{team_abbr}_roster_file.csv", index=False)
 
 
+get_team_roster()
+
+
 

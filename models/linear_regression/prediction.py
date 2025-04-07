@@ -96,13 +96,19 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         # print(f"Selected features for {player}: {features}")
 
         # Split data into training and testing sets based on a timestamp
-        timestamp = int(pd.Timestamp('2025-03-24').timestamp())
+        timestamp = int(pd.Timestamp('2025-02-10').timestamp())
         train_data = df#[df['Date_in_Seconds'] < timestamp]
         test_data = df#[df['Date_in_Seconds'] >= timestamp]
 
 
-        train_data_chose = df#[df['Date_in_Seconds'] < timestamp]
-        test_data_chose = df#[df['Date_in_Seconds'] >= timestamp]
+        train_data_chose = df[df['Date_in_Seconds'] < timestamp]
+        test_data_chose = df[df['Date_in_Seconds'] >= timestamp]
+
+        
+        X_train_chose = train_data_chose[features].fillna(0)
+        y_train_chose = train_data_chose[target].fillna(0)
+        X_test_chose = test_data_chose[features].fillna(0)
+        y_test_chose = test_data_chose[target].fillna(0) 
 
 
 
@@ -130,6 +136,42 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         # Train linear regression model
         model = LinearRegression()
         model.fit(X_train, y_train)
+
+        if X_train_chose.empty or y_train_chose.empty:
+            print(f"[WARNING] No training data for feature '{selected_feature_target}'. Skipping.")
+            # return pd.DataFrame()  # or return None, or a dummy result
+            continue
+
+        if X_test_chose.empty or y_test_chose.empty:
+            print(f"[WARNING] No testing data for feature '{selected_feature_target}'. Skipping.")
+            continue
+
+        # train model  with test to see who to choose
+        model_chose = LinearRegression()
+        model_chose.fit(X_train_chose, y_train_chose)
+
+
+        y_pred_chose = model_chose.predict(X_test_chose)
+        # Calculate error metrics
+        mae_chose = mean_absolute_error(y_test_chose, y_pred_chose)
+        mse_chose = mean_squared_error(y_test_chose, y_pred_chose)
+        rmse_chose = np.sqrt(mse_chose)
+
+        # Make sure predictions and actual test values are in a DataFrame
+
+        results_df = pd.DataFrame({
+            'Actual': y_test_chose,
+            'Predicted': y_pred_chose
+        })
+
+        # Show the first few rows of the DataFrame to compare
+        print(results_df.head())
+
+
+
+        # print(f"{player}, MAE: {mae_chose}, RMSE: {rmse_chose}")
+
+
         # y_pred = model.predict(X_test)
 
         # Calculate error metrics
@@ -217,7 +259,7 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         
 
         # future predictions happens here
-        future_predictions = model.predict(rolling_avg_df_use)
+        future_predictions = model.predict(X_future) #rolling_avg_df_use
 
         future_predictions = np.clip(future_predictions, lower_bound, upper_bound).astype('int')
 
@@ -359,11 +401,11 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
 
 
 
-        fga_prediction_results[player] = [team,player_prediction,confidence_score_percentage,trend_df]
+        fga_prediction_results[player] = [team,player_prediction,confidence_score_percentage,trend_df, rmse_chose]
 
         
         
-        df_results = pd.DataFrame.from_dict(fga_prediction_results, orient='index', columns=['team',target,f'confidence_level_{target}' ,f'recentgames_{target}'])
+        df_results = pd.DataFrame.from_dict(fga_prediction_results, orient='index', columns=['team',target,f'cv-1_{target}' ,f'recentgames_{target}',f'rmse_{target}'])
         # Reset index and rename it properly
         df_results.reset_index(inplace=True)
         df_results.rename(columns={'index': 'Player'}, inplace=True)

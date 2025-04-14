@@ -44,15 +44,7 @@ if __name__ == "__main__":
 
     print(list_of_names) # check history for all comments on what this is doing
 
-    players = [
-    "Kristaps Porzingis",
-    "Jonas Valanciunas",
-    "Vasilije Micic",
-    "Monte Morris",
-    "Dario Saric",
-    "DaRon Holmes II"
-]
-
+    players = list_of_names
 
 
 

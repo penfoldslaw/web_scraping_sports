@@ -15,7 +15,7 @@ from IPython.display import display
 import sys
 from datetime import datetime
 import os
-
+import logging
 
 
 
@@ -43,6 +43,9 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
     Returns:
         pd.DataFrame: A DataFrame containing predicted values and RMSE for each player.
     """
+
+
+
     fga_prediction_data, df_defense = his_usage_team(player_names, date_list, stats_path, player_base_path, defense_base_path)
     fga_prediction_results = {}
 
@@ -64,9 +67,33 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
 
         # Convert schedule dates to timestamp format
         schedule_df['Date_in_Seconds'] = pd.to_datetime(schedule_df['DATE']).astype('int64') // 10**9
-        schedule_df['home_away'] = schedule_df['location'].apply(lambda x: 1 if x == 'away' else 0)
+        # schedule_df['home_away'] = schedule_df['location'].apply(lambda x: 1 if x == 'away' else 0)
+        schedule_df['home_away'] = schedule_df['home_team'].apply(lambda x: 1 if x == team else 0)
 
-        first_team = schedule_df['schedule_team'].iloc[0]
+
+        # first_team = schedule_df['schedule_team'].iloc[0]
+
+        column_with_team = schedule_df.columns[(schedule_df == team).any()].tolist()
+
+        # If the team is found in a column, retrieve the opposing team (example for 'away_team')
+        if column_with_team:
+            print(f"{team} found in column(s): {column_with_team}")
+            # Example: Get the opposing team from another column (e.g., 'away_team')
+            row_index = schedule_df[schedule_df[column_with_team[0]] == team].index[0]
+            check_player_team_column = column_with_team[0]  # Adjust this to the correct column name for the opposing team
+            if check_player_team_column == 'schedule_team':
+                for_opposing_team = 'home_team'
+            
+            if check_player_team_column == 'home_team':
+                for_opposing_team = 'schedule_team'
+
+            opposing_team = schedule_df.loc[row_index, for_opposing_team]  # Adjust this to the correct column name for the opposing team
+            print(f"The opposing team for {team} is: {opposing_team}")
+        else:
+            print(f"{team} not found in the DataFrame.")
+
+        first_team = opposing_team
+
 
         # this is for getting the last row of the team the player played against so it can be used to predict what comes next
         filtered_df = df[df['Away'] == first_team]
@@ -188,13 +215,16 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
 
         # Convert schedule dates to timestamp format
         schedule_df['Date_in_Seconds'] = pd.to_datetime(schedule_df['DATE']).astype('int64') // 10**9
-        schedule_df['home_away'] = schedule_df['location'].apply(lambda x: 1 if x == 'away' else 0)
+        # schedule_df['home_away'] = schedule_df['location'].apply(lambda x: 1 if x == 'away' else 0)
+        schedule_df['home_away'] = schedule_df['home_team'].apply(lambda x: 1 if x != team else 0)
+
 
         # Extract defensive stats for the scheduled team
         last_season = df_defense["season_defense"].iloc[-1]
         df_for_schedule = df_defense.loc[df_defense["season_defense"] == last_season, exclude_features]
-        first_team = schedule_df['schedule_team'].iloc[0]
-        schedule_team_result = schedule_df.loc[schedule_df['schedule_team'] == first_team, 'schedule_team'].values[0]
+        first_team = opposing_team
+        # schedule_team_result = schedule_df.loc[schedule_df['schedule_team'] == first_team, 'schedule_team'].values[0]
+        schedule_team_result = schedule_df.loc[schedule_df[for_opposing_team] == first_team, for_opposing_team].values[0]
         schedule_values = {feature: df_for_schedule.loc[df_for_schedule['TEAM'] == schedule_team_result, feature].values[0] 
                            for feature in exclude_features if feature in df_for_schedule.columns}
         
@@ -245,6 +275,19 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         rolling_avg_df_use = rolling_avg_df.iloc[[-1]]
 
 
+        combined_df_recent_team_played_r = pd.concat([filtered_df,last_5_games])
+
+        combined_df_recent_team_played_r = combined_df_recent_team_played_r[features]
+
+        combined_df_recent_team_played_r = combined_df_recent_team_played_r.reset_index(drop=True)
+
+
+        rolling_avg_df_use_r = combined_df_recent_team_played_r.iloc[[-1]]
+
+
+
+
+
 
 
         # display(X_future.head(10))
@@ -260,8 +303,12 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
 
         # future predictions happens here
         future_predictions = model.predict(X_future) #rolling_avg_df_use
+        future_predictions_last_game = model.predict(rolling_avg_df_use)
+        future_predictions_last_game_r = model.predict(rolling_avg_df_use_r)
+        ensemble_predictions = np.mean([future_predictions,future_predictions_last_game,future_predictions_last_game_r ], axis=0)
 
-        future_predictions = np.clip(future_predictions, lower_bound, upper_bound).astype('int')
+
+        future_predictions = np.clip(ensemble_predictions, lower_bound, upper_bound).astype('int')
 
 
 
@@ -330,68 +377,60 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
 
 
 
-        # Get last 10 games
-        recent_games = df[target].tail(10)
+        from scipy.stats import norm
 
-        
+        # CONFIG: Toggle to use z-score
+        use_z_score = True  # Set to False if you only want ±1 std range
+        confidence = 0.95    # Confidence level if using z-score (e.g., 95%)
 
+        # 1. Rolling calculations
+        df[f"Rolling_Mean_{target}"] = df[target].rolling(window=20).mean()
+        df[f"Rolling_Std_{target}"] = df[target].rolling(window=20).std()
+        df[f"Rolling_CV_{target}"] = df[f"Rolling_Std_{target}"] / df[f"Rolling_Mean_{target}"]
 
-        # Fit a linear regression (x = game number, y = points)
-        x = np.arange(1, len(recent_games) + 1)
-        slope, intercept, r_value, p_value, std_err = linregress(x, recent_games)
+        # 2. Handle NaN or inf values
+        if pd.isna(df[f"Rolling_Std_{target}"].iloc[-1]) or np.isinf(df[f"Rolling_Std_{target}"].iloc[-1]):
+            df.loc[df.index[-1], f"Rolling_Std_{target}"] = 0
 
-        long_term_cv = df[target].rolling(10).std() / df[target].rolling(10).mean()
+        if pd.isna(df[f"Rolling_CV_{target}"].iloc[-1]) or np.isinf(df[f"Rolling_CV_{target}"].iloc[-1]):
+            df.loc[df.index[-1], f"Rolling_CV_{target}"] = 0
 
-        # Set dynamic base threshold (scaled by long-term CV)
-        base_threshold = max(0.2, min(0.6, 0.3 + 0.2 * long_term_cv.iloc[-1]))
+        # 3. Prediction + volatility
+        rounded_future_prediction = abs(future_predictions[0])
+        rolling_std = df[f"Rolling_Std_{target}"].iloc[-1]
+        rolling_cv = df[f"Rolling_CV_{target}"].iloc[-1]
+        highest_cv_seen = df[f"Rolling_CV_{target}"].max()
 
-        # Compute dynamic middle threshold (adjusted for rolling CV)
-        middle_threshold = max(0.2, min(0.8, base_threshold * (1 + rolling_cv)))
-        
-        # Check if the slope is close to zero (i.e., in the middle)
-        if -middle_threshold <= slope <= middle_threshold:
-            trend_status = "stable"
-        elif slope > 0:
-            trend_status = "trending up"
+        # 4. Calculate bounds using std or z * std
+        if use_z_score:
+            z = norm.ppf(1 - (1 - confidence) / 2)
+            conf_low = rounded_future_prediction - z * rolling_std
+            conf_high = rounded_future_prediction + z * rolling_std
         else:
-            trend_status = "trending down"
+            conf_low = rounded_future_prediction - rolling_std
+            conf_high = rounded_future_prediction + rolling_std
+
+        # 5. Convert to integers & clip lower bound
+        conf_low = max(0, int(conf_low))
+        conf_high = int(conf_high)
+        rounded_future_prediction = int(rounded_future_prediction)
+
+        # 6. Build prediction string
+        player_prediction = f"{conf_low} - {rounded_future_prediction} - {conf_high}"
 
 
-        ##### this is for safebet column ############
-        import math
-        # Step 1: Calculate the midpoint of the range
-        midpoint = (lower_bound + upper_bound) / 2
-        midpoint = math.floor(midpoint)
-    
         
-        # Step 2: Adjust the prediction based on confidence score
-        if confidence_score_percentage > 60:
-            # High confidence - stick closer to midpoint
-            if trend_status == "trending up":
-                # Trending up - lean towards the higher end
-                exact_point = round(midpoint)
-            elif trend_status == "trending down":
-                # Trending down - lean towards the lower end
-                exact_point = lower_bound
-            else:
-                # Stable - pick midpoint or the closest round number
-                exact_point = round(midpoint)
+
+        if rolling_cv > 1:
+            confidence_score = max(0, 1 - (rolling_cv / highest_cv_seen))
         else:
-            # Low confidence - lean more conservatively towards the edges
-            if trend_status == "trending up":
-                # Trending up - lean towards the higher end
-                exact_point = round(midpoint + 1)  # Slight bias to upper end
-            elif trend_status == "trending down":
-                # Trending down - lean towards the lower end
-                exact_point = round(midpoint - 1)  # Slight bias to lower end
-            else:
-                # Stable - pick midpoint but be cautious (lean lower)
-                exact_point = round(midpoint - 1)
+            confidence_score = 1 - rolling_cv  # More stability → Higher confidence
 
-        exact_point = int(exact_point)
+        confidence_score_percentage = round(confidence_score * 100, 2)
 
-        if exact_point == -1:
-            exact_point = 0
+
+        lower_bound, upper_bound = cv_low_prediction, rounded_future_prediction
+
 
         if target == 'FGA':
             target = 'PTS'
@@ -411,7 +450,7 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         df_results.rename(columns={'index': 'Player'}, inplace=True)
         today_date = datetime.today().strftime('%Y-%m-%d')
         #create a directory if one doesn't exist
-        directory = f'prediction_output/{target}_outputs'
+        directory = f'D:/prediction_output/{target}_outputs'
         os.makedirs(directory, exist_ok=True)    
         df_results.to_csv(f'{directory}/{target}_output_{today_date}.csv', index=False)
         # display(df_results)

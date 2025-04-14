@@ -1,4 +1,28 @@
 # Launch PowerShell scripts that run Python programs
+
+# StartPython.ps1
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+Write-Output "This is what you are looking for: $scriptDir"
+
+$scriptPath = Join-Path -Path $scriptDir "get_roster.py"  # Replace with your actual script path
+# $scriptPath_parser = Join-Path -Path $scriptDir "current_player_parser_processor.py"
+
+Write-Host "Starting Python script: $scriptPath" -ForegroundColor Green
+
+# Explicitly call python.exe
+$process = Start-Process -FilePath "python" -ArgumentList $scriptPath -NoNewWindow -PassThru
+
+if ($process) {
+    Write-Host "fetching get roster... (PID: $($process.Id))" -ForegroundColor Yellow
+    $process | Wait-Process
+    Write-Host "Scraper script has completed." -ForegroundColor Cyan
+} else {
+    Write-Host "Failed to run get roster." -ForegroundColor Red
+}
+
+
+
+
 function Start-NestedScripts {
     param(
         [Parameter(Mandatory=$true)]
@@ -32,13 +56,7 @@ function Start-NestedScripts {
 
 
 
-# Example PowerShell script content (save as run_python1.ps1):
-<#
-# Sample content for your PowerShell scripts:
-$pythonScript = "path/to/your/python_script1.py"
-$pythonProcess = Start-Process python -ArgumentList $pythonScript -PassThru -NoNewWindow
-Write-Host "Started Python script $pythonScript with PID: $($pythonProcess.Id)"
-#>
+
 
 # Example usage:
 # $processes = Start-NestedScripts -PowerShellScripts @("run_python1.ps1", "run_python2.ps1")
@@ -46,8 +64,8 @@ Write-Host "Started Python script $pythonScript with PID: $($pythonProcess.Id)"
 # $processes_1 = Start-NestedScripts -PowerShellScripts @("historic_defense_data\his_defense_script.ps1")
 # $processes_1 | Wait-Process
 
-# $processes_2 = Start-NestedScripts -PowerShellScripts @("historic_player_data\his_player_script.ps1")
-# $processes_2 | Wait-Process
+$processes_2 = Start-NestedScripts -PowerShellScripts @("historic_player_data\his_player_script.ps1")
+$processes_2 | Wait-Process
 
 # $processes_3 = Start-NestedScripts -PowerShellScripts @("historic_usage_data\his_usage_script.ps1")
 # $processes_3 | Wait-Process
@@ -56,23 +74,32 @@ Write-Host "Started Python script $pythonScript with PID: $($pythonProcess.Id)"
 
 
 
-# $processes_1 = Start-NestedScripts -PowerShellScripts @("current_defense_data\current_defense_script.ps1")
-# $processes_1 | Wait-Process
+$processes_1 = Start-NestedScripts -PowerShellScripts @("current_defense_data\current_defense_script.ps1")
+$processes_1 | Wait-Process
 
 $processes_2 = Start-NestedScripts -PowerShellScripts @("current_player_data\current_player_script.ps1")
 $processes_2 | Wait-Process
 
-# $processes_3 = Start-NestedScripts -PowerShellScripts @("current_usage_data\current_usage_script.ps1")
-# $processes_3 | Wait-Process
+$processes_3 = Start-NestedScripts -PowerShellScripts @("current_usage_data\current_usage_script.ps1")
+$processes_3 | Wait-Process
 
-# $processes_4 = Start-NestedScripts -PowerShellScripts @("schedule\schedule_script.ps1")
-# $processes_4 | Wait-Process
+$processes_4 = Start-NestedScripts -PowerShellScripts @("schedule\schedule_script.ps1")
+$processes_4 | Wait-Process
 
-# $processes_5 = Start-NestedScripts -PowerShellScripts @("track_data\track_script.ps1")
-# $processes_5 | Wait-Process
+$processes_5 = Start-NestedScripts -PowerShellScripts @("track_data\track_script.ps1")
+$processes_5 | Wait-Process
 
 
 $processes_4 = Start-NestedScripts -PowerShellScripts @("mover.ps1")
 $processes_4 | Wait-Process
 
 Write-Host "Mover is done!"
+
+$processes_6 = Start-NestedScripts -PowerShellScripts @("models\linear_regression\run_prediction_script.ps1")
+$processes_6 | Wait-Process
+
+
+$processes_7 = Start-NestedScripts -PowerShellScripts @("streamlit_consumption\breakdown_prediction_script.ps1")
+$processes_7 | Wait-Process
+
+

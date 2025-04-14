@@ -2,7 +2,28 @@ from nba_api.stats.endpoints import commonteamroster
 from nba_api.stats.static import teams
 import pandas as pd
 from unidecode import unidecode
+from nba_api.stats.library.parameters import SeasonAll
+from nba_api.stats.endpoints import commonteamroster
+import requests
 
+# Patch requests.Session.request to always include custom headers
+original_request = requests.Session.request
+
+def patched_request(self, method, url, **kwargs):
+    headers = kwargs.get("headers", {})
+    headers.update({
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
+                      '(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+        'Accept': 'application/json, text/plain, */*',
+        'Referer': 'https://www.nba.com/',
+        'Origin': 'https://www.nba.com',
+        'x-nba-stats-origin': 'stats',
+        'x-nba-stats-token': 'true'
+    })
+    kwargs["headers"] = headers
+    return original_request(self, method, url, **kwargs)
+
+requests.Session.request = patched_request
 
 def get_team_roster():
 

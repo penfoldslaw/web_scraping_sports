@@ -35,13 +35,15 @@ def defense_scraper(main_folder,folder_season,data_season):
     log_file_path = "current_logs/defense_scraper.log"
     sys.stdout = open(log_file_path, "w")
     sys.stderr = open(log_file_path, "w")
+
+    # https://www.nba.com/stats/teams/advanced?Season=2024-25&SeasonType=Regular+Season
     
     web_site_list = [
-    f"https://www.nba.com/stats/teams/advanced?Season={data_season}",
-    f"https://www.nba.com/stats/teams/advanced?Season={data_season}&Period=1",
-    f"https://www.nba.com/stats/teams/advanced?Season={data_season}&Period=2",
-    f"https://www.nba.com/stats/teams/advanced?Season={data_season}&Period=3",
-    f"https://www.nba.com/stats/teams/advanced?Season={data_season}&Period=4"       
+    f"https://www.nba.com/stats/teams/advanced?Season={data_season}&SeasonType=Regular+Season",
+    f"https://www.nba.com/stats/teams/advanced?Season={data_season}&SeasonType=Regular+Season&Period=1",
+    f"https://www.nba.com/stats/teams/advanced?Season={data_season}&SeasonType=Regular+Season&Period=2",
+    f"https://www.nba.com/stats/teams/advanced?Season={data_season}&SeasonType=Regular+Season&Period=3",
+    f"https://www.nba.com/stats/teams/advanced?Season={data_season}&SeasonType=Regular+Season&Period=4"       
     ]
 
     file_names = ["all_quarter",

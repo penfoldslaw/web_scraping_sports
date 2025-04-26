@@ -67,8 +67,13 @@ def scrape_data(season,main_folder,folder_year):
 
     log_with_timestamp("Scraping data...") 
 
-    driver.get(f"https://www.nba.com/stats/players/usage?dir=A&sort=USG_PCT&Season={season}")
-    time.sleep(5)
+    #https://www.nba.com/stats/players/usage?dir=A&sort=USG_PCT&Season=2024-25&SeasonType=PlayIn
+    #    driver.get(f"https://www.nba.com/stats/players/usage?dir=A&sort=USG_PCT&Season={season}")
+
+
+    driver.get(f"https://www.nba.com/stats/players/usage?SeasonType=Regular+Season&Season={season}")
+    # https://www.nba.com/stats/players/usage?SeasonType=Regular+Season&Season=2023-24
+    time.sleep(2)
 
     driver.execute_script("window.scrollBy(0, 200);")
 
@@ -83,11 +88,11 @@ def scrape_data(season,main_folder,folder_year):
     # Select the "All" option by visible text
     select.select_by_visible_text("All")
 
-    time.sleep(5)
+    time.sleep(2)
 
     driver.execute_script("window.scrollBy(0, 500);")
 
-    time.sleep(5)
+    time.sleep(2)
 
 
     # Extract the entire HTML page

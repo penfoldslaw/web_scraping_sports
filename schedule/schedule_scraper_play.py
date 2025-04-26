@@ -52,6 +52,13 @@
 from playwright.sync_api import sync_playwright
 import os
 import sys
+from datetime import datetime
+
+# Get today's date and format it as YYYYMMDD
+today_date = datetime.now().strftime('%Y%m%d')
+
+# print(today_date)
+
 
 year = "2024-25"
 
@@ -62,7 +69,7 @@ sys.stderr = open(log_file_path, "w")
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=False)  # or headless=False to see it
     page = browser.new_page()
-    page.goto("https://www.espn.com/nba/schedule")
+    page.goto(f"https://www.espn.com/nba/schedule/_/date/{today_date}")
     
     # scroll up 500 pixels
     page.evaluate("window.scrollBy(0, -500)")

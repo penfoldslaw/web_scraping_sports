@@ -302,12 +302,48 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         
 
         # future predictions happens here
-        future_predictions = model.predict(X_future) #rolling_avg_df_use
-        future_predictions_last_game = model.predict(rolling_avg_df_use)
-        future_predictions_last_game_r = model.predict(rolling_avg_df_use_r)
-        ensemble_predictions = np.mean([future_predictions,future_predictions_last_game,future_predictions_last_game_r ], axis=0)
+        # future_predictions = model.predict(X_future) #rolling_avg_df_use
+        # future_predictions_last_game = model.predict(rolling_avg_df_use)
+        # future_predictions_last_game_r = model.predict(rolling_avg_df_use_r)
+        # ensemble_predictions = np.mean([future_predictions,future_predictions_last_game,future_predictions_last_game_r ], axis=0)
 
+        predictions =[]
 
+        # X_future
+        if not X_future.empty:
+            try:
+                future_predictions = model.predict(X_future)[0]
+                if not np.isnan(future_predictions):
+                    predictions.append(future_predictions)
+            except Exception as e:
+                print(f"Error predicting for {player}: {e}")
+        
+
+        # rolling_avg_df_use
+        if not rolling_avg_df_use.empty:
+            try:
+                future_predictions_last_game = model.predict(rolling_avg_df_use)[0]
+                if not np.isnan(future_predictions_last_game):
+                    predictions.append(future_predictions_last_game)
+            except Exception as e:
+                print(f"Error predicting for {player}: {e}")
+        
+        # rolling_avg_df_use_r
+        if not rolling_avg_df_use_r.empty:
+            try:
+                future_predictions_last_game_r = model.predict(rolling_avg_df_use_r)[0]
+                if not np.isnan(future_predictions_last_game_r):
+                    predictions.append(future_predictions_last_game_r)
+            except Exception as e:
+                print(f"Error predicting for {player}: {e}")
+
+        # Final handling of predictions
+        if not predictions:
+            print(f"No valid predictions for {player}.")
+            return []
+        
+        #clip prediction
+        ensemble_predictions = np.mean(predictions, axis=0)
         future_predictions = np.clip(ensemble_predictions, lower_bound, upper_bound).astype('int')
 
 
@@ -317,7 +353,7 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
         df[f"Rolling_Std_{target}"] = df[target].rolling(window=20).std()
         df[f"Rolling_CV_{target}"] = df[f"Rolling_Std_{target}"] / df[f"Rolling_Mean_{target}"]
 
-        rounded_future_prediction = abs(future_predictions[0])
+        rounded_future_prediction = abs(future_predictions)
 
         # print(player)
         # display(X_future.head(10))
@@ -396,7 +432,7 @@ def prediction(player_names: dict, date_list: list, stats_path: dict, player_bas
             df.loc[df.index[-1], f"Rolling_CV_{target}"] = 0
 
         # 3. Prediction + volatility
-        rounded_future_prediction = abs(future_predictions[0])
+        rounded_future_prediction = abs(future_predictions)
         rolling_std = df[f"Rolling_Std_{target}"].iloc[-1]
         rolling_cv = df[f"Rolling_CV_{target}"].iloc[-1]
         highest_cv_seen = df[f"Rolling_CV_{target}"].max()

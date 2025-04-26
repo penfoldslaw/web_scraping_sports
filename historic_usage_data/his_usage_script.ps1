@@ -4,8 +4,8 @@ Write-Output "This is what you are looking for: $scriptDir"
 
 
 # StartPython.ps1
-$scriptPath = Join-Path -Path $scriptDir "his_usage_scraper_processor.py"  # Replace with your actual script path
-$scriptPath_parser = Join-Path -Path $scriptDir "his_usage_parser_processor.py"
+$scriptPath = Join-Path -Path $scriptDir "his_url_usage_use.py"  # Replace with your actual script path
+# $scriptPath_parser = Join-Path -Path $scriptDir "his_usage_parser_processor.py"
 
 Write-Host "Starting Python script: $scriptPath" -ForegroundColor Green
 
@@ -21,12 +21,12 @@ if ($process) {
 }
 
 
-$process_parser = Start-Process -FilePath "python" -ArgumentList $scriptPath_parser -NoNewWindow -PassThru
+# $process_parser = Start-Process -FilePath "python" -ArgumentList $scriptPath_parser -NoNewWindow -PassThru
 
-if ($process_parser) {
-    Write-Host "Parser script is running... (PID: $($process_parser.Id))" -ForegroundColor Yellow
-    $process_parser | Wait-Process
-    Write-Host "Parser script has completed." -ForegroundColor Cyan
-} else {
-    Write-Host "Failed to start the Parser script script log." -ForegroundColor Red
-}
+# if ($process_parser) {
+#     Write-Host "Parser script is running... (PID: $($process_parser.Id))" -ForegroundColor Yellow
+#     $process_parser | Wait-Process
+#     Write-Host "Parser script has completed." -ForegroundColor Cyan
+# } else {
+#     Write-Host "Failed to start the Parser script script log." -ForegroundColor Red
+# }

@@ -100,68 +100,135 @@ def fga_prediction(player_names: dict, date_list: list, usage_path, player_base_
 
 
 
+# def select_features(player_names, date_list, usage_path, player_base_path, defense_base_path, target):
+#     player_df, _ = his_usage_team(player_names, date_list, usage_path, player_base_path, defense_base_path)
+    
+#     selected_features_dict = {}
+    
+#     max_features_player = None
+#     max_features = 0
+
+#     for player, df in player_df.items():
+
+#         if df is None:
+#             print(f"Skipping {player} - No data available.")
+#             continue  # Move to the next player
+
+
+
+#         df_X = df.drop(columns=[target, 'Date', 'Matchup', 'Team', 'Home/Away_game', 'W/L', 'Away', 'season', 'TEAM', 'season_defense'])
+
+#         df = df.dropna()
+
+
+        
+
+
+        
+#         # Apply StandardScaler to scale the features
+#         scaler = StandardScaler()
+#         X = scaler.fit_transform(df_X)
+#         y = df[target]  # Target variable
+
+#         # Skip player if not enough data
+#         if X.shape[0] < 5:
+#             print(f"Skipping {player} due to insufficient data ({X.shape[0]} samples).")
+#             continue
+        
+#         # Grid search parameters for Lasso
+#         param_grid = {'alpha': [0.001, 0.01, 0.1, 1, 10]}
+        
+#         # Use GridSearchCV to find the best alpha
+#         grid_search = GridSearchCV(Lasso(max_iter=50000), param_grid, cv=5, scoring='r2')  # Increase max_iter here
+#         grid_search.fit(X, y)
+        
+#         # Get the best alpha and fit Lasso
+#         best_alpha = grid_search.best_params_['alpha']
+#         best_lasso = Lasso(alpha=best_alpha, max_iter=50000)  # Ensure enough iterations for convergence
+#         best_lasso.fit(X, y)
+        
+#         # Select non-zero coefficient features
+#         X = pd.DataFrame(X, columns=df_X.columns)
+#         selected_features = X.columns[best_lasso.coef_ != 0].tolist()
+        
+#         # Store selected features
+#         selected_features_dict[player] = selected_features
+        
+#         # Track the player with the most features
+#         if len(selected_features) > max_features:
+#             max_features = len(selected_features)
+#             max_features_player = player
+
+#     # If a player has no selected features, assign the features of the player with the most features
+#     for player in selected_features_dict:
+#         if not selected_features_dict[player]:  # If empty
+#             selected_features_dict[player] = selected_features_dict.get(max_features_player, [])
+
+#     return selected_features_dict
+
+
 def select_features(player_names, date_list, usage_path, player_base_path, defense_base_path, target):
     player_df, _ = his_usage_team(player_names, date_list, usage_path, player_base_path, defense_base_path)
     
     selected_features_dict = {}
-    
     max_features_player = None
     max_features = 0
 
     for player, df in player_df.items():
-
         if df is None:
             print(f"Skipping {player} - No data available.")
-            continue  # Move to the next player
+            continue
 
-
-
+        # Drop non-feature columns
         df_X = df.drop(columns=[target, 'Date', 'Matchup', 'Team', 'Home/Away_game', 'W/L', 'Away', 'season', 'TEAM', 'season_defense'])
+        y = df[target]
 
-        
+        # Combine to drop rows with any NaNs in features or target
+        combined_df = pd.concat([df_X, y], axis=1).dropna()
 
+        if combined_df.shape[0] < 5:
+            print(f"Skipping {player} due to insufficient data ({combined_df.shape[0]} samples).")
+            continue
 
-        
-        # Apply StandardScaler to scale the features
+        # Split cleaned data back
+        df_X = combined_df.drop(columns=[target])
+        y = combined_df[target]
+
+        # Apply StandardScaler
         scaler = StandardScaler()
         X = scaler.fit_transform(df_X)
-        y = df[target]  # Target variable
 
-        # Skip player if not enough data
-        if X.shape[0] < 5:
-            print(f"Skipping {player} due to insufficient data ({X.shape[0]} samples).")
-            continue
-        
-        # Grid search parameters for Lasso
+        # Grid search for best alpha
         param_grid = {'alpha': [0.001, 0.01, 0.1, 1, 10]}
-        
-        # Use GridSearchCV to find the best alpha
-        grid_search = GridSearchCV(Lasso(max_iter=50000), param_grid, cv=5, scoring='r2')  # Increase max_iter here
-        grid_search.fit(X, y)
-        
-        # Get the best alpha and fit Lasso
+        grid_search = GridSearchCV(Lasso(max_iter=50000), param_grid, cv=5, scoring='r2')
+
+        try:
+            grid_search.fit(X, y)
+        except ValueError as e:
+            print(f"Skipping {player} due to fitting error: {e}")
+            continue
+
         best_alpha = grid_search.best_params_['alpha']
-        best_lasso = Lasso(alpha=best_alpha, max_iter=50000)  # Ensure enough iterations for convergence
+        best_lasso = Lasso(alpha=best_alpha, max_iter=50000)
         best_lasso.fit(X, y)
-        
-        # Select non-zero coefficient features
-        X = pd.DataFrame(X, columns=df_X.columns)
-        selected_features = X.columns[best_lasso.coef_ != 0].tolist()
-        
-        # Store selected features
+
+        # Identify non-zero features
+        X_df = pd.DataFrame(X, columns=df_X.columns)
+        selected_features = X_df.columns[best_lasso.coef_ != 0].tolist()
         selected_features_dict[player] = selected_features
-        
-        # Track the player with the most features
+
+        # Track player with most features
         if len(selected_features) > max_features:
             max_features = len(selected_features)
             max_features_player = player
 
-    # If a player has no selected features, assign the features of the player with the most features
+    # Fill missing players with max-feature player
     for player in selected_features_dict:
-        if not selected_features_dict[player]:  # If empty
+        if not selected_features_dict[player]:
             selected_features_dict[player] = selected_features_dict.get(max_features_player, [])
 
     return selected_features_dict
+
 
 
 

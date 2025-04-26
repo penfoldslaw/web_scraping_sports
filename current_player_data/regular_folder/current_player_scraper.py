@@ -63,8 +63,9 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data='yes'):
     player_id, full_name = get_player_id(player_name)
 
     if player_id is not None:
-        driver.get(f"https://www.nba.com/stats/player/{player_id}/boxscores-traditional?Season={season}")
+        driver.get(f"https://www.nba.com/stats/player/{player_id}/boxscores-traditional?SeasonType=Regular+Season&Season={season}")
         # https://www.nba.com/stats/player/2544/boxscores-traditional?Season=2022-23
+        # https://www.nba.com/stats/player/203507/boxscores-traditional?SeasonType=Regular+Season&Season=2023-24
 
 
         time.sleep(3)
@@ -146,7 +147,7 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data='yes'):
     else:
 
         driver.get("https://www.nba.com/players")
-        time.sleep(5)
+        time.sleep(3)
 
         # This locates the search bar by its 'aria-label' attribute
         search_bar = driver.find_element(By.XPATH, "//input[@aria-label='Player Natural Search Bar']")
@@ -160,14 +161,14 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data='yes'):
         search_bar.send_keys(Keys.RETURN)
         
         # This is so it gives it time to reload
-        time.sleep(4)
+        time.sleep(3)
 
 
         # After the player name has been searched this clicks the player note that this has only been tested for one player coming up not multiple
         player_link = driver.find_element(By.XPATH, "//div[@class='RosterRow_playerName__G28lg']")
         player_link.click()  # This simulates a click
 
-        time.sleep(4)
+        time.sleep(3)
 
 
         #this click the stats page 
@@ -189,7 +190,7 @@ def scrape_data(player,season,main_folder,folder_year,quarter_data='yes'):
     
 
 
-        time.sleep(4)
+        time.sleep(3)
 
         # Extract the entire HTML page
         page_html = driver.page_source

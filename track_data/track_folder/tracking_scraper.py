@@ -82,24 +82,25 @@ def scrape_data(season,main_folder,folder_year):
         print(driver.title.encode('ascii', 'replace').decode())
 
 
-    url_check(f"https://www.nba.com/stats/players/passing?Season={season}", "passing")
+    url_check(f"https://www.nba.com/stats/players/passing?SeasonType=Regular+Season&Season={season}", "passing")
+    #https://www.nba.com/stats/players/speed-distance?SeasonType=Regular+Season&Season=2023-24
 
-    url_check(f"https://www.nba.com/stats/players/catch-shoot?Season={season}", "catch_shoot")
+    url_check(f"https://www.nba.com/stats/players/catch-shoot?SeasonType=Regular+Season&Season={season}", "catch_shoot")
 
 
-    url_check(f"https://www.nba.com/stats/players/pullup?Season={season}", "pullup")
+    url_check(f"https://www.nba.com/stats/players/pullup?SeasonType=Regular+Season&Season={season}", "pullup")
 
-    url_check(f"https://www.nba.com/stats/players/shooting-efficiency?Season={season}", "shooting_efficiency")
+    url_check(f"https://www.nba.com/stats/players/shooting-efficiency?SeasonType=Regular+Season&Season={season}", "shooting_efficiency")
 
-    url_check(f"https://www.nba.com/stats/players/drives?Season={season}", "drives")
+    url_check(f"https://www.nba.com/stats/players/drives?SeasonType=Regular+Season&Season={season}", "drives")
 
-    url_check(f"https://www.nba.com/stats/players/tracking-post-ups?Season={season}", "tracking_post_ups")
+    url_check(f"https://www.nba.com/stats/players/tracking-post-ups?SeasonType=Regular+Season&Season={season}", "tracking_post_ups")
 
-    url_check(f"https://www.nba.com/stats/players/paint-touch?Season={season}", "paint_touch")
+    url_check(f"https://www.nba.com/stats/players/paint-touch?SeasonType=Regular+Season&Season={season}", "paint_touch")
 
-    url_check(f"https://www.nba.com/stats/players/elbow-touch?Season={season}", "elbow_touch")
+    url_check(f"https://www.nba.com/stats/players/elbow-touch?SeasonType=Regular+Season&Season={season}", "elbow_touch")
 
-    url_check(f"https://www.nba.com/stats/players/touches?Season={season}", "touches")
+    url_check(f"https://www.nba.com/stats/players/touches?SeasonType=Regular+Season&Season={season}", "touches")
 
     driver.quit()
 

@@ -202,13 +202,36 @@ def his_usage_team(player_names: dict, date_list: list,stats_path:dict,player_ba
             #merging player and defense dat into one
             merged_data, current_defense_df = his_player_defense_data(player_base_path,defense_base_path,player,date)
 
+            # def add_one_stats(merged_data, one_stat_data, player, player_column, columns):
+            #     """Efficiently adds stats for a player to the merged dataset. stats are from usage and everything from tracking data csv"""
+            #     if "season" not in one_stat_data.columns:
+            #         one_stat_data["season"] = date
+            #     player_data = one_stat_data.loc[one_stat_data[player_column] == player, columns]
+
+            #     if not player_data.empty:
+            #         # Create a new DataFrame with the selected columns to merge
+            #         new_columns = pd.DataFrame([player_data.iloc[0].values], columns=columns, index=merged_data.index)
+            #         merged_data = pd.concat([merged_data, new_columns], axis=1)
+
+            #     return merged_data
+
+
             def add_one_stats(merged_data, one_stat_data, player, player_column, columns):
-                """Efficiently adds stats for a player to the merged dataset. stats are from usage and everything from tracking data csv"""
-                one_stat_data["season"] = date
-                player_data = one_stat_data.loc[one_stat_data[player_column] == player, columns]
+                """Efficiently adds stats for a player to the merged dataset."""
+                temp_df = one_stat_data.copy()
+
+                # Add season column
+                temp_df["season"] = date
+
+                # Ensure 'season' is only added once to columns
+                if "season" not in columns:
+                    columns.append("season")
+
+                # Filter just the row for the player
+                player_data = temp_df.loc[temp_df[player_column] == player, columns]
 
                 if not player_data.empty:
-                    # Create a new DataFrame with the selected columns to merge
+                    # Create DataFrame to concatenate (aligned with merged_data index)
                     new_columns = pd.DataFrame([player_data.iloc[0].values], columns=columns, index=merged_data.index)
                     merged_data = pd.concat([merged_data, new_columns], axis=1)
 
@@ -270,6 +293,13 @@ def his_usage_team(player_names: dict, date_list: list,stats_path:dict,player_ba
             merged_data = merged_data.drop_duplicates()
             
             # Append the DataFrame for this date to the player's list
+            for i, df in enumerate(current_player_frames):
+                if df.columns.duplicated().any():
+                    print(f"Duplicate columns found in frame {i} for player {player}:")
+                    print(df.columns[df.columns.duplicated()])
+                    
+            merged_data = merged_data.loc[:, ~merged_data.columns.duplicated()]
+
             current_player_frames.append(merged_data)
 
         if not current_player_frames:  # Check if list is empty

@@ -50,5 +50,6 @@ $processes_2 | Wait-Process
 $processes_3 = Start-NestedScripts -PowerShellScripts @("historic_usage_data\his_usage_script.ps1")
 $processes_3 | Wait-Process
 
-$processes_4 = Start-NestedScripts -PowerShellScripts @("schedule\schedule_script.ps1")
-$processes_4 | Wait-Process
+
+# $processes_4 = Start-NestedScripts -PowerShellScripts @("schedule\schedule_script.ps1")
+# $processes_4 | Wait-Process

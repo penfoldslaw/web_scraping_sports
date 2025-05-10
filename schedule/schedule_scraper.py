@@ -35,6 +35,7 @@ service = Service(executable_path=path / "firefox_drive/geckodriver.exe", log_pa
 #  Firefox options
 firefox_options = Options()
 firefox_options.add_argument("--headless")  # Run in headless mode if needed
+firefox_options.set_preference("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
 #firefox_options.add_argument("--start-maximized")  # Run in headless mode if needed
 
 # Initialize the Firefox WebDriver
@@ -63,6 +64,12 @@ def schedule_scraper(team,year):
     time.sleep(3)
 
     page_html = driver.page_source
+
+    if team == 'NO':
+        team = 'NOP'
+    
+    if team == 'UTAH':
+        team = 'UTA'
 
     folder = os.path.join("D:/nba_schedules", f"nba_html_{year}")
     file_path = os.path.join(folder, f"{team}_schedule_content.html")

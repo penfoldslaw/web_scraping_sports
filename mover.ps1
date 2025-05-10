@@ -23,3 +23,5 @@ Copy-Folder -Source "D:\nba_player_csv_current\season_2024-25" -Destination "D:\
 Copy-Folder -Source "D:\nba_usage_csv_current\usage_csv_2024-25" -Destination "D:\nba_usage_csv_historic\usage_csv_2024-25"
 
 Copy-Folder -Source "D:\nba_defense_csv_current\defense_csv_2024-25" -Destination "D:\nba_defense_history_csv\defense_csv_2024-25"
+
+

@@ -19,3 +19,11 @@ his_player_scraper.log
 __pycache__
 myenv
 history_logs
+geckodriver
+gecodriver.exe
+current_logs
+box_score_log
+prediction.log
+streamlit_log.log
+
+

@@ -36,6 +36,8 @@ if __name__ == "__main__":
         'GSW', 'HOU', 'IND', 'LAC', 'LAL', 'MEM', 'MIA', 'MIL', 'MIN', 
         'NO', 'NYK', 'OKC', 'ORL', 'PHI', 'PHX', 'POR', 'SAC', 'SAS', 
         'TOR', 'UTAH', 'WAS' ]
+
+    # teams =['OKC','LAC']
     
     year = "2025"
 
